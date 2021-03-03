@@ -1,11 +1,19 @@
-import { Layout, Menu, Breadcrumb } from 'antd';
+import { Layout, Menu, Breadcrumb, Button } from 'antd';
 import 'antd/dist/antd.css';
 import './Base.css';
+import auth from './../auth/auth-helper';
+import { Link, withRouter } from 'react-router-dom';
 
 const { Header, Content, Footer } = Layout;
 
-function Base({ children, title, ...props }) {
-	return (
+const isActive = (history, path) => {
+	if (history.location.pathname == path)
+		return { color: '#bef67a' };
+	else return { color: '#ffffff' };
+};
+
+const Base = withRouter(
+	({ children, title, history, ...props }) => (
 		<Layout className='layout'>
 			<Header>
 				<div className='logo' />
@@ -15,7 +23,13 @@ function Base({ children, title, ...props }) {
 					defaultSelectedKeys={[
 						'2'
 					]}>
-					<Menu.Item key='1'>nav 1</Menu.Item>
+					<Menu.Item key='1'>
+						<Link to='/signin'>
+							<Button style={isActive(history, '/signin')}>
+								Entrar
+							</Button>
+						</Link>
+					</Menu.Item>
 					<Menu.Item key='2'>nav 2</Menu.Item>
 					<Menu.Item key='3'>nav 3</Menu.Item>
 				</Menu>
@@ -34,7 +48,7 @@ function Base({ children, title, ...props }) {
 				Ant Design ©2018 Created by Ant UED
 			</Footer>
 		</Layout>
-	);
-}
+	)
+);
 
 export default Base;

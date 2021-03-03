@@ -18,28 +18,17 @@ const setAuthorizationHeader = (token) => {
 // 	delete client.defaults.headers.common['Authorization'];
 // };
 
-client.login = (credentials) =>
-	client.post('/auth/signin/', credentials).then((auth) => {
-		setAuthorizationHeader(auth.token);
-		return auth;
+client.login = (user) =>
+	client.post('/auth/signin/', user).then((data) => {
+		console.log(user);
+		setAuthorizationHeader(data.token);
+		return data;
 	});
 
-const signin = async (user) => {
-	try {
-		let response = await fetch('/auth/signin/', {
-			method: 'POST',
-			headers: {
-				Accept: 'application/json',
-				'Content-Type': 'application/json'
-			},
-			credentials: 'include',
-			body: JSON.stringify(user)
-		});
-		return await response.json();
-	} catch (err) {
-		console.log(err);
-	}
-};
+const signin = (user) =>
+	client.login(user).then((data) => {
+		return data;
+	});
 
 const signout = async () => {
 	try {

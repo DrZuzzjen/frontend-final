@@ -82,7 +82,6 @@ export default function Signin(props) {
 	return (
 		<Base>
 			<Form {...layout}>
-				<Title strong>Entrar</Title>
 				<Form.Item
 					id='email'
 					name='email'
@@ -98,7 +97,7 @@ export default function Signin(props) {
 					label='Password'
 					value={values.password}
 					onChange={handleChange('password')}>
-					<br />{' '}
+					{' '}
 					{values.error && (
 						<Typography component='p' color='error'>
 							<Icon color='error'>error</Icon>

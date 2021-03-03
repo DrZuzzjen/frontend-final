@@ -1,6 +1,6 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
-import Home from '../layout/Home';
+import Base from '../layout/Base';
 import Signin from '../auth/Signin';
 import Menu from '../layout/Menu';
 
@@ -9,7 +9,7 @@ const MainRouter = () => {
 		<div>
 			<Menu />
 			<Switch>
-				<Route exact path='/' component={Home} />
+				<Route exact path='/' component={Base} />
 				<Route path='/signin' component={Signin} />
 			</Switch>
 		</div>
