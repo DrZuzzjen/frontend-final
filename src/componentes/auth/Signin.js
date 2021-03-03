@@ -13,7 +13,6 @@ import Icon from '@material-ui/core/Icon';
 import auth from './../auth/auth-helper';
 import { Redirect } from 'react-router-dom';
 import { signin } from '../../API/api-auth.js';
-import Base from '../layout/Base.js';
 
 const { Title } = Typography;
 
@@ -80,42 +79,40 @@ export default function Signin(props) {
 	}
 
 	return (
-		<Base>
-			<Form {...layout}>
-				<Form.Item
-					id='email'
-					name='email'
-					label='Email'
-					value={values.email}
-					onChange={handleChange('email')}>
-					<Input />
-				</Form.Item>
+		<Form {...layout}>
+			<Form.Item
+				id='email'
+				name='email'
+				label='Email'
+				value={values.email}
+				onChange={handleChange('email')}>
+				<Input />
+			</Form.Item>
 
-				<Form.Item
-					id='password'
-					name='password'
-					label='Password'
-					value={values.password}
-					onChange={handleChange('password')}>
-					{' '}
-					{values.error && (
-						<Typography component='p' color='error'>
-							<Icon color='error'>error</Icon>
-							{values.error}
-						</Typography>
-					)}
-					<Input.Password />
-				</Form.Item>
+			<Form.Item
+				id='password'
+				name='password'
+				label='Password'
+				value={values.password}
+				onChange={handleChange('password')}>
+				{' '}
+				{values.error && (
+					<Typography component='p' color='error'>
+						<Icon color='error'>error</Icon>
+						{values.error}
+					</Typography>
+				)}
+				<Input.Password />
+			</Form.Item>
 
-				<Form.Item {...tailLayout}>
-					<Button
-						type='primary'
-						htmlType='submit'
-						onClick={clickSubmit}>
-						Enviar
-					</Button>
-				</Form.Item>
-			</Form>
-		</Base>
+			<Form.Item {...tailLayout}>
+				<Button
+					type='primary'
+					htmlType='submit'
+					onClick={clickSubmit}>
+					Enviar
+				</Button>
+			</Form.Item>
+		</Form>
 	);
 }
