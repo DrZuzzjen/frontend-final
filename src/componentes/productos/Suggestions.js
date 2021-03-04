@@ -104,16 +104,7 @@ export default function Suggestions(props) {
 												{item.name}
 											</Typography>
 										</Link>
-										<Link to={'/shops/' + item.shop._id}>
-											<Typography
-												type='subheading'
-												className={classes.subheading}>
-												<Icon className={classes.icon}>
-													shopping_basket
-												</Icon>{' '}
-												{item.shop.name}
-											</Typography>
-										</Link>
+
 										<Typography
 											component='p'
 											className={classes.date}>

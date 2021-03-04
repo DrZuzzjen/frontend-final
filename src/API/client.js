@@ -61,3 +61,15 @@ client.interceptors.response.use(
 );
 
 export default client;
+
+// import client from './client';
+
+// const signin = (user) =>
+// 	client
+// 		.login(user)
+// 		.then((data) => {
+// 			return data;
+// 		})
+// 		.catch((e) => {
+// 			console.log(e);
+// 		});

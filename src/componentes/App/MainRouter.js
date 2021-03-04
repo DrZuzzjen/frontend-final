@@ -10,8 +10,8 @@ import Signup from '../user/Signup';
 const MainRouter = () => {
 	return (
 		<div>
+			<Menu />
 			<Base>
-				<Menu />
 				<Switch>
 					<Route exact path='/' component={Home} />
 					<Route path='/users' component={Users} />

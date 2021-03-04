@@ -14,8 +14,6 @@ import auth from './../auth/auth-helper';
 import { Redirect } from 'react-router-dom';
 import { signin } from '../../API/api-auth.js';
 
-const { Title } = Typography;
-
 const layout = {
 	labelCol: {
 		span: 8
@@ -41,6 +39,10 @@ export default function Signin(props) {
 		error: '',
 		redirectToReferrer: false
 	});
+
+	const couldSubmit = () => {
+		return values.email && values.password;
+	};
 
 	const clickSubmit = () => {
 		const user = {
@@ -82,7 +84,6 @@ export default function Signin(props) {
 		<Form {...layout}>
 			<Form.Item
 				id='email'
-				name='email'
 				label='Email'
 				value={values.email}
 				onChange={handleChange('email')}>
@@ -91,24 +92,25 @@ export default function Signin(props) {
 
 			<Form.Item
 				id='password'
-				name='password'
 				label='Password'
 				value={values.password}
 				onChange={handleChange('password')}>
-				{' '}
+				<Input.Password />
+			</Form.Item>
+			<Form.Item {...tailLayout}>
 				{values.error && (
 					<Typography component='p' color='error'>
 						<Icon color='error'>error</Icon>
 						{values.error}
 					</Typography>
 				)}
-				<Input.Password />
 			</Form.Item>
 
 			<Form.Item {...tailLayout}>
 				<Button
 					type='primary'
 					htmlType='submit'
+					disabled={!couldSubmit()}
 					onClick={clickSubmit}>
 					Enviar
 				</Button>
