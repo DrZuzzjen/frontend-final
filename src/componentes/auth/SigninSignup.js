@@ -1,20 +1,10 @@
+import React from 'react';
 import '../layout/Card.css';
-import {
-	Form,
-	Input,
-	Typography,
-	Button,
-	Checkbox,
-	Card
-} from 'antd';
-import { UserOutlined } from '@ant-design/icons';
-
-import React, { useState } from 'react';
+import { Card } from 'antd';
 
 import TextField from '@material-ui/core/TextField';
 import Icon from '@material-ui/core/Icon';
 
-import { create } from '../../API/api-user';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
