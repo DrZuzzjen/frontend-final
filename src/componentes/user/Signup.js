@@ -1,10 +1,17 @@
+import '../layout/Card.css';
+import {
+	Form,
+	Input,
+	Typography,
+	Button,
+	Checkbox,
+	Card
+} from 'antd';
+import { UserOutlined } from '@ant-design/icons';
+
 import React, { useState } from 'react';
-import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
-import CardContent from '@material-ui/core/CardContent';
-import Button from '@material-ui/core/Button';
+
 import TextField from '@material-ui/core/TextField';
-import Typography from '@material-ui/core/Typography';
 import Icon from '@material-ui/core/Icon';
 import { makeStyles } from '@material-ui/core/styles';
 import { create } from '../../API/api-user';
@@ -13,7 +20,15 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
+
 import { Link } from 'react-router-dom';
+
+const tailLayout = {
+	wrapperCol: {
+		offset: 8,
+		span: 16
+	}
+};
 
 const useStyles = makeStyles((theme) => ({
 	card: {
@@ -58,6 +73,10 @@ export default function Signup() {
 		setValues({ ...values, [name]: event.target.value });
 	};
 
+	const couldSubmit = () => {
+		return values.name && values.email && values.password;
+	};
+
 	const clickSubmit = () => {
 		const user = {
 			name: values.name || undefined,
@@ -75,81 +94,91 @@ export default function Signup() {
 	};
 	return (
 		<div>
-			<Card className={classes.card} elevation={10}>
-				user/Signup
-				<CardContent>
-					<Typography
-						variant='h6'
-						className={classes.title}>
-						Registrar
-					</Typography>
-					<TextField
-						id='name'
-						label='Name'
-						className={classes.textField}
-						value={values.name}
-						onChange={handleChange('name')}
-						margin='normal'
-					/>
-					<br />
-					<TextField
-						id='email'
-						type='email'
-						label='Email'
-						className={classes.textField}
-						value={values.email}
-						onChange={handleChange('email')}
-						margin='normal'
-					/>
-					<br />
-					<TextField
-						id='password'
-						type='password'
-						label='Password'
-						className={classes.textField}
-						value={values.password}
-						onChange={handleChange('password')}
-						margin='normal'
-					/>
-					<br />{' '}
-					{values.error && (
-						<Typography component='p' color='error'>
-							<Icon color='error' className={classes.error}>
-								error
-							</Icon>
-							{values.error}
-						</Typography>
-					)}
-				</CardContent>
-				<CardActions>
-					<Button
-						color='primary'
-						variant='contained'
-						onClick={clickSubmit}
-						className={classes.submit}>
-						Enviar
-					</Button>
-				</CardActions>
-			</Card>
 			<Dialog
-				open={values.open}
-				disableBackdropClick={true}>
-				<DialogTitle>New Account</DialogTitle>
-				<DialogContent>
-					<DialogContentText>
-						New account successfully created.
-					</DialogContentText>
-				</DialogContent>
-				<DialogActions>
-					<Link to='/signin'>
-						<Button
-							color='primary'
-							autoFocus='autoFocus'
-							variant='contained'>
-							Sign In
-						</Button>
-					</Link>
-				</DialogActions>
+				open='true'
+				disableBackdropClick={true}
+				titleStyle={
+					({ textAlign: 'center' }, { padding: 30 })
+				}>
+				<Card
+					title='Regístrate en wallapop'
+					bordered={false}
+					style={({ width: 300 }, { padding: 30 })}>
+					<p>
+						<Form.Item
+							id='name'
+							value={values.name}
+							onChange={handleChange('name')}>
+							<Input
+								size='large'
+								placeholder='Nombre y apellidos'
+								prefix={<UserOutlined />}
+							/>
+						</Form.Item>
+
+						<Form.Item
+							id='email'
+							value={values.email}
+							onChange={handleChange('email')}>
+							<Input
+								size='large'
+								placeholder='Dirección de email'
+								prefix={<UserOutlined />}
+							/>
+						</Form.Item>
+
+						<Form.Item
+							id='password'
+							value={values.password}
+							onChange={handleChange('password')}>
+							<Input.Password
+								size='large'
+								placeholder='Contraseña'
+							/>
+						</Form.Item>
+
+						<Form.Item {...tailLayout}>
+							{values.error && (
+								<Typography component='p' color='error'>
+									<Icon color='error'>error</Icon>
+									{values.error}
+								</Typography>
+							)}
+						</Form.Item>
+
+						<Form.Item {...tailLayout}>
+							<Button
+								type='primary'
+								htmlType='submit'
+								disabled={!couldSubmit()}
+								onClick={clickSubmit}>
+								Crear una cuenta
+							</Button>
+							<Link to='/signin'>Inicia sesión </Link>
+						</Form.Item>
+					</p>
+				</Card>
+
+				<Dialog
+					open={values.open}
+					disableBackdropClick={true}>
+					<DialogTitle>New Account</DialogTitle>
+					<DialogContent>
+						<DialogContentText>
+							New account successfully created.
+						</DialogContentText>
+					</DialogContent>
+					<DialogActions>
+						<Link to='/signin'>
+							<Button
+								color='primary'
+								autoFocus='autoFocus'
+								variant='contained'>
+								Sign In
+							</Button>
+						</Link>
+					</DialogActions>
+				</Dialog>
 			</Dialog>
 		</div>
 	);

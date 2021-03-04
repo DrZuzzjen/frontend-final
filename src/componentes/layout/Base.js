@@ -1,45 +1,58 @@
-import { Layout, Menu, Breadcrumb, Button } from 'antd';
+import {
+	Descriptions,
+	PageHeader,
+	Layout,
+	Button
+} from 'antd';
 import 'antd/dist/antd.css';
 import './Base.css';
-import auth from './../auth/auth-helper';
 import { Link, withRouter } from 'react-router-dom';
 
-const { Header, Content, Footer } = Layout;
+const { Content, Footer } = Layout;
 
 const isActive = (history, path) => {
 	if (history.location.pathname == path)
-		return { color: '#bef67a' };
-	else return { color: '#ffffff' };
+		return { color: '#000000' };
+	else return { color: '#000000' };
 };
 
 const Base = withRouter(
 	({ children, title, history, ...props }) => (
 		<Layout className='layout'>
-			<Header>
-				<div className='logo' />
-				<Menu
-					theme='dark'
-					mode='horizontal'
-					defaultSelectedKeys={[
-						'2'
-					]}>
-					<Menu.Item key='1'>
-						<Link to='/signin'>
-							<Button style={isActive(history, '/signin')}>
-								Entrar
+			<div className='site-page-header-ghost-wrapper'>
+				<PageHeader
+					ghost={false}
+					onBack={() => window.history.back()}
+					title='Title'
+					subTitle='This is a subtitle'
+					extra={[
+						<Button shape='round' key='3'>
+							Mensajes
+						</Button>,
+						<Link to='/signin_signup'>
+							<Button
+								shape='round'
+								key='2'
+								style={isActive(history, '/signin_signup')}>
+								Regístrate o inicia sesión
 							</Button>
-						</Link>
-					</Menu.Item>
-					<Menu.Item key='2'>nav 2</Menu.Item>
-					<Menu.Item key='3'>nav 3</Menu.Item>
-				</Menu>
-			</Header>
+						</Link>,
+						<Button shape='round' key='1' type='primary'>
+							Subir producto
+						</Button>
+					]}>
+					<Descriptions size='small' column={1}>
+						<Descriptions.Item>
+							wallaclone, la plataforma líder de compraventa
+							de productos de Segunda mano
+						</Descriptions.Item>
+						<Descriptions.Item>
+							¿Qué estás buscando hoy?
+						</Descriptions.Item>
+					</Descriptions>
+				</PageHeader>
+			</div>
 			<Content style={{ padding: '0 50px' }}>
-				<Breadcrumb style={{ margin: '16px 0' }}>
-					<Breadcrumb.Item>Home</Breadcrumb.Item>
-					<Breadcrumb.Item>List</Breadcrumb.Item>
-					<Breadcrumb.Item>App</Breadcrumb.Item>
-				</Breadcrumb>
 				<div className='site-layout-content'>
 					{children}
 				</div>

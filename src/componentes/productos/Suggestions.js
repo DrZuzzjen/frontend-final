@@ -104,7 +104,6 @@ export default function Suggestions(props) {
 												{item.name}
 											</Typography>
 										</Link>
-
 										<Typography
 											component='p'
 											className={classes.date}>
