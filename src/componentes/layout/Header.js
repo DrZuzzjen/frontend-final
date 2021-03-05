@@ -1,4 +1,5 @@
 import React from 'react';
+import { Card } from 'antd';
 import { withStyles } from '@material-ui/core/styles';
 import Dialog from '@material-ui/core/Dialog';
 import MuiDialogTitle from '@material-ui/core/DialogTitle';
@@ -127,23 +128,20 @@ export default function Header() {
 					Modal title
 				</DialogTitle>
 				<DialogContent dividers>
-					<Typography gutterBottom>
-						Cras mattis consectetur purus sit amet
-						fermentum. Cras justo odio, dapibus ac facilisis
-						in, egestas eget quam. Morbi leo risus, porta ac
-						consectetur ac, vestibulum at eros.
-					</Typography>
-					<Typography gutterBottom>
-						Praesent commodo cursus magna, vel scelerisque
-						nisl consectetur et. Vivamus sagittis lacus vel
-						augue laoreet rutrum faucibus dolor auctor.
-					</Typography>
-					<Typography gutterBottom>
-						Aenean lacinia bibendum nulla sed consectetur.
-						Praesent commodo cursus magna, vel scelerisque
-						nisl consectetur et. Donec sed odio dui. Donec
-						ullamcorper nulla non metus auctor fringilla.
-					</Typography>
+					<Card
+						title='¡Bienvenido a wallapop!'
+						bordered={false}
+						style={({ width: 300 }, { padding: 30 })}>
+						<p>Registrate o inicia sesión</p>
+						<p>o continua con tu email</p>
+						<p>
+							<DialogActions>
+								<Link to='/signin'>Inicia sesión </Link>
+								{`|`}
+								<Link to='/signup'>Registrate</Link>
+							</DialogActions>
+						</p>
+					</Card>
 				</DialogContent>
 				<DialogActions>
 					<Button
