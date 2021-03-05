@@ -1,16 +1,9 @@
 import '../layout/Card.css';
-import {
-	Form,
-	Input,
-	Typography,
-	Button,
-	Checkbox,
-	Card
-} from 'antd';
+import { Form, Input, Button, Checkbox, Card } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
 
 import React, { useState } from 'react';
-
+import { withStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Icon from '@material-ui/core/Icon';
 import { makeStyles } from '@material-ui/core/styles';
@@ -19,10 +12,47 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
-
+import MuiDialogTitle from '@material-ui/core/DialogTitle';
+import MuiDialogContent from '@material-ui/core/DialogContent';
+import MuiDialogActions from '@material-ui/core/DialogActions';
+import IconButton from '@material-ui/core/IconButton';
+import CloseIcon from '@material-ui/icons/Close';
+import Typography from '@material-ui/core/Typography';
+import { Redirect } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 
+const styles = (theme) => ({
+	root: {
+		margin: 0,
+		padding: theme.spacing(2)
+	},
+	closeButton: {
+		position: 'absolute',
+		right: theme.spacing(1),
+		top: theme.spacing(1),
+		color: theme.palette.grey[500]
+	}
+});
+
+const DialogTitle = withStyles(styles)((props) => {
+	const { children, classes, onClose, ...other } = props;
+	return (
+		<MuiDialogTitle
+			disableTypography
+			className={classes.root}
+			{...other}>
+			<Typography variant='h6'>{children}</Typography>
+			{
+				onClose ? <IconButton
+					aria-label='close'
+					className={classes.closeButton}
+					onClick={onClose}>
+					<CloseIcon />
+				</IconButton> :
+				null}
+		</MuiDialogTitle>
+	);
+});
 const tailLayout = {
 	wrapperCol: {
 		offset: 8,
@@ -30,34 +60,7 @@ const tailLayout = {
 	}
 };
 
-const useStyles = makeStyles((theme) => ({
-	card: {
-		maxWidth: 600,
-		margin: 'auto',
-		textAlign: 'center',
-		marginTop: theme.spacing(5),
-		paddingBottom: theme.spacing(2)
-	},
-	error: {
-		verticalAlign: 'middle'
-	},
-	title: {
-		marginTop: theme.spacing(2),
-		color: theme.palette.openTitle
-	},
-	textField: {
-		marginLeft: theme.spacing(1),
-		marginRight: theme.spacing(1),
-		width: 300
-	},
-	submit: {
-		margin: 'auto',
-		marginBottom: theme.spacing(2)
-	}
-}));
-
-export default function Signup() {
-	const classes = useStyles();
+export default function Signup({ history }) {
 	const [
 		values,
 		setValues
@@ -68,6 +71,16 @@ export default function Signup() {
 		open: false,
 		error: ''
 	});
+
+	const [
+		open,
+		setOpen
+	] = React.useState(true);
+
+	const handleClose = () => {
+		history.push('/');
+		setOpen(false);
+	};
 
 	const handleChange = (name) => (event) => {
 		setValues({ ...values, [name]: event.target.value });
@@ -95,11 +108,17 @@ export default function Signup() {
 	return (
 		<div>
 			<Dialog
-				open='true'
+				onClose={handleClose}
+				open={open}
 				disableBackdropClick={true}
 				titleStyle={
 					({ textAlign: 'center' }, { padding: 30 })
 				}>
+				<DialogTitle
+					id='customized-dialog-title'
+					onClose={handleClose}>
+					Modal title
+				</DialogTitle>
 				<Card
 					title='Regístrate en wallapop'
 					bordered={false}

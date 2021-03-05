@@ -9,17 +9,10 @@ import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
 import Typography from '@material-ui/core/Typography';
 
-import {
-	Descriptions,
-	PageHeader,
-	Layout,
-	Button
-} from 'antd';
+import { Descriptions, PageHeader, Button } from 'antd';
 import 'antd/dist/antd.css';
 import './Base.css';
 import { Link, withRouter } from 'react-router-dom';
-
-const { Content, Footer } = Layout;
 
 const isActive = (history, path) => {
 	if (history.location.pathname == path)
@@ -125,7 +118,7 @@ export default function Header() {
 				<DialogTitle
 					id='customized-dialog-title'
 					onClose={handleClose}>
-					Modal title
+					¡Bienvenido a wallapop!
 				</DialogTitle>
 				<DialogContent dividers>
 					<Card
@@ -133,6 +126,13 @@ export default function Header() {
 						bordered={false}
 						style={({ width: 300 }, { padding: 30 })}>
 						<p>Registrate o inicia sesión</p>
+
+						<Button shape='round' key='1' type='primary'>
+							Subir producto
+						</Button>
+						<Button shape='round' key='1' type='primary'>
+							Subir producto
+						</Button>
 						<p>o continua con tu email</p>
 						<p>
 							<DialogActions>
