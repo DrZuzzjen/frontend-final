@@ -13,8 +13,6 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import MuiDialogTitle from '@material-ui/core/DialogTitle';
-import MuiDialogContent from '@material-ui/core/DialogContent';
-import MuiDialogActions from '@material-ui/core/DialogActions';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
 import Typography from '@material-ui/core/Typography';
@@ -78,7 +76,6 @@ export default function Signup({ history }) {
 	] = React.useState(true);
 
 	const handleClose = () => {
-		history.push('/');
 		setOpen(false);
 	};
 
@@ -107,97 +104,82 @@ export default function Signup({ history }) {
 	};
 	return (
 		<div>
+			<Card
+				title='Regístrate en wallapop'
+				bordered={false}
+				style={({ width: 300 }, { padding: 30 })}>
+				<Form.Item
+					id='name'
+					value={values.name}
+					onChange={handleChange('name')}>
+					<Input
+						size='large'
+						placeholder='Nombre y apellidos'
+						prefix={<UserOutlined />}
+					/>
+				</Form.Item>
+
+				<Form.Item
+					id='email'
+					value={values.email}
+					onChange={handleChange('email')}>
+					<Input
+						size='large'
+						placeholder='Dirección de email'
+						prefix={<UserOutlined />}
+					/>
+				</Form.Item>
+
+				<Form.Item
+					id='password'
+					value={values.password}
+					onChange={handleChange('password')}>
+					<Input.Password
+						size='large'
+						placeholder='Contraseña'
+					/>
+				</Form.Item>
+
+				<Form.Item {...tailLayout}>
+					{values.error && (
+						<Typography component='p' color='error'>
+							<Icon color='error'>error</Icon>
+							{values.error}
+						</Typography>
+					)}
+				</Form.Item>
+
+				<Form.Item {...tailLayout}>
+					<Button
+						type='primary'
+						htmlType='submit'
+						disabled={!couldSubmit()}
+						onClick={clickSubmit}>
+						Crear una cuenta
+					</Button>
+					<Link to='/signin'>Inicia sesión </Link>
+				</Form.Item>
+			</Card>
+
 			<Dialog
-				onClose={handleClose}
-				open={open}
-				disableBackdropClick={true}
-				titleStyle={
-					({ textAlign: 'center' }, { padding: 30 })
-				}>
-				<DialogTitle
-					id='customized-dialog-title'
-					onClose={handleClose}>
-					Modal title
-				</DialogTitle>
-				<Card
-					title='Regístrate en wallapop'
-					bordered={false}
-					style={({ width: 300 }, { padding: 30 })}>
-					<p>
-						<Form.Item
-							id='name'
-							value={values.name}
-							onChange={handleChange('name')}>
-							<Input
-								size='large'
-								placeholder='Nombre y apellidos'
-								prefix={<UserOutlined />}
-							/>
-						</Form.Item>
-
-						<Form.Item
-							id='email'
-							value={values.email}
-							onChange={handleChange('email')}>
-							<Input
-								size='large'
-								placeholder='Dirección de email'
-								prefix={<UserOutlined />}
-							/>
-						</Form.Item>
-
-						<Form.Item
-							id='password'
-							value={values.password}
-							onChange={handleChange('password')}>
-							<Input.Password
-								size='large'
-								placeholder='Contraseña'
-							/>
-						</Form.Item>
-
-						<Form.Item {...tailLayout}>
-							{values.error && (
-								<Typography component='p' color='error'>
-									<Icon color='error'>error</Icon>
-									{values.error}
-								</Typography>
-							)}
-						</Form.Item>
-
-						<Form.Item {...tailLayout}>
-							<Button
-								type='primary'
-								htmlType='submit'
-								disabled={!couldSubmit()}
-								onClick={clickSubmit}>
-								Crear una cuenta
-							</Button>
-							<Link to='/signin'>Inicia sesión </Link>
-						</Form.Item>
-					</p>
-				</Card>
-
-				<Dialog
-					open={values.open}
-					disableBackdropClick={true}>
-					<DialogTitle>New Account</DialogTitle>
-					<DialogContent>
-						<DialogContentText>
-							New account successfully created.
-						</DialogContentText>
-					</DialogContent>
-					<DialogActions>
-						<Link to='/signin'>
-							<Button
-								color='primary'
-								autoFocus='autoFocus'
-								variant='contained'>
-								Sign In
-							</Button>
-						</Link>
-					</DialogActions>
-				</Dialog>
+				open={values.open}
+				disableBackdropClick={true}>
+				<DialogTitle>New Account</DialogTitle>
+				<DialogContent>
+					<DialogContentText>
+						New account successfully created.
+					</DialogContentText>
+				</DialogContent>
+				<DialogActions>
+					<Link to='/signin'>
+						<Button
+							color='primary'
+							autoFocus='autoFocus'
+							variant='contained'>
+							Sign In
+						</Button>
+					</Link>
+				</DialogActions>
 			</Dialog>
 		</div>
 	);

@@ -93,3 +93,7 @@ export default client;
 		<Menu.Item key='3'>nav 3</Menu.Item>
 	</Menu>
 </PageHeader>;
+
+{
+	open === true && <Signup />;
+}
