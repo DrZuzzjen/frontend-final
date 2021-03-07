@@ -9,13 +9,10 @@ import {
 import { useHistory } from 'react-router-dom';
 import { UserOutlined } from '@ant-design/icons';
 import auth from './../auth/auth-helper';
-import { Redirect } from 'react-router-dom';
+
 import { signin } from '../../API/api-auth.js';
 import Icon from '@material-ui/core/Icon';
 import React, { useState } from 'react';
-import Dialog from '@material-ui/core/Dialog';
-import { Modal } from 'react-responsive-modal';
-import DialogActions from '@material-ui/core/DialogActions';
 
 import { Link } from 'react-router-dom';
 const tailLayout = {
@@ -25,13 +22,8 @@ const tailLayout = {
 	}
 };
 
-const Signin = ({ data }) => {
+const Signin = ({ onLogin }) => {
 	const history = useHistory();
-
-	const [
-		open,
-		setOpen
-	] = React.useState(true);
 
 	const [
 		values,
@@ -62,15 +54,11 @@ const Signin = ({ data }) => {
 						...values,
 						error: ''
 					});
-					setOpen(false);
 				});
+				onLogin && onLogin();
 				history.push('/');
 			}
 		});
-	};
-
-	const handleClose = () => {
-		setOpen(false);
 	};
 
 	const handleChange = (name) => (event) => {
@@ -79,60 +67,58 @@ const Signin = ({ data }) => {
 
 	return (
 		<div className='site-card-border-less-wrapper'>
-			<Modal open={open} onClose={handleClose}>
-				<Card
-					title='¡Bienvenido de nuevo!'
-					bordered={false}
-					style={({ width: 300 }, { padding: 30 })}>
-					<Form>
-						<Form.Item
-							id='email'
-							value={values.email}
-							onChange={handleChange('email')}>
-							<Input
-								size='large'
-								placeholder='Dirección de email'
-								prefix={<UserOutlined />}
-							/>
-						</Form.Item>
+			<Card
+				title='¡Bienvenido de nuevo!'
+				bordered={false}
+				style={({ width: 300 }, { padding: 30 })}>
+				<Form>
+					<Form.Item
+						id='email'
+						value={values.email}
+						onChange={handleChange('email')}>
+						<Input
+							size='large'
+							placeholder='Dirección de email'
+							prefix={<UserOutlined />}
+						/>
+					</Form.Item>
 
-						<Form.Item
-							id='password'
-							value={values.password}
-							onChange={handleChange('password')}>
-							<Input.Password
-								size='large'
-								placeholder='Contraseña'
-							/>
-						</Form.Item>
+					<Form.Item
+						id='password'
+						value={values.password}
+						onChange={handleChange('password')}>
+						<Input.Password
+							size='large'
+							placeholder='Contraseña'
+						/>
+					</Form.Item>
 
-						<Form.Item {...tailLayout}>
-							{values.error && (
-								<Typography component='p' color='error'>
-									<Icon color='error'>error</Icon>
-									{values.error}
-								</Typography>
-							)}
-						</Form.Item>
+					<Form.Item {...tailLayout}>
+						{values.error && (
+							<Typography component='p' color='error'>
+								<Icon color='error'>error</Icon>
+								{values.error}
+							</Typography>
+						)}
+					</Form.Item>
 
-						<Form.Item {...tailLayout}>
-							<Button
-								type='primary'
-								htmlType='submit'
-								disabled={!couldSubmit()}
-								onClick={clickSubmit}
-								shape='round'
-								size='large'>
-								Iniciar sesión
-							</Button>
-						</Form.Item>
-					</Form>
+					<Form.Item {...tailLayout}>
+						<Button
+							type='primary'
+							htmlType='submit'
+							disabled={!couldSubmit()}
+							onClick={clickSubmit}
+							shape='round'
+							size='large'>
+							Iniciar sesión
+						</Button>
+					</Form.Item>
+				</Form>
 
-					<Link to='/signin'>Recuperar contraseña </Link>
-					{` |`}
-					<Link to='/signup'>Registrate</Link>
-				</Card>
-			</Modal>
+				<Link to='/signin'>Recuperar contraseña </Link>
+				{` |`}
+				<Link to='/signup'>Registrate</Link>
+			</Card>
 		</div>
 	);
 };

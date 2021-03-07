@@ -30,6 +30,10 @@ export default function Header() {
 		setOpen(false);
 	};
 
+	const handleLogin = () => {
+		setOpen(false);
+	};
+
 	return (
 		<div>
 			<PageHeader
@@ -61,8 +65,9 @@ export default function Header() {
 					</Descriptions.Item>
 				</Descriptions>
 			</PageHeader>
-
-			{open === true && <Signup data={open} />}
+			<Modal open={open} onClose={handleClose}>
+				<Signin onLogin={handleLogin} />
+			</Modal>
 		</div>
 	);
 }
