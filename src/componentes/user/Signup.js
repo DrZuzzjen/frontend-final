@@ -4,9 +4,9 @@ import { UserOutlined } from '@ant-design/icons';
 
 import React, { useState } from 'react';
 import { withStyles } from '@material-ui/core/styles';
-import TextField from '@material-ui/core/TextField';
+
 import Icon from '@material-ui/core/Icon';
-import { makeStyles } from '@material-ui/core/styles';
+
 import { create } from '../../API/api-user';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -16,7 +16,7 @@ import MuiDialogTitle from '@material-ui/core/DialogTitle';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
 import Typography from '@material-ui/core/Typography';
-import { Redirect } from 'react-router-dom';
+
 import { Link } from 'react-router-dom';
 
 const styles = (theme) => ({

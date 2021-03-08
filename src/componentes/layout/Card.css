@@ -2,3 +2,15 @@
 	padding: 30px;
 	background: #ececec;
 }
+
+.container {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.container-buttons {
+	display: flex;
+	flex-direction: column;
+	align-items: stretch;
+}

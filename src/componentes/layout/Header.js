@@ -1,14 +1,14 @@
 import React from 'react';
 import { Descriptions, PageHeader, Button } from 'antd';
 
-import ReactDOM from 'react-dom';
 import 'react-responsive-modal/styles.css';
 import { Modal } from 'react-responsive-modal';
-import SigninSignup from '../auth/SigninSignup';
+
 import Signin from '../auth/Signin';
 import Signup from '../user/Signup';
 import 'antd/dist/antd.css';
 import './Base.css';
+import SignBase from '../auth/SignBase';
 
 const isActive = (history, path) => {
 	if (history.location.pathname == path)
@@ -17,6 +17,11 @@ const isActive = (history, path) => {
 };
 
 export default function Header() {
+	const [
+		signbase,
+		setSignbase
+	] = React.useState(false);
+
 	const [
 		signin,
 		setSignin
@@ -33,7 +38,7 @@ export default function Header() {
 	] = React.useState(false);
 
 	const handleClickOpen = () => {
-		setSignin(true);
+		setSignbase(true);
 		setOpen(true);
 	};
 
@@ -50,11 +55,13 @@ export default function Header() {
 	const handleSignup = () => {
 		setSignup(true);
 		setSignin(false);
+		setSignbase(false);
 	};
 
 	const handleSign = () => {
 		setSignup(false);
 		setSignin(true);
+		setSignbase(false);
 	};
 
 	return (
@@ -89,6 +96,12 @@ export default function Header() {
 				</Descriptions>
 			</PageHeader>
 			<Modal open={open} onClose={handleClose}>
+				{signbase && (
+					<SignBase
+						onbasein={handleSign}
+						onbaseup={handleSignup}
+					/>
+				)}
 				{signin && (
 					<Signin
 						onSignin={handleSignin}
