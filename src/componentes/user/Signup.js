@@ -58,7 +58,7 @@ const tailLayout = {
 	}
 };
 
-export default function Signup({ history }) {
+export default function Signup({ onSign }) {
 	const [
 		values,
 		setValues
@@ -69,15 +69,6 @@ export default function Signup({ history }) {
 		open: false,
 		error: ''
 	});
-
-	const [
-		open,
-		setOpen
-	] = React.useState(true);
-
-	const handleClose = () => {
-		setOpen(false);
-	};
 
 	const handleChange = (name) => (event) => {
 		setValues({ ...values, [name]: event.target.value });
@@ -157,7 +148,9 @@ export default function Signup({ history }) {
 						onClick={clickSubmit}>
 						Crear una cuenta
 					</Button>
-					<Link to='/signin'>Inicia sesión </Link>
+					<Button as={Link} onClick={() => onSign()}>
+						Sign In
+					</Button>
 				</Form.Item>
 			</Card>
 
@@ -171,14 +164,13 @@ export default function Signup({ history }) {
 					</DialogContentText>
 				</DialogContent>
 				<DialogActions>
-					<Link to='/signin'>
-						<Button
-							color='primary'
-							autoFocus='autoFocus'
-							variant='contained'>
-							Sign In
-						</Button>
-					</Link>
+					<Button
+						color='primary'
+						autoFocus='autoFocus'
+						variant='contained'
+						onClick={() => onSign()}>
+						Sign In
+					</Button>
 				</DialogActions>
 			</Dialog>
 		</div>

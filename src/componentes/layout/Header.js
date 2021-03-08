@@ -18,20 +18,43 @@ const isActive = (history, path) => {
 
 export default function Header() {
 	const [
+		signin,
+		setSignin
+	] = React.useState(false);
+
+	const [
+		signup,
+		setSignup
+	] = React.useState(false);
+
+	const [
 		open,
 		setOpen
 	] = React.useState(false);
 
 	const handleClickOpen = () => {
+		setSignin(true);
 		setOpen(true);
 	};
 
 	const handleClose = () => {
 		setOpen(false);
+		setSignup(false);
+		setSignin(false);
 	};
 
-	const handleLogin = () => {
+	const handleSignin = () => {
 		setOpen(false);
+	};
+
+	const handleSignup = () => {
+		setSignup(true);
+		setSignin(false);
+	};
+
+	const handleSign = () => {
+		setSignup(false);
+		setSignin(true);
 	};
 
 	return (
@@ -66,7 +89,13 @@ export default function Header() {
 				</Descriptions>
 			</PageHeader>
 			<Modal open={open} onClose={handleClose}>
-				<Signin onLogin={handleLogin} />
+				{signin && (
+					<Signin
+						onSignin={handleSignin}
+						onsingup={handleSignup}
+					/>
+				)}
+				{signup && <Signup onSign={handleSign} />}
 			</Modal>
 		</div>
 	);
