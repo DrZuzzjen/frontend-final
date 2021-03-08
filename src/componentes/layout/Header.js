@@ -1,22 +1,30 @@
 import React from 'react';
-import { Descriptions, PageHeader, Button } from 'antd';
+
+import { Button, Col, Divider, Input, Row } from 'antd';
+import {
+	MessageOutlined,
+	HighlightOutlined,
+	PlusOutlined,
+	QuestionCircleOutlined
+} from '@ant-design/icons';
 
 import 'react-responsive-modal/styles.css';
 import { Modal } from 'react-responsive-modal';
-
+import { AudioOutlined } from '@ant-design/icons';
+import { useHistory } from 'react-router-dom';
 import Signin from '../auth/Signin';
 import Signup from '../user/Signup';
 import 'antd/dist/antd.css';
 import './Base.css';
 import SignBase from '../auth/SignBase';
-
+const { Search } = Input;
 const isActive = (history, path) => {
 	if (history.location.pathname == path)
 		return { color: '#000000' };
 	else return { color: '#000000' };
 };
 
-export default function Header() {
+export default function Header({ handleSearch }) {
 	const [
 		signbase,
 		setSignbase
@@ -66,35 +74,52 @@ export default function Header() {
 
 	return (
 		<div>
-			<PageHeader
-				ghost={false}
-				onBack={() => window.history.back()}
-				title='Title'
-				subTitle='This is a subtitle'
-				extra={[
-					<Button shape='round' key='3'>
-						Mensajes
-					</Button>,
+			<Row>
+				<Col>
 					<Button
-						shape='round'
+						icon={<HighlightOutlined />}
+						shape='circle'
+						style={{ float: 'right' }}
+					/>
+				</Col>
+				<br />
+				<Col>
+					<Search
+						placeholder='Search'
+						onSearch={handleSearch}
+						allowClear
+						style={{ float: 'left', width: 350 }}
+					/>
+				</Col>
+				<Col flex='auto'>
+					<Button
+						icon={<MessageOutlined />}
 						key='2'
+						shape='round'
+						style={{ float: 'right' }}>
+						Mensajes
+					</Button>
+				</Col>
+				<Col flex='auto'>
+					<Button
+						style={{ float: 'right' }}
+						shape='round'
 						onClick={handleClickOpen}>
 						Regístrate o inicia sesión
-					</Button>,
-					<Button shape='round' key='1' type='primary'>
-						Subir producto
 					</Button>
-				]}>
-				<Descriptions size='small' column={1}>
-					<Descriptions.Item>
-						wallaclone, la plataforma líder de compraventa
-						de productos de Segunda mano
-					</Descriptions.Item>
-					<Descriptions.Item>
-						¿Qué estás buscando hoy?
-					</Descriptions.Item>
-				</Descriptions>
-			</PageHeader>
+				</Col>
+				<Col flex='auto'>
+					<Button
+						icon={<PlusOutlined />}
+						type='primary'
+						shape='round'
+						style={{ float: 'right' }}>
+						Subir Producto
+					</Button>
+				</Col>
+			</Row>
+			<Divider />
+
 			<Modal open={open} onClose={handleClose}>
 				{signbase && (
 					<SignBase

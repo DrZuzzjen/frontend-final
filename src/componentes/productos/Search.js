@@ -8,6 +8,7 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import SearchIcon from '@material-ui/icons/Search';
 import { list } from '../../API/api-product';
+import Products from '../productos/Products';
 
 const useStyles = makeStyles((theme) => ({
 	card: {
@@ -123,6 +124,10 @@ export default function Search(props) {
 					<SearchIcon />
 				</Button>
 				<Divider />
+				<Products
+					products={values.results}
+					searched={values.searched}
+				/>
 			</Card>
 		</div>
 	);
