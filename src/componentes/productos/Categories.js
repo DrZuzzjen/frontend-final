@@ -8,6 +8,7 @@ import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
 import Icon from '@material-ui/core/Icon';
 import { list } from '../../API/api-product';
+import Products from './Products';
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -131,6 +132,7 @@ export default function Categories(props) {
 					</GridList>
 				</div>
 				<Divider />
+				<Products products={products} searched={false} />
 			</Card>
 		</div>
 	);

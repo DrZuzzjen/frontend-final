@@ -6,9 +6,10 @@ import '../layout/Card.css';
 export default function SignBase({ onbasein, onbaseup }) {
 	return (
 		<div className='container'>
-			<p />
+			<br />
 			<h1>¡Bienvenido a wallapop!</h1>
 			<p>Registrate o inicia sesión</p>
+			<br />
 			<div className='container-buttons'>
 				<Button
 					shape='round'
@@ -29,6 +30,7 @@ export default function SignBase({ onbasein, onbaseup }) {
 					Entrar con Google
 				</Button>
 			</div>
+			<br />
 			<p>o continua con tu email</p>
 			<p>
 				<Button as={Link} onClick={() => onbasein()}>
