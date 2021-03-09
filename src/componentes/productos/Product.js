@@ -134,7 +134,6 @@ export default function Product({ match }) {
 			<Grid container spacing={10}>
 				<Grid item xs={7} sm={7}>
 					<Card className={classes.card} elevation={10}>
-						product/Products
 						<CardHeader
 							title={product.name}
 							subheader={

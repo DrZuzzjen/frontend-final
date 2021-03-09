@@ -2,12 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Suggestions from '../productos/Suggestions';
+import Categories from '../productos/Categories';
 import {
 	listLatest,
 	listCategories
 } from '../../API/api-product';
-import Products from '../productos/Products';
-import Categories from '../productos/Categories';
 
 const useStyles = makeStyles((theme) => ({
 	root: {

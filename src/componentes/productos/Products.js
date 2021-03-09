@@ -56,7 +56,6 @@ export default function Products(props) {
 	const classes = useStyles();
 	return (
 		<div className={classes.root}>
-			product/Products
 			{
 				props.products.length > 0 ? <div
 					className={classes.container}>

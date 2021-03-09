@@ -1,32 +1,24 @@
 import React, { useState } from 'react';
-
-import { Button, Col, Divider, Row, Input } from 'antd';
+import { Input } from 'antd';
+import { Button, Col, Divider, Row } from 'antd';
+import { Modal } from 'react-responsive-modal';
+import Signin from '../auth/Signin';
+import Signup from '../user/Signup';
+import SignBase from '../auth/SignBase';
+import { list } from '../../API/api-product';
+import Products from '../productos/Products';
+import 'antd/dist/antd.css';
+import './Base.css';
+import 'react-responsive-modal/styles.css';
 import {
 	MessageOutlined,
 	HighlightOutlined,
 	PlusOutlined
 } from '@ant-design/icons';
 
-import 'react-responsive-modal/styles.css';
-import { Modal } from 'react-responsive-modal';
-import Signin from '../auth/Signin';
-import Signup from '../user/Signup';
-import 'antd/dist/antd.css';
-import './Base.css';
-import SignBase from '../auth/SignBase';
-import { list } from '../../API/api-product';
-import Products from '../productos/Products';
-import Home from '../layout/Home';
-import Search from '../productos/Search';
-
-import SearchIcon from '@material-ui/icons/Search';
-const isActive = (history, path) => {
-	if (history.location.pathname == path)
-		return { color: '#000000' };
-	else return { color: '#000000' };
-};
-
 export default function Header({ handleSearch }) {
+	const { Search } = Input;
+
 	const [
 		values,
 		setValues
@@ -36,7 +28,9 @@ export default function Header({ handleSearch }) {
 		results: [],
 		searched: false
 	});
+
 	const handleChange = (name) => (event) => {
+		console.log(event.target.value);
 		setValues({
 			...values,
 			[name]: event.target.value
@@ -62,7 +56,7 @@ export default function Header({ handleSearch }) {
 		}
 	};
 	const enterKey = (event) => {
-		if (event.keyCode == 13) {
+		if (event.keyCode === 13) {
 			event.preventDefault();
 			search();
 		}
@@ -117,30 +111,27 @@ export default function Header({ handleSearch }) {
 	return (
 		<div>
 			<Row>
-				<Col>
+				<Col flex='auto'>
 					<Button
 						icon={<HighlightOutlined />}
 						shape='circle'
 						style={{ float: 'right' }}
 					/>
 				</Col>
-
-				<br />
-				<Col>
-					<Input
-						id='search'
-						type='search'
+				<Col flex='auto'>
+					{' '}
+					<br />
+				</Col>
+				<Col flex='auto'>
+					<Search
 						onKeyDown={enterKey}
 						onChange={handleChange('search')}
-						margin='normal'
+						placeholder='input search text'
+						onSearch={search}
+						enterButton
 					/>
-					<Button
-						variant='contained'
-						color={'primary'}
-						onClick={search}>
-						<SearchIcon />
-					</Button>
 				</Col>
+
 				<Col flex='auto'>
 					<Button
 						icon={<MessageOutlined />}

@@ -1,16 +1,10 @@
 import { Layout } from 'antd';
-import 'antd/dist/antd.css';
-import './Base.css';
 import { withRouter } from 'react-router-dom';
 import Header from '../layout/Header';
+import 'antd/dist/antd.css';
+import './Base.css';
 
 const { Content, Footer } = Layout;
-
-const isActive = (history, path) => {
-	if (history.location.pathname == path)
-		return { color: '#000000' };
-	else return { color: '#000000' };
-};
 
 const Base = withRouter(
 	({ children, title, history, ...props }) => (

@@ -100,7 +100,7 @@ export default function CartItems(props) {
 
 	const handleChange = (index) => (event) => {
 		let updatedCartItems = cartItems;
-		if (event.target.value == 0) {
+		if (event.target.value === 0) {
 			updatedCartItems[index].quantity = 1;
 		}
 		else {
@@ -120,7 +120,7 @@ export default function CartItems(props) {
 
 	const removeItem = (index) => (event) => {
 		let updatedCartItems = cart.removeItem(index);
-		if (updatedCartItems.length == 0) {
+		if (updatedCartItems.length === 0) {
 			props.setCheckout(false);
 		}
 		setCartItems(updatedCartItems);
