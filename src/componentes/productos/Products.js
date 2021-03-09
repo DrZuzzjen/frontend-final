@@ -6,14 +6,14 @@ import GridList from '@material-ui/core/GridList';
 
 import GridListTileBar from '@material-ui/core/GridListTileBar';
 import { Link } from 'react-router-dom';
-import AddToCart from './../cart/AddToCart';
+import AddToCart from '../carro/AddToCart';
 
 export default function Products(props) {
 	return (
 		<div>
 			{
 				props.products.length > 0 ? <div>
-					<GridList cellHeight={200} cols={5}>
+					<GridList cellHeight={200} cols={2}>
 						{props.products.map((product, i) => (
 							<Card key={i}>
 								<Link to={'/product/' + product._id}>

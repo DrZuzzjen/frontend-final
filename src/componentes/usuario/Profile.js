@@ -9,7 +9,7 @@ import {
 } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
 import ListItemText from '@material-ui/core/ListItemText';
-import auth from './../auth/auth-helper';
+import auth from '../auth/auth-helper';
 import { read } from '../../API/api-user';
 import { Redirect, Link } from 'react-router-dom';
 
