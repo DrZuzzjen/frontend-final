@@ -6,7 +6,7 @@ import {
 	listLatest,
 	listCategories
 } from '../../API/api-product';
-import Search from '../productos/Search';
+import Products from '../productos/Products';
 import Categories from '../productos/Categories';
 
 const useStyles = makeStyles((theme) => ({
@@ -16,8 +16,13 @@ const useStyles = makeStyles((theme) => ({
 	}
 }));
 
-export default function Home() {
+export default function Home(props) {
 	const classes = useStyles();
+
+	const [
+		products,
+		setProducts
+	] = useState([]);
 	const [
 		suggestionTitle,
 		setSuggestionTitle
@@ -67,7 +72,6 @@ export default function Home() {
 		<div className={classes.root}>
 			<Grid container spacing={2}>
 				<Grid item xs={8} sm={8}>
-					<Search categories={categories} />
 					<Categories categories={categories} />
 				</Grid>
 				<Grid item xs={4} sm={4}>

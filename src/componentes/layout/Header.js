@@ -1,23 +1,25 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-import { Button, Col, Divider, Input, Row } from 'antd';
+import { Button, Col, Divider, Row, Input } from 'antd';
 import {
 	MessageOutlined,
 	HighlightOutlined,
-	PlusOutlined,
-	QuestionCircleOutlined
+	PlusOutlined
 } from '@ant-design/icons';
 
 import 'react-responsive-modal/styles.css';
 import { Modal } from 'react-responsive-modal';
-import { AudioOutlined } from '@ant-design/icons';
-import { useHistory } from 'react-router-dom';
 import Signin from '../auth/Signin';
 import Signup from '../user/Signup';
 import 'antd/dist/antd.css';
 import './Base.css';
 import SignBase from '../auth/SignBase';
-const { Search } = Input;
+import { list } from '../../API/api-product';
+import Products from '../productos/Products';
+import Home from '../layout/Home';
+import Search from '../productos/Search';
+
+import SearchIcon from '@material-ui/icons/Search';
 const isActive = (history, path) => {
 	if (history.location.pathname == path)
 		return { color: '#000000' };
@@ -25,6 +27,46 @@ const isActive = (history, path) => {
 };
 
 export default function Header({ handleSearch }) {
+	const [
+		values,
+		setValues
+	] = useState({
+		category: '',
+		search: '',
+		results: [],
+		searched: false
+	});
+	const handleChange = (name) => (event) => {
+		setValues({
+			...values,
+			[name]: event.target.value
+		});
+	};
+	const search = () => {
+		if (values.search) {
+			list({
+				search: values.search || undefined,
+				category: values.category
+			}).then((data) => {
+				if (data.error) {
+					console.log(data.error);
+				}
+				else {
+					setValues({
+						...values,
+						results: data,
+						searched: true
+					});
+				}
+			});
+		}
+	};
+	const enterKey = (event) => {
+		if (event.keyCode == 13) {
+			event.preventDefault();
+			search();
+		}
+	};
 	const [
 		signbase,
 		setSignbase
@@ -82,14 +124,22 @@ export default function Header({ handleSearch }) {
 						style={{ float: 'right' }}
 					/>
 				</Col>
+
 				<br />
 				<Col>
-					<Search
-						placeholder='Search'
-						onSearch={handleSearch}
-						allowClear
-						style={{ float: 'left', width: 350 }}
+					<Input
+						id='search'
+						type='search'
+						onKeyDown={enterKey}
+						onChange={handleChange('search')}
+						margin='normal'
 					/>
+					<Button
+						variant='contained'
+						color={'primary'}
+						onClick={search}>
+						<SearchIcon />
+					</Button>
 				</Col>
 				<Col flex='auto'>
 					<Button
@@ -119,6 +169,13 @@ export default function Header({ handleSearch }) {
 				</Col>
 			</Row>
 			<Divider />
+			<Row>
+				{' '}
+				<Products
+					products={values.results}
+					searched={values.searched}
+				/>
+			</Row>
 
 			<Modal open={open} onClose={handleClose}>
 				{signbase && (

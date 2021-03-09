@@ -5,10 +5,11 @@ import Card from '@material-ui/core/Card';
 import Divider from '@material-ui/core/Divider';
 import MenuItem from '@material-ui/core/MenuItem';
 import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
+import { Button } from 'antd';
 import SearchIcon from '@material-ui/icons/Search';
 import { list } from '../../API/api-product';
 import Products from '../productos/Products';
+import Home from '../layout/Home';
 
 const useStyles = makeStyles((theme) => ({
 	card: {
@@ -88,46 +89,28 @@ export default function Search(props) {
 			<Card className={classes.card} elevation={10}>
 				product/Search <br />
 				<TextField
-					id='select-category'
-					select
-					label='Categoria'
-					className={classes.textField}
-					value={values.category}
-					onChange={handleChange('category')}
-					SelectProps={{
-						MenuProps: {
-							className: classes.menu
-						}
-					}}
-					margin='normal'>
-					<MenuItem value='All'>Todos</MenuItem>
-					{props.categories.map((option) => (
-						<MenuItem key={option} value={option}>
-							{option}
-						</MenuItem>
-					))}
-				</TextField>
-				<TextField
 					id='search'
 					label='Busca producto'
 					type='search'
 					onKeyDown={enterKey}
 					onChange={handleChange('search')}
-					className={classes.searchField}
 					margin='normal'
 				/>
 				<Button
 					variant='contained'
 					color={'primary'}
-					className={classes.searchButton}
 					onClick={search}>
 					<SearchIcon />
 				</Button>
 				<Divider />
-				<Products
+				<Home
 					products={values.results}
-					searched={values.searched}
-				/>
+					searched={values.searched}>
+					<Products
+						products={values.results}
+						searched={values.searched}
+					/>
+				</Home>
 			</Card>
 		</div>
 	);
