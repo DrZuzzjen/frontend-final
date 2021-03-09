@@ -1,12 +1,19 @@
 import React, { useState } from 'react';
-import { Input } from 'antd';
-import { Button, Col, Divider, Row } from 'antd';
+import {
+	Button,
+	Col,
+	Divider,
+	Row,
+	Input,
+	Space
+} from 'antd';
 import { Modal } from 'react-responsive-modal';
 import Signin from '../auth/Signin';
 import Signup from '../user/Signup';
 import SignBase from '../auth/SignBase';
 import { list } from '../../API/api-product';
 import Products from '../productos/Products';
+import auth from '../auth/auth-helper';
 import 'antd/dist/antd.css';
 import './Base.css';
 import 'react-responsive-modal/styles.css';
@@ -15,8 +22,10 @@ import {
 	HighlightOutlined,
 	PlusOutlined
 } from '@ant-design/icons';
+import { useHistory } from 'react-router-dom';
 
-export default function Header({ handleSearch }) {
+export default function Header() {
+	const history = useHistory();
 	const { Search } = Input;
 
 	const [
@@ -94,6 +103,8 @@ export default function Header({ handleSearch }) {
 
 	const handleSignin = () => {
 		setOpen(false);
+		setSignup(false);
+		setSignin(false);
 	};
 
 	const handleSignup = () => {
@@ -111,53 +122,67 @@ export default function Header({ handleSearch }) {
 	return (
 		<div>
 			<Row>
-				<Col flex='auto'>
-					<Button
-						icon={<HighlightOutlined />}
-						shape='circle'
-						style={{ float: 'right' }}
-					/>
-				</Col>
-				<Col flex='auto'>
-					{' '}
-					<br />
-				</Col>
-				<Col flex='auto'>
-					<Search
-						onKeyDown={enterKey}
-						onChange={handleChange('search')}
-						placeholder='input search text'
-						onSearch={search}
-						enterButton
-					/>
-				</Col>
+				<Space>
+					<Col flex='auto'>
+						<Button
+							icon={<HighlightOutlined />}
+							shape='circle'
+							style={{ float: 'right' }}
+						/>
+					</Col>
+					<Col flex='auto'>
+						{' '}
+						<br />
+					</Col>
+					<Col flex='auto'>
+						<Search
+							onKeyDown={enterKey}
+							onChange={handleChange('search')}
+							placeholder='input search text'
+							onSearch={search}
+							enterButton
+						/>
+					</Col>
 
-				<Col flex='auto'>
-					<Button
-						icon={<MessageOutlined />}
-						key='2'
-						shape='round'
-						style={{ float: 'right' }}>
-						Mensajes
-					</Button>
-				</Col>
-				<Col flex='auto'>
-					<Button
-						style={{ float: 'right' }}
-						shape='round'
-						onClick={handleClickOpen}>
-						Regístrate o inicia sesión
-					</Button>
-				</Col>
-				<Col flex='auto'>
-					<Button
-						icon={<PlusOutlined />}
-						type='primary'
-						shape='round'
-						style={{ float: 'right' }}>
-						Subir Producto
-					</Button>
-				</Col>
+					<Col flex='auto'>
+						<Button
+							icon={<MessageOutlined />}
+							key='2'
+							shape='round'
+							style={{ float: 'right' }}>
+							Mensajes
+						</Button>
+					</Col>
+					{
+						!auth.isAuthenticated() ? <Col flex='auto'>
+							<Button
+								style={{ float: 'right' }}
+								shape='round'
+								onClick={handleClickOpen}>
+								Regístrate o inicia sesión
+							</Button>
+						</Col> :
+						<Col>
+							<Button
+								color='inherit'
+								onClick={() => {
+									handleSignin();
+									auth.clearJWT(() => history.push('/'));
+								}}>
+								Salir
+							</Button>
+						</Col>}
+
+					<Col flex='auto'>
+						<Button
+							icon={<PlusOutlined />}
+							type='primary'
+							shape='round'
+							style={{ float: 'right' }}>
+							Subir Producto
+						</Button>
+					</Col>
+				</Space>
 			</Row>
 			<Divider />
 			<Row>

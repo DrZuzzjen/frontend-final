@@ -49,14 +49,15 @@ const Signin = ({ onSignin, onsingup }) => {
 				setValues({ ...values, error: data.error });
 			}
 			else {
+				onSignin && onSignin();
 				auth.authenticate(data, () => {
 					setValues({
 						...values,
 						error: ''
 					});
+
+					history.push('/user/' + data.user._id);
 				});
-				onSignin && onSignin();
-				history.push('/');
 			}
 		});
 	};
