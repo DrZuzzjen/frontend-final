@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Card } from 'antd';
-import CardHeader from '@material-ui/core/CardHeader';
-import CardMedia from '@material-ui/core/CardMedia';
-import Typography from '@material-ui/core/Typography';
+import { Card, Typography, Button } from 'antd';
+
 import Icon from '@material-ui/core/Icon';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
@@ -134,8 +132,7 @@ export default function Product({ match }) {
 			<Grid container spacing={10}>
 				<Grid item xs={7} sm={7}>
 					<Card className={classes.card} elevation={10}>
-						<CardHeader
-							title={product.name}
+						<Card
 							subheader={
 
 									product.quantity > 0 ? 'Con stock' :
@@ -151,30 +148,17 @@ export default function Product({ match }) {
 							}
 						/>
 						<div className={classes.flex}>
-							<CardMedia
+							<Card
 								className={classes.media}
 								image={imageUrl}
 								title={product.name}
 							/>
-							<Typography
-								component='p'
-								variant='subtitle1'
-								className={classes.subheading}>
+							<Typography component='p' variant='subtitle1'>
 								{product.description}
 								<br />
 								<span className={classes.price}>
 									{product.price} €
 								</span>
-								<Link
-									to={'/shops/' + product.shop._id}
-									className={classes.link}>
-									<span>
-										<Icon className={classes.icon}>
-											shopping_basket
-										</Icon>{' '}
-										{product.shop.name}
-									</span>
-								</Link>
 							</Typography>
 						</div>
 					</Card>
