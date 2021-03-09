@@ -22,7 +22,7 @@ const tailLayout = {
 	}
 };
 
-const Signin = (props, { onSignin }) => {
+const Signin = ({ onSignin, onsingup }) => {
 	const history = useHistory();
 
 	const [
@@ -49,13 +49,13 @@ const Signin = (props, { onSignin }) => {
 				setValues({ ...values, error: data.error });
 			}
 			else {
+				onSignin && onSignin();
 				auth.authenticate(data, () => {
-					console.log(data);
 					setValues({
 						...values,
 						error: ''
 					});
-					onSignin && onSignin();
+
 					history.push('/user/' + data.user._id);
 				});
 			}
@@ -116,9 +116,11 @@ const Signin = (props, { onSignin }) => {
 					</Form.Item>
 				</Form>
 
-				<Link to='/signin'>Recuperar contraseña </Link>
+				<Button as={Link}>Recuperar contraseña </Button>
 				{` |`}
-				<Link to='/signup'>Registrate</Link>
+				<Button as={Link} onClick={() => onsingup()}>
+					Registrate
+				</Button>
 			</Card>
 		</div>
 	);

@@ -13,6 +13,7 @@ import Signup from '../user/Signup';
 import SignBase from '../auth/SignBase';
 import { list } from '../../API/api-product';
 import Products from '../productos/Products';
+import auth from '../auth/auth-helper';
 import 'antd/dist/antd.css';
 import './Base.css';
 import 'react-responsive-modal/styles.css';
@@ -21,8 +22,10 @@ import {
 	HighlightOutlined,
 	PlusOutlined
 } from '@ant-design/icons';
+import { useHistory } from 'react-router-dom';
 
-export default function Header({ handleSearch }) {
+export default function Header() {
+	const history = useHistory();
 	const { Search } = Input;
 
 	const [
@@ -100,6 +103,8 @@ export default function Header({ handleSearch }) {
 
 	const handleSignin = () => {
 		setOpen(false);
+		setSignup(false);
+		setSignin(false);
 	};
 
 	const handleSignup = () => {
@@ -148,14 +153,26 @@ export default function Header({ handleSearch }) {
 							Mensajes
 						</Button>
 					</Col>
-					<Col flex='auto'>
-						<Button
-							style={{ float: 'right' }}
-							shape='round'
-							onClick={handleClickOpen}>
-							Regístrate o inicia sesión
-						</Button>
-					</Col>
+					{
+						!auth.isAuthenticated() ? <Col flex='auto'>
+							<Button
+								style={{ float: 'right' }}
+								shape='round'
+								onClick={handleClickOpen}>
+								Regístrate o inicia sesión
+							</Button>
+						</Col> :
+						<Col>
+							<Button
+								color='inherit'
+								onClick={() => {
+									handleSignin();
+									auth.clearJWT(() => history.push('/'));
+								}}>
+								Salir
+							</Button>
+						</Col>}
+
 					<Col flex='auto'>
 						<Button
 							icon={<PlusOutlined />}
