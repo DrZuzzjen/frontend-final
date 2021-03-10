@@ -90,6 +90,12 @@ export default function Header() {
 		setOpen
 	] = React.useState(false);
 
+	const handleNuevoProducto = () => {
+
+			!auth.isAuthenticated() ? handleClickOpen() :
+			history.push('/product');
+	};
+
 	const handleClickOpen = () => {
 		setSignbase(true);
 		setOpen(true);
@@ -178,6 +184,7 @@ export default function Header() {
 							icon={<PlusOutlined />}
 							type='primary'
 							shape='round'
+							onClick={handleNuevoProducto}
 							style={{ float: 'right' }}>
 							Subir Producto
 						</Button>

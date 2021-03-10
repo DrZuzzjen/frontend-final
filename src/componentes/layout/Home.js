@@ -8,6 +8,8 @@ import {
 	listCategories
 } from '../../API/api-product';
 
+import NuevoProducto from '../productos/NuevoProducto';
+
 const useStyles = makeStyles((theme) => ({
 	root: {
 		flexGrow: 1,
@@ -69,6 +71,7 @@ export default function Home(props) {
 
 	return (
 		<div className={classes.root}>
+			<NuevoProducto />
 			<Grid container spacing={2}>
 				<Grid item xs={8} sm={8} />
 				<Grid item xs={4} sm={4} />

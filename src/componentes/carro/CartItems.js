@@ -101,10 +101,10 @@ export default function CartItems(props) {
 	const handleChange = (index) => (event) => {
 		let updatedCartItems = cartItems;
 		if (event.target.value === 0) {
-			updatedCartItems[index].quantity = 1;
+			updatedCartItems[index] = 1;
 		}
 		else {
-			updatedCartItems[index].quantity = event.target.value;
+			updatedCartItems[index] = event.target.value;
 		}
 		setCartItems([
 			...updatedCartItems
@@ -114,7 +114,7 @@ export default function CartItems(props) {
 
 	const getTotal = () => {
 		return cartItems.reduce((a, b) => {
-			return a + b.quantity * b.product.price;
+			return a + b.product.price;
 		}, 0);
 	};
 
@@ -173,27 +173,11 @@ export default function CartItems(props) {
 													{item.product.price} €
 												</Typography>
 												<span className={classes.itemTotal}>
-													{item.product.price *
-														item.quantity}{' '}
-													€
+													{item.product.price} €
 												</span>
 											</div>
 										</CardContent>
 										<div className={classes.subheading}>
-											Cantidad:{' '}
-											<TextField
-												value={item.quantity}
-												onChange={handleChange(i)}
-												type='number'
-												inputProps={{
-													min: 1
-												}}
-												className={classes.textField}
-												InputLabelProps={{
-													shrink: true
-												}}
-												margin='normal'
-											/>
 											<Button
 												className={classes.removeButton}
 												color='primary'
