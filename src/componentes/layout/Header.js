@@ -9,7 +9,7 @@ import {
 } from 'antd';
 import { Modal } from 'react-responsive-modal';
 import Signin from '../auth/Signin';
-import Signup from '../user/Signup';
+import Signup from '../usuario/Signup';
 import SignBase from '../auth/SignBase';
 import { list } from '../../API/api-product';
 import Products from '../productos/Products';
