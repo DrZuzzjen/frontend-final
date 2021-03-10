@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Card, Typography, Button } from 'antd';
+import { Card, Typography } from 'antd';
 
 import GridList from '@material-ui/core/GridList';
 
