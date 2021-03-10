@@ -1,11 +1,11 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 import Home from '../layout/Home';
-import Cart from '../../componentes/cart/Cart';
+import Cart from '../../componentes/carro/Cart';
 import Base from '../layout/Base.js';
-import Users from '../user/Users';
+import Users from '../usuario/Users';
 import Product from '../productos/Product';
-import Profile from '../user/Profile';
+import Profile from '../usuario/Profile';
 
 const MainRouter = () => {
 	return (

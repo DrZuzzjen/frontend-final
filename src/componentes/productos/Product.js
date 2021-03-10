@@ -6,7 +6,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { read, listRelated } from '../../API/api-product';
 
 import Suggestions from './Suggestions';
-import AddToCart from '../cart/AddToCart';
+import AddToCart from '../carro/AddToCart';
 
 const useStyles = makeStyles((theme) => ({
 	root: {
