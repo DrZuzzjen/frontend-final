@@ -17,10 +17,6 @@ import {
 	Card,
 	Space
 } from 'antd';
-import {
-	DownOutlined,
-	UserOutlined
-} from '@ant-design/icons';
 
 export default function NuevoProducto({ match }) {
 	const [

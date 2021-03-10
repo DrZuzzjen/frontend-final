@@ -1,14 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
-import Suggestions from '../productos/Suggestions';
-import Categories from '../productos/Categories';
+
 import {
 	listLatest,
 	listCategories
 } from '../../API/api-product';
-
-import NuevoProducto from '../productos/NuevoProducto';
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -71,7 +68,6 @@ export default function Home(props) {
 
 	return (
 		<div className={classes.root}>
-			<NuevoProducto />
 			<Grid container spacing={2}>
 				<Grid item xs={8} sm={8} />
 				<Grid item xs={4} sm={4} />

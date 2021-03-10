@@ -5,7 +5,6 @@ import CartItems from './CartItems';
 import { StripeProvider } from 'react-stripe-elements';
 import config from '../../API/api-config';
 import Checkout from './Checkout';
-import { Card } from 'antd';
 
 const useStyles = makeStyles((theme) => ({
 	root: {
