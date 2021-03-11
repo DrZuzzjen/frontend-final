@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Card, Typography } from 'antd';
+import { Card, Typography, Image } from 'antd';
 
 import GridList from '@material-ui/core/GridList';
 
@@ -17,9 +17,11 @@ export default function Products(props) {
 						{props.products.map((product, i) => (
 							<Card key={i}>
 								<Link to={'/product/' + product._id}>
-									<img
+									<Image
+										width={100}
 										src={
-											'/api/product/image/' + product._id
+											'http://localhost:3000/api/product/image/' +
+											product._id
 										}
 										alt={product.name}
 									/>

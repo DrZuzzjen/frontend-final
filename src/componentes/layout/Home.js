@@ -54,6 +54,7 @@ export default function Home(props) {
 		const abortController = new AbortController();
 		const signal = abortController.signal;
 		listCategories(signal).then((data) => {
+			console.log(data);
 			if (data.error) {
 				console.log(data.error);
 			}

@@ -145,7 +145,7 @@ export default function CartItems(props) {
 									<CardMedia
 										className={classes.cover}
 										image={
-											'/api/product/image/' +
+											'http://localhost:3000/api/product/image/' +
 											item.product._id
 										}
 										title={item.product.name}

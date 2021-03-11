@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Card, Typography, Button } from 'antd';
+import { Card, Typography, Image } from 'antd';
 
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
@@ -58,6 +58,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Product({ match }) {
+	console.log(match.params);
 	const classes = useStyles();
 	const [
 		product,
@@ -124,7 +125,8 @@ export default function Product({ match }) {
 	);
 
 	const imageUrl =
-		product._id ? `/api/product/image/${product._id}?${new Date().getTime()}` :
+		product._id ? 'http://localhost:3000/api/product/image/' +
+		product._id :
 		'/api/product/defaultphoto';
 	return (
 		<div className={classes.root}>
@@ -147,6 +149,7 @@ export default function Product({ match }) {
 							}
 						/>
 						<div className={classes.flex}>
+							<Image width={200} src={imageUrl} />
 							<Card
 								className={classes.media}
 								image={imageUrl}

@@ -90,7 +90,10 @@ export default function Suggestions(props) {
 							<Card className={classes.card}>
 								<CardMedia
 									className={classes.cover}
-									image={'/api/product/image/' + item._id}
+									image={
+										'http://localhost:3000/api/product/image/' +
+										item._id
+									}
 									title={item.name}
 								/>
 								<div className={classes.details}>
