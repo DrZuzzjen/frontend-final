@@ -6,11 +6,11 @@ import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import { Link } from 'react-router-dom';
 import ViewIcon from '@material-ui/icons/Visibility';
-import Icon from '@material-ui/core/Icon';
 import Divider from '@material-ui/core/Divider';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
+import { API_ROOT } from '../../API/api-config';
 
 const useStyles = makeStyles((theme) => ({
 	root: theme.mixins.gutters({
@@ -80,7 +80,6 @@ export default function Suggestions(props) {
 	return (
 		<div>
 			<Paper className={classes.root} elevation={10}>
-				product/Suggestions
 				<Typography type='title' className={classes.title}>
 					{/* {props.title} */} Ultimos Productos
 				</Typography>
@@ -90,10 +89,7 @@ export default function Suggestions(props) {
 							<Card className={classes.card}>
 								<CardMedia
 									className={classes.cover}
-									image={
-										'http://localhost:3000/api/product/image/' +
-										item._id
-									}
+									image={`${API_ROOT}/api/product/image/${item._id}`}
 									title={item.name}
 								/>
 								<div className={classes.details}>

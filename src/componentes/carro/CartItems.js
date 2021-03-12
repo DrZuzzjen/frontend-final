@@ -10,6 +10,7 @@ import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import cart from './cart-helper.js';
 import { Link } from 'react-router-dom';
+import { API_ROOT } from '../../API/api-config';
 
 const useStyles = makeStyles((theme) => ({
 	card: {
@@ -132,7 +133,6 @@ export default function CartItems(props) {
 	return (
 		<Card className={classes.card} elevation={24}>
 			{' '}
-			cart/CarItems
 			<Typography type='title' className={classes.title}>
 				Carrito de compras
 			</Typography>
@@ -144,10 +144,8 @@ export default function CartItems(props) {
 								<Card className={classes.cart}>
 									<CardMedia
 										className={classes.cover}
-										image={
-											'http://localhost:3000/api/product/image/' +
-											item.product._id
-										}
+										image={`${API_ROOT}/api/product/image/${item
+											.product._id}`}
 										title={item.product.name}
 									/>
 									<div className={classes.details}>
