@@ -4,7 +4,7 @@ import { Card, Typography, Image } from 'antd';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
 import { read, listRelated } from '../../API/api-product';
-
+import { API_ROOT } from '../../API/api-config';
 import Suggestions from './Suggestions';
 import AddToCart from '../carro/AddToCart';
 
@@ -125,9 +125,8 @@ export default function Product({ match }) {
 	);
 
 	const imageUrl =
-		product._id ? 'http://localhost:3000/api/product/image/' +
-		product._id :
-		'/api/product/defaultphoto';
+		product._id ? `${API_ROOT}/api/product/image/${product._id}` :
+		`${API_ROOT}/api/product/defaultphoto`;
 	return (
 		<div className={classes.root}>
 			<Grid container spacing={10}>

@@ -6,11 +6,20 @@ import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import FileUpload from '@material-ui/icons/AddPhotoAlternate';
 import auth from '../auth/auth-helper';
-import Typography from '@material-ui/core/Typography';
+
 import Icon from '@material-ui/core/Icon';
 import { makeStyles } from '@material-ui/core/styles';
 import { create } from '../../API/api-product';
 import { Link, Redirect } from 'react-router-dom';
+import {
+	InputNumber,
+	message,
+	Form,
+	Select,
+	Input,
+	Typography,
+	Space
+} from 'antd';
 
 const useStyles = makeStyles((theme) => ({
 	card: {
@@ -60,12 +69,15 @@ export default function NewProduct({ match }) {
 		redirect: false,
 		error: ''
 	});
+	const { Option } = Select;
 	const jwt = auth.isAuthenticated();
 	const id = jwt.user._id;
 	console.log(id);
 	const handleChange = (name) => (event) => {
+		console.log(event);
 		const value =
 
+				name === 'category' ? event :
 				name === 'image' ? event.target.files[0] :
 				event.target.value;
 		setValues({ ...values, [name]: value });
@@ -112,13 +124,9 @@ export default function NewProduct({ match }) {
 	return (
 		<div>
 			<Card className={classes.card} elevation={24}>
-				product/NewProduct
 				<CardContent>
-					<Typography
-						type='headline'
-						component='h2'
-						className={classes.title}>
-						Nuevo Producto
+					<Typography type='headline' component='h5'>
+						INFORMACIÓN DE TU PRODUCTO
 					</Typography>
 					<br />
 					<input
@@ -171,6 +179,20 @@ export default function NewProduct({ match }) {
 						onChange={handleChange('category')}
 						margin='normal'
 					/>
+					<Form.Item label='Categoría'>
+						<Select
+							id='category'
+							value={values.category}
+							defaultValue='Categoría'
+							onChange={handleChange('category')}
+							style={{ width: 200 }}>
+							<Option value='Coches'>Coches</Option>
+							<Option value='Motos'>Motos</Option>
+							<Option value='Moda y Accesorios'>
+								Moda y Accesorios
+							</Option>
+						</Select>
+					</Form.Item>
 					<br />
 					<TextField
 						id='quantity'
