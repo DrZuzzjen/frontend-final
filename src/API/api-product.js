@@ -5,7 +5,7 @@ import { API_ROOT } from './api-config';
 const create = async (params, credentials, product) => {
 	try {
 		let response = await fetch(
-			`${API_ROOT}/api/products/by/` + params.shopId,
+			`${API_ROOT}/api/products/by/` + params.userId,
 			{
 				method: 'POST',
 				headers: {

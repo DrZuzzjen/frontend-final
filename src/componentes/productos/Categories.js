@@ -67,7 +67,6 @@ export default function Categories(props) {
 
 	useEffect(() => {
 		const abortController = new AbortController();
-		const signal = abortController.signal;
 
 		list({
 			category: props.categories[0]
@@ -115,7 +114,7 @@ export default function Categories(props) {
 									height: '64px',
 									backgroundColor:
 
-											selected ==
+											selected ===
 											tile ? 'rgba(95, 139, 137, 0.56)' :
 											'rgba(95, 124, 139, 0.32)'
 								}}>
@@ -124,7 +123,7 @@ export default function Categories(props) {
 									onClick={listbyCategory(tile)}>
 									{tile}{' '}
 									<Icon className={classes.icon}>
-										{selected == tile && 'arrow_drop_down'}
+										{selected === tile && 'arrow_drop_down'}
 									</Icon>
 								</span>
 							</GridListTile>

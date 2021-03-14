@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { Card, Typography, Button } from 'antd';
+import { Card, Typography, Image } from 'antd';
 
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
 import { read, listRelated } from '../../API/api-product';
-
+import { API_ROOT } from '../../API/api-config';
 import Suggestions from './Suggestions';
 import AddToCart from '../carro/AddToCart';
 
@@ -58,6 +58,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Product({ match }) {
+	console.log(match.params);
 	const classes = useStyles();
 	const [
 		product,
@@ -124,8 +125,8 @@ export default function Product({ match }) {
 	);
 
 	const imageUrl =
-		product._id ? `/api/product/image/${product._id}?${new Date().getTime()}` :
-		'/api/product/defaultphoto';
+		product._id ? `${API_ROOT}/api/product/image/${product._id}` :
+		`${API_ROOT}/api/product/defaultphoto`;
 	return (
 		<div className={classes.root}>
 			<Grid container spacing={10}>
@@ -147,6 +148,7 @@ export default function Product({ match }) {
 							}
 						/>
 						<div className={classes.flex}>
+							<Image width={200} src={imageUrl} />
 							<Card
 								className={classes.media}
 								image={imageUrl}

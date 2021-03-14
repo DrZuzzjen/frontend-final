@@ -6,6 +6,8 @@ import Base from '../layout/Base.js';
 import Users from '../usuario/Users';
 import Product from '../productos/Product';
 import Profile from '../usuario/Profile';
+import NuevoProducto from '../productos/NuevoProducto';
+import NewProduct from '../productos/NewProduct';
 
 const MainRouter = () => {
 	return (
@@ -18,6 +20,7 @@ const MainRouter = () => {
 						path='/product/:productId'
 						component={Product}
 					/>
+					<Route path='/product' component={NewProduct} />
 					<Route path='/cart' component={Cart} />
 					<Route path='/user/:userId' component={Profile} />
 				</Switch>

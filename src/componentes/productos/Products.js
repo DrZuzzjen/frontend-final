@@ -1,13 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Card, Typography, Button } from 'antd';
-
+import { Card, Typography, Image } from 'antd';
 import GridList from '@material-ui/core/GridList';
-
 import GridListTileBar from '@material-ui/core/GridListTileBar';
 import { Link } from 'react-router-dom';
 import AddToCart from '../carro/AddToCart';
-
+import { API_ROOT } from '../../API/api-config';
 export default function Products(props) {
 	return (
 		<div>
@@ -17,10 +15,9 @@ export default function Products(props) {
 						{props.products.map((product, i) => (
 							<Card key={i}>
 								<Link to={'/product/' + product._id}>
-									<img
-										src={
-											'/api/product/image/' + product._id
-										}
+									<Image
+										width={100}
+										src={`${API_ROOT}/api/product/image/${product._id}`}
 										alt={product.name}
 									/>
 								</Link>

@@ -4,13 +4,13 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import cart from './cart-helper.js';
 import { Link } from 'react-router-dom';
+import { API_ROOT } from '../../API/api-config';
 
 const useStyles = makeStyles((theme) => ({
 	card: {
@@ -101,10 +101,10 @@ export default function CartItems(props) {
 	const handleChange = (index) => (event) => {
 		let updatedCartItems = cartItems;
 		if (event.target.value === 0) {
-			updatedCartItems[index].quantity = 1;
+			updatedCartItems[index] = 1;
 		}
 		else {
-			updatedCartItems[index].quantity = event.target.value;
+			updatedCartItems[index] = event.target.value;
 		}
 		setCartItems([
 			...updatedCartItems
@@ -114,7 +114,7 @@ export default function CartItems(props) {
 
 	const getTotal = () => {
 		return cartItems.reduce((a, b) => {
-			return a + b.quantity * b.product.price;
+			return a + b.product.price;
 		}, 0);
 	};
 
@@ -133,7 +133,6 @@ export default function CartItems(props) {
 	return (
 		<Card className={classes.card} elevation={24}>
 			{' '}
-			cart/CarItems
 			<Typography type='title' className={classes.title}>
 				Carrito de compras
 			</Typography>
@@ -145,10 +144,8 @@ export default function CartItems(props) {
 								<Card className={classes.cart}>
 									<CardMedia
 										className={classes.cover}
-										image={
-											'/api/product/image/' +
-											item.product._id
-										}
+										image={`${API_ROOT}/api/product/image/${item
+											.product._id}`}
 										title={item.product.name}
 									/>
 									<div className={classes.details}>
@@ -173,27 +170,11 @@ export default function CartItems(props) {
 													{item.product.price} €
 												</Typography>
 												<span className={classes.itemTotal}>
-													{item.product.price *
-														item.quantity}{' '}
-													€
+													{item.product.price} €
 												</span>
 											</div>
 										</CardContent>
 										<div className={classes.subheading}>
-											Cantidad:{' '}
-											<TextField
-												value={item.quantity}
-												onChange={handleChange(i)}
-												type='number'
-												inputProps={{
-													min: 1
-												}}
-												className={classes.textField}
-												InputLabelProps={{
-													shrink: true
-												}}
-												margin='normal'
-											/>
 											<Button
 												className={classes.removeButton}
 												color='primary'
