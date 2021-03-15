@@ -123,9 +123,7 @@ export default function Suggestions(props) {
 										</Typography>
 										<span className={classes.actions}>
 											<Link to={'/product/' + item._id}>
-												<IconButton
-													color='secondary'
-													dense='dense'>
+												<IconButton color='secondary'>
 													<ViewIcon
 														className={classes.iconButton}
 													/>

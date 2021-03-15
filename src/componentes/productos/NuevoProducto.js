@@ -1,20 +1,15 @@
 import React, { useState } from 'react';
-
-import FileUpload from '@material-ui/icons/AddPhotoAlternate';
-import auth from './../auth/auth-helper';
+import auth from '../auth/auth-helper';
 import Icon from '@material-ui/core/Icon';
 import { create } from '../../API/api-product';
-import { Redirect } from 'react-router-dom';
-
+import { Link, Redirect } from 'react-router-dom';
 import {
 	InputNumber,
 	Button,
-	message,
 	Form,
 	Select,
 	Input,
 	Typography,
-	Card,
 	Space
 } from 'antd';
 
@@ -41,18 +36,18 @@ export default function NuevoProducto({ match }) {
 		}
 	};
 	const jwt = auth.isAuthenticated();
+	const id = jwt.user._id;
+	console.log(id);
 	const handleChange = (name) => (event) => {
+		console.log(event);
 		const value =
 
+				name === 'price' ? event :
+				name === 'category' ? event :
 				name === 'image' ? event.target.files[0] :
 				event.target.value;
 		setValues({ ...values, [name]: value });
 	};
-
-	function handleMenuClick(e) {
-		message.info('Click on menu item.');
-		console.log('click', e);
-	}
 	const clickSubmit = () => {
 		let productData = new FormData();
 		values.name && productData.append('name', values.name);
@@ -69,7 +64,7 @@ export default function NuevoProducto({ match }) {
 
 		create(
 			{
-				shopId: match.params.shopId
+				userId: id
 			},
 			{
 				t: jwt.token
@@ -88,111 +83,143 @@ export default function NuevoProducto({ match }) {
 	if (values.redirect) {
 		return (
 			<Redirect
-				to={'/seller/shop/edit/' + match.params.shopId}
+				to={'/seller/shop/edit/' + match.params.userId}
 			/>
 		);
 	}
 	return (
 		<div>
-			<Card elevation={24}>
-				<Form layout='vertical'>
-					<Typography type='headline' component='h5'>
-						INFORMACIÓN DE TU PRODUCTO
-					</Typography>
-					<br />
-					<Form.Item
-						id='name'
-						label='Qué estas vendiendo?'
-						value={values.name}
-						onChange={handleChange('name')}>
-						<Input
-							size='large'
-							placeholder='En pocas palabras'
-						/>
+			<Form layout='vertical'>
+				<Typography type='headline' component='h5'>
+					INFORMACIÓN DE TU PRODUCTO
+				</Typography>
+				<Form.Item
+					id='name'
+					label='Qué estas vendiendo?'
+					value={values.name}
+					onChange={handleChange('name')}>
+					<Input
+						size='large'
+						placeholder='En pocas palabras'
+					/>
+				</Form.Item>
+				<Space>
+					<Form.Item label='Categoría'>
+						<Select
+							id='category'
+							value={values.category}
+							defaultValue='Escoge un estado'
+							onChange={handleChange('category')}
+							style={{ width: 200 }}>
+							<Option value='Coches'>Coches</Option>
+							<Option value='Motos'>Motos</Option>
+							<Option value='Motor y Accesorios'>
+								Motor y Accesorios
+							</Option>
+							<Option value='Moda y Accesorios'>
+								Moda y Accesorios
+							</Option>
+							<Option value='Inmobiliaria'>
+								Inmobiliaria
+							</Option>
+							<Option value='TV, Audio y Foto'>
+								TV, Audio y Foto
+							</Option>
+						</Select>
 					</Form.Item>
-					<Space>
-						<Form.Item label='Categoría'>
-							<Select
-								defaultValue='Categoría'
-								value={values.category}
-								onChange={handleChange('category')}
-								style={{ width: 200 }}>
-								<Option value='Coches'>Coches</Option>
-								<Option value='Motos'>Motos</Option>
-								<Option value='>Moda y Accesorios'>
-									Moda y Accesorios
-								</Option>
-							</Select>
-						</Form.Item>
-						<Form.Item
-							id='price'
-							label='Price'
+					<Form.Item
+						id='price'
+						label='Precio'
+						type='number'
+						margin='normal'>
+						<InputNumber
+							min={0}
+							max={10000000}
 							value={values.price}
 							onChange={handleChange('price')}
-							type='number'
-							margin='normal'>
-							<InputNumber
-								min={8}
-								max={10000000}
-								// value={number.value}
-								// onChange={onNumberChange}
-							/>
-						</Form.Item>
-					</Space>
-					<Form.Item
-						id='multiline-flexible'
-						label='Description'
-						multiline
-						rows='2'
-						value={values.description}
-						onChange={handleChange('description')}>
-						<TextArea
-							size='large'
-							placeholder='Añade informacion relevante como estado, modelo, color...'
-							rows={4}
 						/>
 					</Form.Item>
-					<br />
-					<br />
-					<input
-						accept='image/*'
-						onChange={handleChange('image')}
-						id='icon-button-file'
-						type='file'
-					/>
-					<br />
-					<label htmlFor='icon-button-file'>
-						<Button
-							variant='contained'
-							color='secondary'
-							component='span'>
-							Subir foto
-							<FileUpload />
-						</Button>
-					</label>{' '}
-					<span>
-						{
-							values.image ? values.image.name :
-							''}
-					</span>
-					<br />
-					<br />
-					{values.error && (
-						<Typography component='p' color='error'>
-							<Icon color='error'>error</Icon>
-							{values.error}
+					<Form.Item
+						id='price'
+						label='Moneda'
+						type='number'
+						margin='normal'>
+						<Typography prefix='￥' suffix='RMB'>
+							€ Euro
 						</Typography>
-					)}
+					</Form.Item>
+					<br />
+					<Form.Item label='Estado'>
+						<Select
+							id='estado'
+							value={values.estado}
+							style={{ width: 200 }}>
+							<Option value='Nuevo'>Nuevo</Option>
+							<Option value='Como Nuevo'>Como Nuevo</Option>
+							<Option value='En buen estado'>
+								En buen estado
+							</Option>
+							<Option value='En condiciones aceptables'>
+								En condiciones aceptables
+							</Option>
+							<Option value='Lo ha dado todo'>
+								Lo ha dado todo
+							</Option>
+						</Select>
+					</Form.Item>
+				</Space>
+				<Form.Item
+					label='Description'
+					rows='2'
+					value={values.description}
+					onChange={handleChange('description')}>
+					<TextArea
+						size='large'
+						placeholder='Añade informacion relevante como estado, modelo, color...'
+						rows={4}
+					/>
+				</Form.Item>
+				<Form.Item label='Subir imagen'>
+					<Space align='center'>
+						<input
+							accept='image/*'
+							onChange={handleChange('image')}
+							id='icon-button-file'
+							type='file'
+						/>
+						<label />{' '}
+						<span>
+							{
+								values.image ? values.image.name :
+								''}
+						</span>
+						<br />
+						{values.error && (
+							<Typography component='p' color='error'>
+								<Icon color='error'>error</Icon>
+								{values.error}
+							</Typography>
+						)}
+					</Space>
+				</Form.Item>
+				<br />
+				<br />
+				<Space>
 					<Form.Item {...tailLayout}>
 						<Button
-							color='primary'
+							type='primary'
 							variant='contained'
 							onClick={clickSubmit}>
 							Enviar
 						</Button>
 					</Form.Item>
-				</Form>
-			</Card>
+					<Form.Item {...tailLayout}>
+						<Link to={'/user/' + id + '/product'}>
+							<Button variant='contained'>Cancelar</Button>
+						</Link>
+					</Form.Item>
+				</Space>
+			</Form>
 		</div>
 	);
 }

@@ -1,50 +1,49 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
-import FileUpload from '@material-ui/icons/AddPhotoAlternate';
-import auth from '../auth/auth-helper';
-
+import Typography from '@material-ui/core/Typography';
 import Icon from '@material-ui/core/Icon';
+import Avatar from '@material-ui/core/Avatar';
+import auth from './../auth/auth-helper';
+import FileUpload from '@material-ui/icons/AddPhotoAlternate';
 import { makeStyles } from '@material-ui/core/styles';
-import { create } from '../../API/api-product';
+import { withStyles } from '@material-ui/core/styles';
+import { read, update } from '../../API/api-product';
 import { Link, Redirect } from 'react-router-dom';
-import {
-	InputNumber,
-	message,
-	Form,
-	Select,
-	Input,
-	Typography,
-	Space
-} from 'antd';
 
 const useStyles = makeStyles((theme) => ({
 	card: {
-		maxWidth: 600,
 		margin: 'auto',
 		textAlign: 'center',
-		marginTop: theme.spacing(5),
+		marginTop: theme.spacing(3),
+		marginBottom: theme.spacing(2),
+		maxWidth: 500,
 		paddingBottom: theme.spacing(2)
+	},
+	title: {
+		margin: theme.spacing(2),
+		color: theme.palette.protectedTitle,
+		fontSize: '1.2em'
 	},
 	error: {
 		verticalAlign: 'middle'
 	},
-	title: {
-		marginTop: theme.spacing(2),
-		color: theme.palette.openTitle,
-		fontSize: '1.2em'
-	},
 	textField: {
 		marginLeft: theme.spacing(1),
 		marginRight: theme.spacing(1),
-		width: 300
+		width: 400
 	},
 	submit: {
 		margin: 'auto',
 		marginBottom: theme.spacing(2)
+	},
+	bigAvatar: {
+		width: 60,
+		height: 60,
+		margin: 'auto'
 	},
 	input: {
 		display: 'none'
@@ -54,7 +53,7 @@ const useStyles = makeStyles((theme) => ({
 	}
 }));
 
-export default function NewProduct({ match }) {
+export default function EditProduct({ match }) {
 	const classes = useStyles();
 	const [
 		values,
@@ -69,19 +68,36 @@ export default function NewProduct({ match }) {
 		redirect: false,
 		error: ''
 	});
-	const { Option } = Select;
-	const jwt = auth.isAuthenticated();
-	const id = jwt.user._id;
-	console.log(id);
-	const handleChange = (name) => (event) => {
-		console.log(event);
-		const value =
 
-				name === 'category' ? event :
-				name === 'image' ? event.target.files[0] :
-				event.target.value;
-		setValues({ ...values, [name]: value });
-	};
+	const jwt = auth.isAuthenticated();
+	useEffect(() => {
+		const abortController = new AbortController();
+		const signal = abortController.signal;
+		read(
+			{
+				productId: match.params.productId
+			},
+			signal
+		).then((data) => {
+			if (data.error) {
+				setValues({ ...values, error: data.error });
+			}
+			else {
+				setValues({
+					...values,
+					id: data._id,
+					name: data.name,
+					description: data.description,
+					category: data.category,
+					quantity: data.quantity,
+					price: data.price
+				});
+			}
+		});
+		return function cleanup() {
+			abortController.abort();
+		};
+	}, []);
 	const clickSubmit = () => {
 		let productData = new FormData();
 		values.name && productData.append('name', values.name);
@@ -96,9 +112,10 @@ export default function NewProduct({ match }) {
 		values.price &&
 			productData.append('price', values.price);
 
-		create(
+		update(
 			{
-				userId: id
+				shopId: match.params.shopId,
+				productId: match.params.productId
 			},
 			{
 				t: jwt.token
@@ -109,25 +126,43 @@ export default function NewProduct({ match }) {
 				setValues({ ...values, error: data.error });
 			}
 			else {
-				setValues({ ...values, error: '', redirect: true });
+				setValues({ ...values, redirect: true });
 			}
 		});
 	};
+	const handleChange = (name) => (event) => {
+		const value =
 
+				name === 'image' ? event.target.files[0] :
+				event.target.value;
+		setValues({ ...values, [name]: value });
+	};
+	const imageUrl =
+		values.id ? `/api/product/image/${values.id}?${new Date().getTime()}` :
+		'/api/product/defaultphoto';
 	if (values.redirect) {
 		return (
 			<Redirect
-				to={'/seller/shop/edit/' + match.params.userId}
+				to={'/seller/shop/edit/' + match.params.shopId}
 			/>
 		);
 	}
 	return (
 		<div>
 			<Card className={classes.card} elevation={24}>
+				product/EditProduct
 				<CardContent>
-					<Typography type='headline' component='h5'>
-						INFORMACIÓN DE TU PRODUCTO
+					<Typography
+						type='headline'
+						component='h2'
+						className={classes.title}>
+						Editar producto
 					</Typography>
+					<br />
+					<Avatar
+						src={imageUrl}
+						className={classes.bigAvatar}
+					/>
 					<br />
 					<input
 						accept='image/*'
@@ -141,7 +176,7 @@ export default function NewProduct({ match }) {
 							variant='contained'
 							color='secondary'
 							component='span'>
-							Subir foto
+							Cambiar Imagen
 							<FileUpload />
 						</Button>
 					</label>{' '}
@@ -153,7 +188,7 @@ export default function NewProduct({ match }) {
 					<br />
 					<TextField
 						id='name'
-						label='Name'
+						label='Nombre'
 						className={classes.textField}
 						value={values.name}
 						onChange={handleChange('name')}
@@ -162,9 +197,9 @@ export default function NewProduct({ match }) {
 					<br />
 					<TextField
 						id='multiline-flexible'
-						label='Description'
+						label='Descripcion'
 						multiline
-						rows='2'
+						rows='3'
 						value={values.description}
 						onChange={handleChange('description')}
 						className={classes.textField}
@@ -173,30 +208,16 @@ export default function NewProduct({ match }) {
 					<br />
 					<TextField
 						id='category'
-						label='Category'
+						label='Categoria'
 						className={classes.textField}
 						value={values.category}
 						onChange={handleChange('category')}
 						margin='normal'
 					/>
-					<Form.Item label='Categoría'>
-						<Select
-							id='category'
-							value={values.category}
-							defaultValue='Categoría'
-							onChange={handleChange('category')}
-							style={{ width: 200 }}>
-							<Option value='Coches'>Coches</Option>
-							<Option value='Motos'>Motos</Option>
-							<Option value='Moda y Accesorios'>
-								Moda y Accesorios
-							</Option>
-						</Select>
-					</Form.Item>
 					<br />
 					<TextField
 						id='quantity'
-						label='Quantity'
+						label='Cantidad'
 						className={classes.textField}
 						value={values.quantity}
 						onChange={handleChange('quantity')}
@@ -206,7 +227,7 @@ export default function NewProduct({ match }) {
 					<br />
 					<TextField
 						id='price'
-						label='Price'
+						label='Precio'
 						className={classes.textField}
 						value={values.price}
 						onChange={handleChange('price')}
@@ -229,10 +250,10 @@ export default function NewProduct({ match }) {
 						variant='contained'
 						onClick={clickSubmit}
 						className={classes.submit}>
-						Enviar
+						Modificar
 					</Button>
 					<Link
-						to={'/seller/shop/edit/' + match.params.shopId}
+						to={'/seller/shops/edit/' + match.params.shopId}
 						className={classes.submit}>
 						<Button variant='contained'>Cancelar</Button>
 					</Link>
