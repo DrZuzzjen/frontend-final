@@ -1,19 +1,11 @@
 import React, { useState } from 'react';
-import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
-import CardContent from '@material-ui/core/CardContent';
-import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
-import FileUpload from '@material-ui/icons/AddPhotoAlternate';
 import auth from '../auth/auth-helper';
-
 import Icon from '@material-ui/core/Icon';
-import { makeStyles } from '@material-ui/core/styles';
 import { create } from '../../API/api-product';
 import { Link, Redirect } from 'react-router-dom';
 import {
 	InputNumber,
-	message,
+	Button,
 	Form,
 	Select,
 	Input,
@@ -21,41 +13,7 @@ import {
 	Space
 } from 'antd';
 
-const useStyles = makeStyles((theme) => ({
-	card: {
-		maxWidth: 600,
-		margin: 'auto',
-		textAlign: 'center',
-		marginTop: theme.spacing(5),
-		paddingBottom: theme.spacing(2)
-	},
-	error: {
-		verticalAlign: 'middle'
-	},
-	title: {
-		marginTop: theme.spacing(2),
-		color: theme.palette.openTitle,
-		fontSize: '1.2em'
-	},
-	textField: {
-		marginLeft: theme.spacing(1),
-		marginRight: theme.spacing(1),
-		width: 300
-	},
-	submit: {
-		margin: 'auto',
-		marginBottom: theme.spacing(2)
-	},
-	input: {
-		display: 'none'
-	},
-	filename: {
-		marginLeft: '10px'
-	}
-}));
-
 export default function NewProduct({ match }) {
-	const classes = useStyles();
 	const [
 		values,
 		setValues
@@ -64,12 +22,19 @@ export default function NewProduct({ match }) {
 		description: '',
 		image: '',
 		category: '',
-		quantity: '',
+		quantity: 1,
 		price: '',
 		redirect: false,
 		error: ''
 	});
 	const { Option } = Select;
+	const { TextArea } = Input;
+	const tailLayout = {
+		wrapperCol: {
+			offset: 8,
+			span: 16
+		}
+	};
 	const jwt = auth.isAuthenticated();
 	const id = jwt.user._id;
 	console.log(id);
@@ -77,6 +42,7 @@ export default function NewProduct({ match }) {
 		console.log(event);
 		const value =
 
+				name === 'price' ? event :
 				name === 'category' ? event :
 				name === 'image' ? event.target.files[0] :
 				event.target.value;
@@ -123,121 +89,143 @@ export default function NewProduct({ match }) {
 	}
 	return (
 		<div>
-			<Card className={classes.card} elevation={24}>
-				<CardContent>
-					<Typography type='headline' component='h5'>
-						INFORMACIÓN DE TU PRODUCTO
-					</Typography>
-					<br />
-					<input
-						accept='image/*'
-						onChange={handleChange('image')}
-						className={classes.input}
-						id='icon-button-file'
-						type='file'
+			<Form layout='vertical'>
+				<Typography type='headline' component='h5'>
+					INFORMACIÓN DE TU PRODUCTO
+				</Typography>
+				<Form.Item
+					id='name'
+					label='Qué estas vendiendo?'
+					value={values.name}
+					onChange={handleChange('name')}>
+					<Input
+						size='large'
+						placeholder='En pocas palabras'
 					/>
-					<label htmlFor='icon-button-file'>
-						<Button
-							variant='contained'
-							color='secondary'
-							component='span'>
-							Subir foto
-							<FileUpload />
-						</Button>
-					</label>{' '}
-					<span className={classes.filename}>
-						{
-							values.image ? values.image.name :
-							''}
-					</span>
-					<br />
-					<TextField
-						id='name'
-						label='Name'
-						className={classes.textField}
-						value={values.name}
-						onChange={handleChange('name')}
-						margin='normal'
-					/>
-					<br />
-					<TextField
-						id='multiline-flexible'
-						label='Description'
-						multiline
-						rows='2'
-						value={values.description}
-						onChange={handleChange('description')}
-						className={classes.textField}
-						margin='normal'
-					/>
-					<br />
-					<TextField
-						id='category'
-						label='Category'
-						className={classes.textField}
-						value={values.category}
-						onChange={handleChange('category')}
-						margin='normal'
-					/>
+				</Form.Item>
+				<Space>
 					<Form.Item label='Categoría'>
 						<Select
 							id='category'
 							value={values.category}
-							defaultValue='Categoría'
+							defaultValue='Escoge un estado'
 							onChange={handleChange('category')}
 							style={{ width: 200 }}>
 							<Option value='Coches'>Coches</Option>
 							<Option value='Motos'>Motos</Option>
+							<Option value='Motor y Accesorios'>
+								Motor y Accesorios
+							</Option>
 							<Option value='Moda y Accesorios'>
 								Moda y Accesorios
 							</Option>
+							<Option value='Inmobiliaria'>
+								Inmobiliaria
+							</Option>
+							<Option value='TV, Audio y Foto'>
+								TV, Audio y Foto
+							</Option>
 						</Select>
 					</Form.Item>
-					<br />
-					<TextField
-						id='quantity'
-						label='Quantity'
-						className={classes.textField}
-						value={values.quantity}
-						onChange={handleChange('quantity')}
-						type='number'
-						margin='normal'
-					/>
-					<br />
-					<TextField
+					<Form.Item
 						id='price'
-						label='Price'
-						className={classes.textField}
-						value={values.price}
-						onChange={handleChange('price')}
+						label='Precio'
 						type='number'
-						margin='normal'
-					/>
-					<br />
-					{values.error && (
-						<Typography component='p' color='error'>
-							<Icon color='error' className={classes.error}>
-								error
-							</Icon>
-							{values.error}
+						margin='normal'>
+						<InputNumber
+							min={0}
+							max={10000000}
+							value={values.price}
+							onChange={handleChange('price')}
+						/>
+					</Form.Item>
+					<Form.Item
+						id='price'
+						label='Moneda'
+						type='number'
+						margin='normal'>
+						<Typography prefix='￥' suffix='RMB'>
+							€ Euro
 						</Typography>
-					)}
-				</CardContent>
-				<CardActions>
-					<Button
-						color='primary'
-						variant='contained'
-						onClick={clickSubmit}
-						className={classes.submit}>
-						Enviar
-					</Button>
-					<Link
-						to={'/seller/shop/edit/' + match.params.shopId}
-						className={classes.submit}>
-						<Button variant='contained'>Cancelar</Button>
-					</Link>
-				</CardActions>
-			</Card>
+					</Form.Item>
+					<br />
+					<Form.Item label='Estado'>
+						<Select
+							id='category'
+							value={values.estado}
+							style={{ width: 200 }}>
+							<Option value='Coches'>Coches</Option>
+							<Option value='Motos'>Motos</Option>
+							<Option value='Motor y Accesorios'>
+								Motor y Accesorios
+							</Option>
+							<Option value='Moda y Accesorios'>
+								Moda y Accesorios
+							</Option>
+							<Option value='Inmobiliaria'>
+								Inmobiliaria
+							</Option>
+							<Option value='TV, Audio y Foto'>
+								TV, Audio y Foto
+							</Option>
+						</Select>
+					</Form.Item>
+				</Space>
+				<Form.Item
+					label='Description'
+					rows='2'
+					value={values.description}
+					onChange={handleChange('description')}>
+					<TextArea
+						size='large'
+						placeholder='Añade informacion relevante como estado, modelo, color...'
+						rows={4}
+					/>
+				</Form.Item>
+				<Form.Item label='Subir imagen'>
+					<Space align='center'>
+						<input
+							accept='image/*'
+							onChange={handleChange('image')}
+							id='icon-button-file'
+							type='file'
+						/>
+						<label />{' '}
+						<span>
+							{
+								values.image ? values.image.name :
+								''}
+						</span>
+						<br />
+						{values.error && (
+							<Typography component='p' color='error'>
+								<Icon color='error'>error</Icon>
+								{values.error}
+							</Typography>
+						)}
+					</Space>
+				</Form.Item>
+				<br />
+				<br />
+				<Space>
+					<Form.Item {...tailLayout}>
+						<Button
+							type='primary'
+							variant='contained'
+							onClick={clickSubmit}>
+							Enviar
+						</Button>
+					</Form.Item>
+					<Form.Item {...tailLayout}>
+						<Link
+							to={
+								'/seller/shop/edit/' + match.params.userId
+							}>
+							<Button variant='contained'>Cancelar</Button>
+						</Link>
+					</Form.Item>
+				</Space>
+			</Form>
 		</div>
 	);
 }

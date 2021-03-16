@@ -81,7 +81,7 @@ export default function Profile({ match }) {
 			<Typography variant='h6' className={classes.title}>
 				Perfil
 			</Typography>
-			<List dense>
+			<List>
 				<List.Item>
 					<Avatar size={64} icon={<UserOutlined />} />
 					<ListItemText
