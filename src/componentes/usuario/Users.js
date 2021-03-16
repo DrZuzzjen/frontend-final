@@ -56,7 +56,7 @@ export default function Users() {
 			<Typography variant='h6' className={classes.title}>
 				All Users
 			</Typography>
-			<List dense>
+			<List>
 				{users.map((item, i) => {
 					return (
 						<Link to={'/user/' + item._id} key={i}>

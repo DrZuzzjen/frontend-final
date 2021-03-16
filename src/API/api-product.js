@@ -62,7 +62,7 @@ const remove = async (params, credentials) => {
 	try {
 		let response = await fetch(
 			`${API_ROOT}/api/product/` +
-				params.shopId +
+				params.userId +
 				'/' +
 				params.productId,
 			{

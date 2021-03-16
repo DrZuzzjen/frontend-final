@@ -18,13 +18,15 @@ export default function DeleteProduct(props) {
 	] = useState(false);
 
 	const jwt = auth.isAuthenticated();
+	const id = jwt.user._id;
+
 	const clickButton = () => {
 		setOpen(true);
 	};
 	const deleteProduct = () => {
 		remove(
 			{
-				userId: props.userId,
+				userId: id,
 				productId: props.product._id
 			},
 			{ t: jwt.token }
@@ -50,7 +52,6 @@ export default function DeleteProduct(props) {
 				<DeleteIcon />
 			</IconButton>
 			<Dialog open={open} onClose={handleRequestClose}>
-				product/DeleteProduct
 				<DialogTitle>
 					{'Borrar ' + props.product.name}
 				</DialogTitle>
