@@ -30,24 +30,29 @@ const MainRouter = () => {
 						component={MisProductos}
 					/>
 					<Route
+						exact
 						path='/user/edit/:userId'
 						component={EditProfile}
 					/>
 
 					<Route
+						exact
 						path='/product/:productId'
 						component={Product}
 					/>
 					<Route
+						exact
 						path='/product'
 						component={NuevoProducto}
 					/>
 					<Route
-						path='/product/edit/:userId'
+						exact
+						path='/product/:productId/delete'
 						component={DeleteProducto}
 					/>
 					<Route
-						path='/product/delete/:userId'
+						exact
+						path='/product/:productId/edit/'
 						component={EditProducto}
 					/>
 

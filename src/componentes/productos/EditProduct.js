@@ -1,16 +1,21 @@
 import React, { useEffect, useState } from 'react';
-import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
-import CardContent from '@material-ui/core/CardContent';
-import Button from '@material-ui/core/Button';
+import {
+	InputNumber,
+	Button,
+	Form,
+	Select,
+	Input,
+	Typography,
+	Space
+} from 'antd';
+
 import TextField from '@material-ui/core/TextField';
-import Typography from '@material-ui/core/Typography';
 import Icon from '@material-ui/core/Icon';
 import Avatar from '@material-ui/core/Avatar';
 import auth from './../auth/auth-helper';
 import FileUpload from '@material-ui/icons/AddPhotoAlternate';
 import { makeStyles } from '@material-ui/core/styles';
-import { withStyles } from '@material-ui/core/styles';
+
 import { read, update } from '../../API/api-product';
 import { Link, Redirect } from 'react-router-dom';
 
@@ -69,7 +74,17 @@ export default function EditProduct({ match }) {
 		error: ''
 	});
 
+	const { Option } = Select;
+	const { TextArea } = Input;
+	const tailLayout = {
+		wrapperCol: {
+			offset: 8,
+			span: 16
+		}
+	};
+
 	const jwt = auth.isAuthenticated();
+	const id = jwt.user._id;
 	useEffect(() => {
 		const abortController = new AbortController();
 		const signal = abortController.signal;
@@ -114,7 +129,7 @@ export default function EditProduct({ match }) {
 
 		update(
 			{
-				shopId: match.params.shopId,
+				userId: id,
 				productId: match.params.productId
 			},
 			{
@@ -133,6 +148,8 @@ export default function EditProduct({ match }) {
 	const handleChange = (name) => (event) => {
 		const value =
 
+				name === 'price' ? event :
+				name === 'category' ? event :
 				name === 'image' ? event.target.files[0] :
 				event.target.value;
 		setValues({ ...values, [name]: value });
@@ -149,92 +166,122 @@ export default function EditProduct({ match }) {
 	}
 	return (
 		<div>
-			<Card className={classes.card} elevation={24}>
-				product/EditProduct
-				<CardContent>
-					<Typography
-						type='headline'
-						component='h2'
-						className={classes.title}>
-						Editar producto
-					</Typography>
-					<br />
-					<Avatar
-						src={imageUrl}
-						className={classes.bigAvatar}
-					/>
-					<br />
-					<input
-						accept='image/*'
-						onChange={handleChange('image')}
-						className={classes.input}
-						id='icon-button-file'
-						type='file'
-					/>
-					<label htmlFor='icon-button-file'>
-						<Button
-							variant='contained'
-							color='secondary'
-							component='span'>
-							Cambiar Imagen
-							<FileUpload />
-						</Button>
-					</label>{' '}
-					<span className={classes.filename}>
-						{
-							values.image ? values.image.name :
-							''}
-					</span>
-					<br />
-					<TextField
-						id='name'
-						label='Nombre'
-						className={classes.textField}
-						value={values.name}
-						onChange={handleChange('name')}
-						margin='normal'
-					/>
-					<br />
-					<TextField
-						id='multiline-flexible'
-						label='Descripcion'
-						multiline
-						rows='3'
-						value={values.description}
-						onChange={handleChange('description')}
-						className={classes.textField}
-						margin='normal'
-					/>
-					<br />
-					<TextField
-						id='category'
-						label='Categoria'
-						className={classes.textField}
-						value={values.category}
-						onChange={handleChange('category')}
-						margin='normal'
-					/>
-					<br />
-					<TextField
-						id='quantity'
-						label='Cantidad'
-						className={classes.textField}
-						value={values.quantity}
-						onChange={handleChange('quantity')}
-						type='number'
-						margin='normal'
-					/>
-					<br />
-					<TextField
+			<Form layout='vertical'>
+				<Typography
+					type='headline'
+					component='h2'
+					className={classes.title}>
+					Editar producto
+				</Typography>
+				<br />
+				<Form.Item
+					id='name'
+					label='Qué estas vendiendo?'
+					onChange={handleChange('name')}>
+					<Input size='large' value={values.name} />
+				</Form.Item>
+				<br />
+				<br />
+				<Space>
+					<Form.Item label='Categoría'>
+						<Select
+							id='category'
+							value={values.category}
+							defaultValue='Escoge un estado'
+							onChange={handleChange('category')}
+							style={{ width: 200 }}>
+							<Option value='Coches'>Coches</Option>
+							<Option value='Motos'>Motos</Option>
+							<Option value='Motor y Accesorios'>
+								Motor y Accesorios
+							</Option>
+							<Option value='Moda y Accesorios'>
+								Moda y Accesorios
+							</Option>
+							<Option value='Inmobiliaria'>
+								Inmobiliaria
+							</Option>
+							<Option value='TV, Audio y Foto'>
+								TV, Audio y Foto
+							</Option>
+						</Select>
+					</Form.Item>
+					<Form.Item
 						id='price'
 						label='Precio'
-						className={classes.textField}
-						value={values.price}
-						onChange={handleChange('price')}
 						type='number'
-						margin='normal'
-					/>
+						margin='normal'>
+						<InputNumber
+							min={0}
+							max={10000000}
+							value={values.price}
+							onChange={handleChange('price')}
+						/>
+					</Form.Item>
+					<Form.Item
+						id='price'
+						label='Moneda'
+						type='number'
+						margin='normal'>
+						<Typography prefix='￥' suffix='RMB'>
+							€ Euro
+						</Typography>
+					</Form.Item>
 					<br />
+					<Form.Item label='Estado'>
+						<Select
+							id='estado'
+							value={values.estado}
+							style={{ width: 200 }}>
+							<Option value='Nuevo'>Nuevo</Option>
+							<Option value='Como Nuevo'>Como Nuevo</Option>
+							<Option value='En buen estado'>
+								En buen estado
+							</Option>
+							<Option value='En condiciones aceptables'>
+								En condiciones aceptables
+							</Option>
+							<Option value='Lo ha dado todo'>
+								Lo ha dado todo
+							</Option>
+						</Select>
+					</Form.Item>
+				</Space>
+				<Form.Item
+					label='Description'
+					rows='2'
+					onChange={handleChange('description')}>
+					<TextArea
+						size='large'
+						rows={4}
+						value={values.description}
+					/>
+				</Form.Item>
+				<Form.Item label='Cambiar imagen'>
+					<Space align='center'>
+						<br />
+						<Avatar
+							src={imageUrl}
+							className={classes.bigAvatar}
+						/>
+						<br />
+						<input
+							accept='image/*'
+							onChange={handleChange('image')}
+							id='icon-button-file'
+							type='file'
+						/>
+						<label />{' '}
+						<span>
+							{
+								values.image ? values.image.name :
+								''}
+						</span>
+					</Space>
+				</Form.Item>
+				<br />
+				<br />
+				<Space align='center'>
 					{values.error && (
 						<Typography component='p' color='error'>
 							<Icon color='error' className={classes.error}>
@@ -243,22 +290,23 @@ export default function EditProduct({ match }) {
 							{values.error}
 						</Typography>
 					)}
-				</CardContent>
-				<CardActions>
-					<Button
-						color='primary'
-						variant='contained'
-						onClick={clickSubmit}
-						className={classes.submit}>
-						Modificar
-					</Button>
-					<Link
-						to={'/seller/shops/edit/' + match.params.shopId}
-						className={classes.submit}>
-						<Button variant='contained'>Cancelar</Button>
-					</Link>
-				</CardActions>
-			</Card>
+				</Space>
+				<Space>
+					<Form.Item {...tailLayout}>
+						<Button
+							type='primary'
+							shape='round'
+							onClick={clickSubmit}>
+							Enviar
+						</Button>
+					</Form.Item>
+					<Form.Item {...tailLayout}>
+						<Link to={'/user/' + id + '/product'}>
+							<Button shape='round'>Cancelar</Button>
+						</Link>
+					</Form.Item>
+				</Space>
+			</Form>
 		</div>
 	);
 }

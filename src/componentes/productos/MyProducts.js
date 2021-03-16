@@ -12,7 +12,7 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import Typography from '@material-ui/core/Typography';
 import { Link } from 'react-router-dom';
-import { ShopOutlined } from '@ant-design/icons';
+import { PlusOutlined } from '@ant-design/icons';
 import { listByShop } from '../../API/api-product';
 import DeleteProduct from '../productos/DeleteProduct';
 import { API_ROOT } from '../../API/api-config';
@@ -95,9 +95,9 @@ export default function MyProducts(props) {
 							'/seller/' + props.userId + '/products/new'
 						}>
 						<Button
-							icon={<ShopOutlined />}
-							color='primary'
-							variant='contained'>
+							icon={<PlusOutlined />}
+							type='primary'
+							shape='round'>
 							Nuevo Producto
 						</Button>
 					</Link>
@@ -131,14 +131,7 @@ export default function MyProducts(props) {
 									</Typography>
 								</div>
 								<ListItemSecondaryAction>
-									<Link
-										to={
-											'/seller/' +
-											product._id +
-											'/' +
-											product._id +
-											'/edit'
-										}>
+									<Link to={`/product/${product._id}/edit`}>
 										<IconButton
 											aria-label='Edit'
 											color='primary'>

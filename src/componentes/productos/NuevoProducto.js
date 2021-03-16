@@ -169,7 +169,7 @@ export default function NuevoProducto({ match }) {
 					</Form.Item>
 				</Space>
 				<Form.Item
-					label='Description'
+					label='Descripción'
 					rows='2'
 					value={values.description}
 					onChange={handleChange('description')}>
@@ -193,29 +193,30 @@ export default function NuevoProducto({ match }) {
 								values.image ? values.image.name :
 								''}
 						</span>
-						<br />
-						{values.error && (
-							<Typography component='p' color='error'>
-								<Icon color='error'>error</Icon>
-								{values.error}
-							</Typography>
-						)}
 					</Space>
 				</Form.Item>
 				<br />
 				<br />
+				<Space align='center'>
+					{values.error && (
+						<Typography component='p' color='error'>
+							<Icon color='error'>error</Icon>
+							{values.error}
+						</Typography>
+					)}
+				</Space>
 				<Space>
 					<Form.Item {...tailLayout}>
 						<Button
 							type='primary'
-							variant='contained'
+							shape='round'
 							onClick={clickSubmit}>
 							Enviar
 						</Button>
 					</Form.Item>
 					<Form.Item {...tailLayout}>
 						<Link to={'/user/' + id + '/product'}>
-							<Button variant='contained'>Cancelar</Button>
+							<Button shape='round'>Cancelar</Button>
 						</Link>
 					</Form.Item>
 				</Space>
