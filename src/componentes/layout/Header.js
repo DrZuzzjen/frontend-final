@@ -19,7 +19,7 @@ import './Base.css';
 import 'react-responsive-modal/styles.css';
 import {
 	MessageOutlined,
-	HighlightOutlined,
+	ShopOutlined,
 	PlusOutlined
 } from '@ant-design/icons';
 import { useHistory } from 'react-router-dom';
@@ -131,7 +131,7 @@ export default function Header() {
 				<Space>
 					<Col flex='auto'>
 						<Button
-							icon={<HighlightOutlined />}
+							icon={<ShopOutlined />}
 							shape='circle'
 							style={{ float: 'right' }}
 						/>

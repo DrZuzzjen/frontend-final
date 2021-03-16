@@ -40,7 +40,7 @@ const update = async (params, credentials, product) => {
 	try {
 		let response = await fetch(
 			`${API_ROOT}/api/product/` +
-				params.shopId +
+				params.userId +
 				'/' +
 				params.productId,
 			{
