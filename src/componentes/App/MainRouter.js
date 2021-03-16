@@ -5,12 +5,12 @@ import Cart from '../../componentes/carro/Cart';
 import Base from '../layout/Base.js';
 import Users from '../usuario/Users';
 import Product from '../productos/Product';
-import Profile from '../usuario/Profile';
+import Perfil from '../usuario/Perfil';
 import NuevoProducto from '../productos/NuevoProducto';
 import DeleteProducto from '../productos/DeleteProduct';
 import EditProducto from '../productos/EditProduct';
 import EditProfile from '../usuario/EditProfile';
-import MisProductos from '../productos/MyProducts';
+import MisProductos from '../productos/MisProductos';
 
 const MainRouter = () => {
 	return (
@@ -22,7 +22,7 @@ const MainRouter = () => {
 					<Route
 						exact
 						path='/user/:userId'
-						component={Profile}
+						component={Perfil}
 					/>
 					<Route
 						exact
@@ -57,7 +57,6 @@ const MainRouter = () => {
 					/>
 
 					<Route path='/cart' component={Cart} />
-					<Route path='/user/:userId' component={Profile} />
 				</Switch>
 			</Base>
 		</div>
