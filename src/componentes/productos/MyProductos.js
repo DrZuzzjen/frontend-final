@@ -2,20 +2,21 @@ import React, { useState, useEffect } from 'react';
 import auth from '../auth/auth-helper';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
-import { Button, Divider } from 'antd';
+import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
 import CardMedia from '@material-ui/core/CardMedia';
 import IconButton from '@material-ui/core/IconButton';
+import Icon from '@material-ui/core/Icon';
 import Edit from '@material-ui/icons/Edit';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import Typography from '@material-ui/core/Typography';
 import { Link } from 'react-router-dom';
-import { ShopOutlined } from '@ant-design/icons';
+import Divider from '@material-ui/core/Divider';
 import { listByShop } from '../../API/api-product';
 import DeleteProduct from '../productos/DeleteProduct';
-import { API_ROOT } from '../../API/api-config';
+
 const useStyles = makeStyles((theme) => ({
 	products: {
 		padding: '24px'
@@ -45,7 +46,7 @@ const useStyles = makeStyles((theme) => ({
 	}
 }));
 
-export default function MyProducts(props) {
+export default function MyProduct(props) {
 	const classes = useStyles();
 	const [
 		products,
@@ -87,76 +88,23 @@ export default function MyProducts(props) {
 
 	return (
 		<Card className={classes.products}>
+			product/MyProducts
 			<Typography type='title' className={classes.title}>
-				Mis Productos
+				Producto
 				<span className={classes.addButton}>
 					<Link
 						to={
 							'/seller/' + props.userId + '/products/new'
 						}>
-						<Button
-							icon={<ShopOutlined />}
-							color='primary'
-							variant='contained'>
+						<Button color='primary' variant='contained'>
+							<Icon className={classes.leftIcon}>
+								add_box
+							</Icon>
 							Nuevo Producto
 						</Button>
 					</Link>
 				</span>
 			</Typography>
-			<List>
-				{products.map((product, i) => {
-					console.log(product._id);
-					return (
-						<span key={i}>
-							<ListItem>
-								<CardMedia
-									className={classes.cover}
-									image={`${API_ROOT}/api/product/image/${product._id}`}
-									title={product.name}
-								/>
-								<div className={classes.details}>
-									<Typography
-										type='headline'
-										component='h2'
-										color='primary'
-										className={classes.productTitle}>
-										{product.name}
-									</Typography>
-									<Typography
-										type='subheading'
-										component='h4'
-										className={classes.subheading}>
-										{' '}
-										Precio: {product.price} €
-									</Typography>
-								</div>
-								<ListItemSecondaryAction>
-									<Link
-										to={
-											'/seller/' +
-											product._id +
-											'/' +
-											product._id +
-											'/edit'
-										}>
-										<IconButton
-											aria-label='Edit'
-											color='primary'>
-											<Edit />
-										</IconButton>
-									</Link>
-									<DeleteProduct
-										product={product}
-										userId={props.userId}
-										onRemove={removeProduct}
-									/>
-								</ListItemSecondaryAction>
-							</ListItem>
-							<Divider />
-						</span>
-					);
-				})}
-			</List>
 		</Card>
 	);
 }

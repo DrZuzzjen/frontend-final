@@ -83,7 +83,7 @@ const remove = async (params, credentials) => {
 const listByShop = async (params, signal) => {
 	try {
 		let response = await fetch(
-			`${API_ROOT}/api/products/by/` + params.shopId,
+			`${API_ROOT}/api/products/by/` + params.userId,
 			{
 				method: 'GET',
 				signal: signal
