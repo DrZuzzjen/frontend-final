@@ -25,7 +25,7 @@ import {
 	UserOutlined
 } from '@ant-design/icons';
 import { useHistory } from 'react-router-dom';
-
+import { Link } from 'react-router-dom';
 export default function Header() {
 	const history = useHistory();
 	const { Search } = Input;
@@ -95,7 +95,13 @@ export default function Header() {
 	const handleNuevoProducto = () => {
 
 			!auth.isAuthenticated() ? handleClickOpen() :
-			history.push('/product');
+			history.push(`/product`);
+	};
+
+	const handleProfile = () => {
+		const jwt = auth.isAuthenticated();
+		const id = jwt.user._id;
+		history.push(`/user/${id}`);
 	};
 
 	const handleClickOpen = () => {
@@ -161,6 +167,24 @@ export default function Header() {
 							Mensajes
 						</Button>
 					</Col>
+
+					<Col flex='auto'>
+						<Button
+							icon={<PlusOutlined />}
+							type='primary'
+							shape='round'
+							onClick={handleNuevoProducto}
+							style={{ float: 'right' }}>
+							Subir Producto
+						</Button>
+					</Col>
+					{auth.isAuthenticated() && (
+						<Col flex='auto'>
+							<Link onClick={handleProfile}>
+								<Avatar icon={<UserOutlined />} /> Profile
+							</Link>
+						</Col>
+					)}
 					{
 						!auth.isAuthenticated() ? <Col flex='auto'>
 							<Button
@@ -172,26 +196,13 @@ export default function Header() {
 						</Col> :
 						<Col>
 							<Button
-								color='inherit'
+								style={{ float: 'right' }}
+								shape='round'
 								onClick={() => {
 									handleSignin();
 									auth.clearJWT(() => history.push('/'));
 								}}>
-								Salir
-							</Button>
-						</Col>}
-					{
-						auth.isAuthenticated() ? <Col flex='auto'>
-							<Avatar icon={<UserOutlined />} />
-						</Col> :
-						<Col flex='auto'>
-							<Button
-								icon={<PlusOutlined />}
-								type='primary'
-								shape='round'
-								onClick={handleNuevoProducto}
-								style={{ float: 'right' }}>
-								Subir Producto
+								Cerrar Sesión
 							</Button>
 						</Col>}
 				</Space>
