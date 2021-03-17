@@ -5,9 +5,12 @@ import Cart from '../../componentes/carro/Cart';
 import Base from '../layout/Base.js';
 import Users from '../usuario/Users';
 import Product from '../productos/Product';
-import Profile from '../usuario/Profile';
+import Perfil from '../usuario/Profile';
 import NuevoProducto from '../productos/NuevoProducto';
-import NewProduct from '../productos/NewProduct';
+import DeleteProducto from '../productos/DeleteProduct';
+import EditProducto from '../productos/EditProduct';
+import EditProfile from '../usuario/EditProfile';
+import MisProductos from '../productos/MisProductos';
 
 const MainRouter = () => {
 	return (
@@ -15,14 +18,45 @@ const MainRouter = () => {
 			<Base>
 				<Switch>
 					<Route exact path='/' component={Home} />
-					<Route path='/users' component={Users} />
+					<Route exact path='/users' component={Users} />
 					<Route
+						exact
+						path='/user/:userId'
+						component={Perfil}
+					/>
+					<Route
+						exact
+						path='/user/:userId/product'
+						component={MisProductos}
+					/>
+					<Route
+						exact
+						path='/user/edit/:userId'
+						component={EditProfile}
+					/>
+
+					<Route
+						exact
 						path='/product/:productId'
 						component={Product}
 					/>
-					<Route path='/product' component={NewProduct} />
+					<Route
+						exact
+						path='/product'
+						component={NuevoProducto}
+					/>
+					<Route
+						exact
+						path='/product/:productId/delete'
+						component={DeleteProducto}
+					/>
+					<Route
+						exact
+						path='/product/:productId/edit/'
+						component={EditProducto}
+					/>
+
 					<Route path='/cart' component={Cart} />
-					<Route path='/user/:userId' component={Profile} />
 				</Switch>
 			</Base>
 		</div>

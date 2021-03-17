@@ -1,8 +1,4 @@
-import React, { useState } from 'react';
-import auth from '../auth/auth-helper';
-import Icon from '@material-ui/core/Icon';
-import { create } from '../../API/api-product';
-import { Link, Redirect } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
 import {
 	InputNumber,
 	Button,
@@ -13,7 +9,56 @@ import {
 	Space
 } from 'antd';
 
-export default function NuevoProducto({ match }) {
+import Icon from '@material-ui/core/Icon';
+import Avatar from '@material-ui/core/Avatar';
+import auth from './../auth/auth-helper';
+
+import { makeStyles } from '@material-ui/core/styles';
+
+import { read, update } from '../../API/api-product';
+import { Link, Redirect } from 'react-router-dom';
+
+const useStyles = makeStyles((theme) => ({
+	card: {
+		margin: 'auto',
+		textAlign: 'center',
+		marginTop: theme.spacing(3),
+		marginBottom: theme.spacing(2),
+		maxWidth: 500,
+		paddingBottom: theme.spacing(2)
+	},
+	title: {
+		margin: theme.spacing(2),
+		color: theme.palette.protectedTitle,
+		fontSize: '1.2em'
+	},
+	error: {
+		verticalAlign: 'middle'
+	},
+	textField: {
+		marginLeft: theme.spacing(1),
+		marginRight: theme.spacing(1),
+		width: 400
+	},
+	submit: {
+		margin: 'auto',
+		marginBottom: theme.spacing(2)
+	},
+	bigAvatar: {
+		width: 60,
+		height: 60,
+		margin: 'auto'
+	},
+	input: {
+		display: 'none'
+	},
+	filename: {
+		marginLeft: '10px'
+	}
+}));
+
+export default function EditProduct({ match }) {
+	const classes = useStyles();
 	const [
 		values,
 		setValues
@@ -22,11 +67,12 @@ export default function NuevoProducto({ match }) {
 		description: '',
 		image: '',
 		category: '',
-		quantity: 1,
+		quantity: '',
 		price: '',
 		redirect: false,
 		error: ''
 	});
+
 	const { Option } = Select;
 	const { TextArea } = Input;
 	const tailLayout = {
@@ -35,19 +81,37 @@ export default function NuevoProducto({ match }) {
 			span: 16
 		}
 	};
+
 	const jwt = auth.isAuthenticated();
 	const id = jwt.user._id;
-	console.log(id);
-	const handleChange = (name) => (event) => {
-		console.log(event);
-		const value =
-
-				name === 'price' ? event :
-				name === 'category' ? event :
-				name === 'image' ? event.target.files[0] :
-				event.target.value;
-		setValues({ ...values, [name]: value });
-	};
+	useEffect(() => {
+		const abortController = new AbortController();
+		const signal = abortController.signal;
+		read(
+			{
+				productId: match.params.productId
+			},
+			signal
+		).then((data) => {
+			if (data.error) {
+				setValues({ ...values, error: data.error });
+			}
+			else {
+				setValues({
+					...values,
+					id: data._id,
+					name: data.name,
+					description: data.description,
+					category: data.category,
+					quantity: data.quantity,
+					price: data.price
+				});
+			}
+		});
+		return function cleanup() {
+			abortController.abort();
+		};
+	}, []);
 	const clickSubmit = () => {
 		let productData = new FormData();
 		values.name && productData.append('name', values.name);
@@ -62,9 +126,10 @@ export default function NuevoProducto({ match }) {
 		values.price &&
 			productData.append('price', values.price);
 
-		create(
+		update(
 			{
-				userId: id
+				userId: id,
+				productId: match.params.productId
 			},
 			{
 				t: jwt.token
@@ -75,30 +140,47 @@ export default function NuevoProducto({ match }) {
 				setValues({ ...values, error: data.error });
 			}
 			else {
-				setValues({ ...values, error: '', redirect: true });
+				setValues({ ...values, redirect: true });
 			}
 		});
 	};
+	const handleChange = (name) => (event) => {
+		const value =
 
+				name === 'price' ? event :
+				name === 'category' ? event :
+				name === 'image' ? event.target.files[0] :
+				event.target.value;
+		setValues({ ...values, [name]: value });
+	};
+	const imageUrl =
+		values.id ? `/api/product/image/${values.id}?${new Date().getTime()}` :
+		'/api/product/defaultphoto';
 	if (values.redirect) {
-		return <Redirect to={`/user/${id}/product`} />;
+		return (
+			<Redirect
+				to={'/seller/shop/edit/' + match.params.shopId}
+			/>
+		);
 	}
 	return (
 		<div>
 			<Form layout='vertical'>
-				<Typography type='headline' component='h5'>
-					INFORMACIÓN DE TU PRODUCTO
+				<Typography
+					type='headline'
+					component='h2'
+					className={classes.title}>
+					Editar producto
 				</Typography>
+				<br />
 				<Form.Item
 					id='name'
 					label='Qué estas vendiendo?'
-					value={values.name}
 					onChange={handleChange('name')}>
-					<Input
-						size='large'
-						placeholder='En pocas palabras'
-					/>
+					<Input size='large' value={values.name} />
 				</Form.Item>
+				<br />
+				<br />
 				<Space>
 					<Form.Item label='Categoría'>
 						<Select
@@ -165,18 +247,23 @@ export default function NuevoProducto({ match }) {
 					</Form.Item>
 				</Space>
 				<Form.Item
-					label='Descripción'
+					label='Description'
 					rows='2'
-					value={values.description}
 					onChange={handleChange('description')}>
 					<TextArea
 						size='large'
-						placeholder='Añade informacion relevante como estado, modelo, color...'
 						rows={4}
+						value={values.description}
 					/>
 				</Form.Item>
-				<Form.Item label='Subir imagen'>
+				<Form.Item label='Cambiar imagen'>
 					<Space align='center'>
+						<br />
+						<Avatar
+							src={imageUrl}
+							className={classes.bigAvatar}
+						/>
+						<br />
 						<input
 							accept='image/*'
 							onChange={handleChange('image')}
@@ -196,7 +283,9 @@ export default function NuevoProducto({ match }) {
 				<Space align='center'>
 					{values.error && (
 						<Typography component='p' color='error'>
-							<Icon color='error'>error</Icon>
+							<Icon color='error' className={classes.error}>
+								error
+							</Icon>
 							{values.error}
 						</Typography>
 					)}
