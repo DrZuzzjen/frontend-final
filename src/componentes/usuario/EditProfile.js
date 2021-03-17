@@ -6,8 +6,6 @@ import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import Icon from '@material-ui/core/Icon';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Switch from '@material-ui/core/Switch';
 import { makeStyles } from '@material-ui/core/styles';
 import auth from './../auth/auth-helper';
 import { read, update } from '../../API/api-user';
@@ -123,9 +121,6 @@ export default function EditProfile({ match }) {
 	const handleChange = (name) => (event) => {
 		setValues({ ...values, [name]: event.target.value });
 	};
-	const handleCheck = (event, checked) => {
-		setValues({ ...values, seller: checked });
-	};
 
 	if (values.redirectToProfile) {
 		return <Redirect to={'/user/' + values.userId} />;
@@ -165,29 +160,7 @@ export default function EditProfile({ match }) {
 					onChange={handleChange('password')}
 					margin='normal'
 				/>
-				<Typography
-					variant='subtitle1'
-					className={classes.subheading}>
-					Seller Account
-				</Typography>
-				<FormControlLabel
-					control={
-						<Switch
-							classes={{
-								checked: classes.checked,
-								bar: classes.bar
-							}}
-							checked={values.seller}
-							onChange={handleCheck}
-						/>
-					}
-					label={
 
-							values.seller ? 'Active' :
-							'Inactive'
-					}
-				/>
-				<br />{' '}
 				{values.error && (
 					<Typography component='p' color='error'>
 						<Icon color='error' className={classes.error}>
@@ -203,7 +176,7 @@ export default function EditProfile({ match }) {
 					variant='contained'
 					onClick={clickSubmit}
 					className={classes.submit}>
-					Submit
+					Enviar
 				</Button>
 			</CardActions>
 		</Card>

@@ -56,7 +56,7 @@ const Signin = ({ onSignin, onsingup }) => {
 						error: ''
 					});
 
-					history.push('/user/' + data.user._id);
+					history.push(`/user/${data.user._id}/product`);
 				});
 			}
 		});

@@ -9,11 +9,10 @@ import {
 	Space
 } from 'antd';
 
-import TextField from '@material-ui/core/TextField';
 import Icon from '@material-ui/core/Icon';
 import Avatar from '@material-ui/core/Avatar';
 import auth from './../auth/auth-helper';
-import FileUpload from '@material-ui/icons/AddPhotoAlternate';
+
 import { makeStyles } from '@material-ui/core/styles';
 
 import { read, update } from '../../API/api-product';

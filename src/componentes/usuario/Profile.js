@@ -1,17 +1,25 @@
 import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import {
-	Card,
-	Typography,
-	Divider,
-	Avatar,
-	List
-} from 'antd';
-import { UserOutlined } from '@ant-design/icons';
+import Paper from '@material-ui/core/Paper';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemAvatar from '@material-ui/core/ListItemAvatar';
+import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import ListItemText from '@material-ui/core/ListItemText';
-import auth from '../auth/auth-helper';
+
+import IconButton from '@material-ui/core/IconButton';
+import Edit from '@material-ui/icons/Edit';
+import Person from '@material-ui/icons/Person';
+import DeleteUser from './DeleteUser';
+import auth from './../auth/auth-helper';
 import { read } from '../../API/api-user';
 import { Redirect, Link } from 'react-router-dom';
+import {
+	Skeleton,
+	Typography,
+	Divider,
+	Avatar
+} from 'antd';
 
 const useStyles = makeStyles((theme) => ({
 	root: theme.mixins.gutters({
@@ -77,27 +85,45 @@ export default function Profile({ match }) {
 		return <Redirect to='/signin' />;
 	}
 	return (
-		<Card className={classes.root} elevation={4}>
+		<Paper className={classes.root} elevation={4}>
 			<Typography variant='h6' className={classes.title}>
 				Perfil
 			</Typography>
-			<List>
-				<List.Item>
-					<Avatar size={64} icon={<UserOutlined />} />
+			<List dense>
+				<ListItem>
+					<ListItemAvatar>
+						<Avatar>
+							<Person />
+						</Avatar>
+					</ListItemAvatar>
 					<ListItemText
 						primary={user.name}
 						secondary={user.email}
 					/>{' '}
-				</List.Item>
+					{auth.isAuthenticated().user &&
+					auth.isAuthenticated().user._id === user._id && (
+						<ListItemSecondaryAction>
+							<Link to={'/user/edit/' + user._id}>
+								<IconButton
+									aria-label='Edit'
+									color='primary'>
+									<Edit />
+								</IconButton>
+							</Link>
+							<DeleteUser userId={user._id} />
+						</ListItemSecondaryAction>
+					)}
+				</ListItem>
 				<Divider />
-
-				<ListItemText
-					primary={
-						'Joined: ' +
-						new Date(user.created).toDateString()
-					}
-				/>
+				<ListItem>
+					<ListItemText
+						primary={
+							'Joined: ' +
+							new Date(user.created).toDateString()
+						}
+					/>
+				</ListItem>
 			</List>
-		</Card>
+		</Paper>
 	);
 }
