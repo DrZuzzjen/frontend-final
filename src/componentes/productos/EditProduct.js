@@ -157,11 +157,7 @@ export default function EditProduct({ match }) {
 		values.id ? `/api/product/image/${values.id}?${new Date().getTime()}` :
 		'/api/product/defaultphoto';
 	if (values.redirect) {
-		return (
-			<Redirect
-				to={'/seller/shop/edit/' + match.params.shopId}
-			/>
-		);
+		return <Redirect to={`/user/${id}/product`} />;
 	}
 	return (
 		<div>

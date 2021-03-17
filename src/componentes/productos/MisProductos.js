@@ -92,7 +92,7 @@ export default function MisProductos(props) {
 			</Typography>
 			<Typography type='headline' component='h7'>
 				Aquí podrás subir productos, gestionar los que ya
-				tienes y destacarlos para venderlos antes
+				tienes.
 			</Typography>
 			<span className={classes.addButton}>
 				<Link to={'/product'}>
@@ -114,20 +114,16 @@ export default function MisProductos(props) {
 								<CardMedia
 									className={classes.cover}
 									image={`${API_ROOT}/api/product/image/${product._id}`}
-									title={product.name}
 								/>
 								<div className={classes.details}>
 									<Typography
 										type='headline'
-										component='h2'
-										color='primary'
-										className={classes.productTitle}>
+										component='h3'>
 										{product.name}
 									</Typography>
 									<Typography
 										type='subheading'
-										component='h4'
-										className={classes.subheading}>
+										component='h5'>
 										{' '}
 										Precio: {product.price} €
 									</Typography>
