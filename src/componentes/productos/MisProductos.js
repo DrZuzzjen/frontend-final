@@ -10,12 +10,12 @@ import Edit from '@material-ui/icons/Edit';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
-import Typography from '@material-ui/core/Typography';
 import { Link } from 'react-router-dom';
 import { PlusOutlined } from '@ant-design/icons';
 import { listByShop } from '../../API/api-product';
 import DeleteProduct from '../productos/DeleteProduct';
 import { API_ROOT } from '../../API/api-config';
+import { Typography } from 'antd';
 const useStyles = makeStyles((theme) => ({
 	products: {
 		padding: '24px'
@@ -87,22 +87,24 @@ export default function MisProductos(props) {
 
 	return (
 		<Card className={classes.products}>
-			<Typography type='title' className={classes.title}>
-				Mis Productos
-				<span className={classes.addButton}>
-					<Link
-						to={
-							'/seller/' + props.userId + '/products/new'
-						}>
-						<Button
-							icon={<PlusOutlined />}
-							type='primary'
-							shape='round'>
-							Nuevo Producto
-						</Button>
-					</Link>
-				</span>
+			<Typography type='headline' component='h3'>
+				Tus productos
 			</Typography>
+			<Typography type='headline' component='h7'>
+				Aquí podrás subir productos, gestionar los que ya
+				tienes y destacarlos para venderlos antes
+			</Typography>
+			<span className={classes.addButton}>
+				<Link to={'/product'}>
+					<Button
+						icon={<PlusOutlined />}
+						type='primary'
+						shape='round'>
+						Subir Producto
+					</Button>
+				</Link>
+			</span>
+			<br />
 			<List>
 				{products.map((product, i) => {
 					console.log(product._id);

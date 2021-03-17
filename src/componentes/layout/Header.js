@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import {
+	Avatar,
 	Button,
 	Col,
 	Divider,
@@ -20,7 +21,8 @@ import 'react-responsive-modal/styles.css';
 import {
 	MessageOutlined,
 	ShopOutlined,
-	PlusOutlined
+	PlusOutlined,
+	UserOutlined
 } from '@ant-design/icons';
 import { useHistory } from 'react-router-dom';
 
@@ -178,17 +180,20 @@ export default function Header() {
 								Salir
 							</Button>
 						</Col>}
-
-					<Col flex='auto'>
-						<Button
-							icon={<PlusOutlined />}
-							type='primary'
-							shape='round'
-							onClick={handleNuevoProducto}
-							style={{ float: 'right' }}>
-							Subir Producto
-						</Button>
-					</Col>
+					{
+						auth.isAuthenticated() ? <Col flex='auto'>
+							<Avatar icon={<UserOutlined />} />
+						</Col> :
+						<Col flex='auto'>
+							<Button
+								icon={<PlusOutlined />}
+								type='primary'
+								shape='round'
+								onClick={handleNuevoProducto}
+								style={{ float: 'right' }}>
+								Subir Producto
+							</Button>
+						</Col>}
 				</Space>
 			</Row>
 			<Divider />

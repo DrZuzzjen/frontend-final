@@ -81,11 +81,7 @@ export default function NuevoProducto({ match }) {
 	};
 
 	if (values.redirect) {
-		return (
-			<Redirect
-				to={'/seller/shop/edit/' + match.params.userId}
-			/>
-		);
+		return <Redirect to={`/user/${id}/product`} />;
 	}
 	return (
 		<div>

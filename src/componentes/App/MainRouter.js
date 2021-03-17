@@ -5,7 +5,7 @@ import Cart from '../../componentes/carro/Cart';
 import Base from '../layout/Base.js';
 import Users from '../usuario/Users';
 import Product from '../productos/Product';
-import Perfil from '../usuario/Perfil';
+import Perfil from '../usuario/Profile';
 import NuevoProducto from '../productos/NuevoProducto';
 import DeleteProducto from '../productos/DeleteProduct';
 import EditProducto from '../productos/EditProduct';
