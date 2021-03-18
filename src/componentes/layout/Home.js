@@ -1,11 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
+import Products from '../productos/Products';
 
 import {
 	listLatest,
 	listCategories
 } from '../../API/api-product';
+
+import Suggestions from '../productos/Suggestions';
+
+import Search from '../productos/Search';
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -14,13 +19,9 @@ const useStyles = makeStyles((theme) => ({
 	}
 }));
 
-export default function Home(props) {
+export default function Home({ products, searched }) {
 	const classes = useStyles();
 
-	const [
-		products,
-		setProducts
-	] = useState([]);
 	const [
 		suggestionTitle,
 		setSuggestionTitle
@@ -69,10 +70,11 @@ export default function Home(props) {
 
 	return (
 		<div className={classes.root}>
-			<Grid container spacing={2}>
-				<Grid item xs={8} sm={8} />
-				<Grid item xs={4} sm={4} />
-			</Grid>
+			<Products products={products} searched={searched} />
+			<Suggestions
+				products={suggestions}
+				title={suggestionTitle}
+			/>
 		</div>
 	);
 }

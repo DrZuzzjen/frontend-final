@@ -10,7 +10,8 @@ import {
 	Select,
 	Input,
 	Typography,
-	Space
+	Space,
+	Divider
 } from 'antd';
 
 export default function NuevoProducto({ match }) {
@@ -201,13 +202,13 @@ export default function NuevoProducto({ match }) {
 						</Typography>
 					)}
 				</Space>
-				<Space>
+				<Space split={<Divider type='vertical' />}>
 					<Form.Item {...tailLayout}>
 						<Button
 							type='primary'
 							shape='round'
 							onClick={clickSubmit}>
-							Enviar
+							Subir Producto
 						</Button>
 					</Form.Item>
 					<Form.Item {...tailLayout}>
