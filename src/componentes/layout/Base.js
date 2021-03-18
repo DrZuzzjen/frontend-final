@@ -1,21 +1,21 @@
-import { Layout } from 'antd';
+import { Layout, Button } from 'antd';
 import { withRouter } from 'react-router-dom';
 import Header from '../layout/Header';
 import 'antd/dist/antd.css';
 import './Base.css';
+import Home from '../layout/Home';
 
 const { Content, Footer } = Layout;
 
 const Base = withRouter(
 	({ children, title, history, ...props }) => (
 		<Layout className='layout'>
+			{console.log(props.search)}
 			<div className='site-page-header-ghost-wrapper'>
 				<Header />
 			</div>
 			<Content style={{ padding: '0 50px' }}>
-				<div className='site-layout-content'>
-					{children}
-				</div>
+				{children}
 			</Content>
 			<Footer style={{ textAlign: 'center' }}>
 				Ant Design ©2018 Created by Ant UED

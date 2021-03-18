@@ -8,6 +8,7 @@ import {
 	Input,
 	Space
 } from 'antd';
+import Home from '../layout/Home';
 import { Modal } from 'react-responsive-modal';
 import Signin from '../auth/Signin';
 import Signup from '../usuario/Signup';
@@ -26,7 +27,9 @@ import {
 } from '@ant-design/icons';
 import { useHistory } from 'react-router-dom';
 import { Link } from 'react-router-dom';
-export default function Header() {
+import { render } from '@testing-library/react';
+
+export default function Header(props) {
 	const history = useHistory();
 	const { Search } = Input;
 
@@ -161,7 +164,6 @@ export default function Header() {
 					<Col flex='auto'>
 						<Button
 							icon={<MessageOutlined />}
-							key='2'
 							shape='round'
 							style={{ float: 'right' }}>
 							Mensajes
@@ -208,13 +210,14 @@ export default function Header() {
 				</Space>
 			</Row>
 			<Divider />
-			<Row>
-				{' '}
-				<Products
-					products={values.results}
-					searched={values.searched}
-				/>
-			</Row>
+			{!auth.isAuthenticated() && (
+				<Row>
+					<Home
+						products={values.results}
+						searched={values.searched}
+					/>
+				</Row>
+			)}
 
 			<Modal open={open} onClose={handleClose}>
 				{signbase && (

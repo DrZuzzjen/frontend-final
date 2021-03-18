@@ -13,7 +13,6 @@ export default function SignBase({ onbasein, onbaseup }) {
 			<div className='container-buttons'>
 				<Button
 					shape='round'
-					key='1'
 					style={{
 						background: '#3b5998',
 						color: 'white'
@@ -22,7 +21,6 @@ export default function SignBase({ onbasein, onbaseup }) {
 				</Button>
 				<Button
 					shape='round'
-					key='1'
 					style={{
 						background: '#db4437',
 						color: 'white'
