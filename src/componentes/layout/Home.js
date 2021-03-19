@@ -34,15 +34,21 @@ export default function Home({ history }) {
 		setSuggestions
 	] = useState([]);
 
-	useEffect(() => {
-		const info = history.location.state;
-		if (info.error) {
-			console.log(info.error);
-		}
-		else {
-			setProductos(info);
-		}
-	});
+	useEffect(
+		() => {
+			const info = history.location.state;
+			console.log(info);
+			if (info) {
+				setProductos(info);
+			}
+			else {
+				console.log(info);
+			}
+		},
+		[
+			history.location.state
+		]
+	);
 
 	useEffect(() => {
 		const abortController = new AbortController();

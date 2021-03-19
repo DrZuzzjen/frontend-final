@@ -55,11 +55,11 @@ export default function Header(props) {
 		console.log(values.search);
 		if (values.search) {
 			list({
-				search: values.search || undefined,
+				search: values.search,
 				category: values.category
 			}).then((data) => {
 				if (data.error) {
-					console.log(data.error);
+					console.log(data);
 				}
 				else {
 					setValues({
@@ -72,6 +72,10 @@ export default function Header(props) {
 						state: data
 					});
 				}
+			});
+			history.push({
+				path: '/',
+				state: []
 			});
 		}
 	};
