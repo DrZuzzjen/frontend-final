@@ -17,6 +17,9 @@ const MainRouter = () => {
 		<div>
 			<Base>
 				<Switch>
+					<Route path='/' exact>
+						{({ history }) => <Home history={history} />}
+					</Route>
 					<Route exact path='/users' component={Users} />
 					<Route
 						exact

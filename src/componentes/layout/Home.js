@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import Grid from '@material-ui/core/Grid';
+import Header from '../layout/Header';
 import Products from '../productos/Products';
 
 import {
@@ -9,8 +9,7 @@ import {
 } from '../../API/api-product';
 
 import Suggestions from '../productos/Suggestions';
-
-import Search from '../productos/Search';
+import { render } from '@testing-library/react';
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -18,8 +17,11 @@ const useStyles = makeStyles((theme) => ({
 		margin: 30
 	}
 }));
+// const search = () => {
+// 	render(<Header />);
+// };
 
-export default function Home({ products, searched }) {
+export default function Home(props) {
 	const classes = useStyles();
 
 	const [
@@ -51,6 +53,8 @@ export default function Home({ products, searched }) {
 		};
 	}, []);
 
+	render(<Header />);
+
 	useEffect(() => {
 		const abortController = new AbortController();
 		const signal = abortController.signal;
@@ -70,7 +74,10 @@ export default function Home({ products, searched }) {
 
 	return (
 		<div className={classes.root}>
-			<Products products={products} searched={searched} />
+			<Products
+				products={props.products}
+				searched={props.searched}
+			/>
 			<Suggestions
 				products={suggestions}
 				title={suggestionTitle}
