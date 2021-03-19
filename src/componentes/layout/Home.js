@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import Header from '../layout/Header';
 import Products from '../productos/Products';
 
 import {
@@ -9,7 +8,6 @@ import {
 } from '../../API/api-product';
 
 import Suggestions from '../productos/Suggestions';
-import { render } from '@testing-library/react';
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -17,17 +15,16 @@ const useStyles = makeStyles((theme) => ({
 		margin: 30
 	}
 }));
-// const search = () => {
-// 	render(<Header />);
-// };
 
-export default function Home(props) {
+export default function Home({ history }) {
+	console.log(history.location.state);
+
 	const classes = useStyles();
 
 	const [
-		suggestionTitle,
-		setSuggestionTitle
-	] = useState('Latest Products');
+		productos,
+		setProductos
+	] = useState([]);
 	const [
 		categories,
 		setCategories
@@ -36,6 +33,16 @@ export default function Home(props) {
 		suggestions,
 		setSuggestions
 	] = useState([]);
+
+	useEffect(() => {
+		const info = history.location.state;
+		if (info.error) {
+			console.log(info.error);
+		}
+		else {
+			setProductos(info);
+		}
+	});
 
 	useEffect(() => {
 		const abortController = new AbortController();
@@ -52,8 +59,6 @@ export default function Home(props) {
 			abortController.abort();
 		};
 	}, []);
-
-	render(<Header />);
 
 	useEffect(() => {
 		const abortController = new AbortController();
@@ -74,14 +79,8 @@ export default function Home(props) {
 
 	return (
 		<div className={classes.root}>
-			<Products
-				products={props.products}
-				searched={props.searched}
-			/>
-			<Suggestions
-				products={suggestions}
-				title={suggestionTitle}
-			/>
+			<Products products={productos} />
+			<Suggestions products={suggestions} />
 		</div>
 	);
 }

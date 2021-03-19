@@ -10,10 +10,9 @@ const { Content, Footer } = Layout;
 const Base = withRouter(
 	({ children, title, history, ...props }) => (
 		<Layout className='layout'>
-			{console.log(props.search)}
-			<div className='site-page-header-ghost-wrapper'>
-				<Header />
-			</div>
+			{console.log({ children })}
+			<div className='site-page-header-ghost-wrapper' />
+			<Header />
 			<Content style={{ padding: '0 50px' }}>
 				{children}
 			</Content>

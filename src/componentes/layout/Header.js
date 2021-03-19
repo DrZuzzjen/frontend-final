@@ -44,13 +44,15 @@ export default function Header(props) {
 	});
 
 	const handleChange = (name) => (event) => {
-		console.log(event.target.value);
+		const info = event.target.value;
+		console.log(info);
 		setValues({
 			...values,
 			[name]: event.target.value
 		});
 	};
 	const search = () => {
+		console.log(values.search);
 		if (values.search) {
 			list({
 				search: values.search || undefined,
@@ -65,10 +67,15 @@ export default function Header(props) {
 						results: data,
 						searched: true
 					});
+					history.push({
+						path: '/',
+						state: data
+					});
 				}
 			});
 		}
 	};
+
 	const enterKey = (event) => {
 		if (event.keyCode === 13) {
 			event.preventDefault();
@@ -210,15 +217,6 @@ export default function Header(props) {
 				</Space>
 			</Row>
 			<Divider />
-			{!auth.isAuthenticated() && (
-				<Row>
-					<Home
-						products={values.results}
-						searched={values.searched}
-					/>
-				</Row>
-			)}
-
 			<Modal open={open} onClose={handleClose}>
 				{signbase && (
 					<SignBase
