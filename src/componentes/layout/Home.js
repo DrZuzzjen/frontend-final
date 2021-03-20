@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import Grid from '@material-ui/core/Grid';
+import Products from '../productos/Products';
 
 import {
 	listLatest,
 	listCategories
 } from '../../API/api-product';
+
+import Suggestions from '../productos/Suggestions';
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -14,17 +16,15 @@ const useStyles = makeStyles((theme) => ({
 	}
 }));
 
-export default function Home(props) {
+export default function Home({ history }) {
+	console.log(history.location.state);
+
 	const classes = useStyles();
 
 	const [
-		products,
-		setProducts
+		productos,
+		setProductos
 	] = useState([]);
-	const [
-		suggestionTitle,
-		setSuggestionTitle
-	] = useState('Latest Products');
 	const [
 		categories,
 		setCategories
@@ -33,6 +33,22 @@ export default function Home(props) {
 		suggestions,
 		setSuggestions
 	] = useState([]);
+
+	useEffect(
+		() => {
+			const info = history.location.state;
+			console.log(info);
+			if (info) {
+				setProductos(info);
+			}
+			else {
+				console.log(info);
+			}
+		},
+		[
+			history.location.state
+		]
+	);
 
 	useEffect(() => {
 		const abortController = new AbortController();
@@ -69,10 +85,8 @@ export default function Home(props) {
 
 	return (
 		<div className={classes.root}>
-			<Grid container spacing={2}>
-				<Grid item xs={8} sm={8} />
-				<Grid item xs={4} sm={4} />
-			</Grid>
+			<Products products={productos} />
+			<Suggestions products={suggestions} />
 		</div>
 	);
 }

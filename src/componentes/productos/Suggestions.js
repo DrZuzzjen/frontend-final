@@ -81,7 +81,7 @@ export default function Suggestions(props) {
 		<div>
 			<Paper className={classes.root} elevation={10}>
 				<Typography type='title' className={classes.title}>
-					{/* {props.title} */} Ultimos Productos
+					Ultimos Productos
 				</Typography>
 				{props.products.map((item, i) => {
 					return (

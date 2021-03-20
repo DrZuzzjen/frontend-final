@@ -6,9 +6,13 @@ import {
 	Divider,
 	Row,
 	Input,
+
+
+
 	Space,
 	Image,
 	} from 'antd';
+
 
 import { Modal } from 'react-responsive-modal';
 import Signin from '../auth/Signin';
@@ -23,12 +27,18 @@ import 'react-responsive-modal/styles.css';
 
 import {
 	PlusOutlined,
+
+
+
+
+
 	UserOutlined,S, AppstoreAddOutlined
 } from '@ant-design/icons';
 import { useHistory } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 
 export default function Header() {
+
 	const history = useHistory();
 	const { Search } = Input;
 
@@ -43,20 +53,25 @@ export default function Header() {
 	});
 
 	const handleChange = (name) => (event) => {
-		console.log(event.target.value);
+		const info = event.target.value;
+		console.log(info);
 		setValues({
 			...values,
 			[name]: event.target.value
 		});
+		history.push({
+			path: '/'
+		});
 	};
 	const search = () => {
+		console.log(values.search);
 		if (values.search) {
 			list({
-				search: values.search || undefined,
+				search: values.search,
 				category: values.category
 			}).then((data) => {
 				if (data.error) {
-					console.log(data.error);
+					console.log(data);
 				}
 				else {
 					setValues({
@@ -65,12 +80,18 @@ export default function Header() {
 						searched: true
 					});
 				}
+				history.push({
+					pathname: '/',
+					state: data
+				});
 			});
 		}
 	};
+
 	const enterKey = (event) => {
 		if (event.keyCode === 13) {
 			event.preventDefault();
+			console.log('pase por aca');
 			search();
 		}
 	};
@@ -173,7 +194,11 @@ export default function Header() {
  
 					</Col>
 					<Col flex='auto'>
+
+				
+
 						<Button className='logo'
+
 							icon={<PlusOutlined />}
 							type='danger'
 							shape='round'
@@ -220,6 +245,7 @@ export default function Header() {
 						</Col>}
 				</Space>
 			</Row>
+
 			<Divider className='divider' />
 			<Row>
 				{' '}
@@ -228,6 +254,7 @@ export default function Header() {
 					searched={values.searched}
 				/>
 			</Row>
+
 
 			<Modal open={open} onClose={handleClose}>
 				{signbase && (
