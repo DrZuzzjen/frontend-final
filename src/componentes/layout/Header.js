@@ -6,9 +6,14 @@ import {
 	Divider,
 	Row,
 	Input,
-	Space
-} from 'antd';
-import Home from '../layout/Home';
+
+
+
+	Space,
+	Image,
+	} from 'antd';
+
+
 import { Modal } from 'react-responsive-modal';
 import Signin from '../auth/Signin';
 import Signup from '../usuario/Signup';
@@ -19,18 +24,21 @@ import auth from '../auth/auth-helper';
 import 'antd/dist/antd.css';
 import './Base.css';
 import 'react-responsive-modal/styles.css';
+
 import {
-	MessageOutlined,
-	ShopOutlined,
 	PlusOutlined,
-	UserOutlined,
-	InfoCircleFilled
+
+
+
+
+
+	UserOutlined,S, AppstoreAddOutlined
 } from '@ant-design/icons';
 import { useHistory } from 'react-router-dom';
 import { Link } from 'react-router-dom';
-import { render } from '@testing-library/react';
 
-export default function Header(props) {
+export default function Header() {
+
 	const history = useHistory();
 	const { Search } = Input;
 
@@ -148,16 +156,25 @@ export default function Header(props) {
 		setSignbase(false);
 	};
 
+	const handleMyProducts = () => {
+		const jwt = auth.isAuthenticated();
+		const id = jwt.user._id;
+		history.push(`/user/${id}/product`);
+	}
+
+	const handleHome = () => {
+		history.push('/')
+	}
+
 	return (
 		<div>
-			<Row>
+			<Row className='navbar'>
 				<Space>
 					<Col flex='auto'>
-						<Button
-							icon={<ShopOutlined />}
-							shape='circle'
-							style={{ float: 'right' }}
-						/>
+						<a href='#' onClick={handleHome}> 
+						<Image width={130} src='./wallarock.logo.svg' flex='auto' preview={false}/>
+						</a>
+					
 					</Col>
 					<Col flex='auto'>
 						{' '}
@@ -167,25 +184,23 @@ export default function Header(props) {
 						<Search
 							onKeyDown={enterKey}
 							onChange={handleChange('search')}
-							placeholder='input search text'
+							placeholder='Busca un articulo'
 							onSearch={search}
 							enterButton
+							type='danger'
+							color='red'
+							className='logo'
 						/>
+ 
 					</Col>
-
 					<Col flex='auto'>
-						<Button
-							icon={<MessageOutlined />}
-							shape='round'
-							style={{ float: 'right' }}>
-							Mensajes
-						</Button>
-					</Col>
 
-					<Col flex='auto'>
-						<Button
+				
+
+						<Button className='logo'
+
 							icon={<PlusOutlined />}
-							type='primary'
+							type='danger'
 							shape='round'
 							onClick={handleNuevoProducto}
 							style={{ float: 'right' }}>
@@ -194,8 +209,16 @@ export default function Header(props) {
 					</Col>
 					{auth.isAuthenticated() && (
 						<Col flex='auto'>
-							<Link onClick={handleProfile}>
-								<Avatar icon={<UserOutlined />} /> Profile
+							<Link className='red' onClick={handleMyProducts}>
+								<Avatar icon={<AppstoreAddOutlined />} /> Mis Productos
+							</Link>
+						</Col>
+					)}
+
+					{auth.isAuthenticated() && (
+						<Col flex='auto'>
+							<Link className='red' onClick={handleProfile}>
+								<Avatar icon={<UserOutlined />} /> Mi Cuenta
 							</Link>
 						</Col>
 					)}
@@ -209,7 +232,8 @@ export default function Header(props) {
 							</Button>
 						</Col> :
 						<Col>
-							<Button
+								<Button danger
+								type='dashed'
 								style={{ float: 'right' }}
 								shape='round'
 								onClick={() => {
@@ -221,7 +245,17 @@ export default function Header(props) {
 						</Col>}
 				</Space>
 			</Row>
-			<Divider />
+
+			<Divider className='divider' />
+			<Row>
+				{' '}
+				<Products
+					products={values.results}
+					searched={values.searched}
+				/>
+			</Row>
+
+
 			<Modal open={open} onClose={handleClose}>
 				{signbase && (
 					<SignBase

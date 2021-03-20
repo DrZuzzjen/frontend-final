@@ -9,15 +9,17 @@ const { Content, Footer } = Layout;
 
 const Base = withRouter(
 	({ children, title, history, ...props }) => (
-		<Layout className='layout'>
-			{console.log({ children })}
-			<div className='site-page-header-ghost-wrapper' />
-			<Header />
+
+		<Layout className='whit'>
+			<div className='site-page-header-ghost-wrapper'>
+				<Header className='blanco'/>
+			</div>
+
 			<Content style={{ padding: '0 50px' }}>
 				{children}
 			</Content>
-			<Footer style={{ textAlign: 'center' }}>
-				Ant Design ©2018 Created by Ant UED
+			<Footer className='red' style={{ textAlign: 'center' }}>
+				Wallarock© 2021 - v0.1.2
 			</Footer>
 		</Layout>
 	)

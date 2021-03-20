@@ -127,9 +127,9 @@ export default function EditProfile({ match }) {
 	}
 	return (
 		<Card className={classes.card}>
-			user/EditProfile
+				<Typography variant='h4' className={classes.title}>Menu de Usuario</Typography>
 			<CardContent>
-				<Typography variant='h6' className={classes.title}>
+				<Typography variant='h5' className={classes.title}>
 					Editar Perfil
 				</Typography>
 				<TextField
@@ -172,7 +172,7 @@ export default function EditProfile({ match }) {
 			</CardContent>
 			<CardActions>
 				<Button
-					color='primary'
+					color='danger'
 					variant='contained'
 					onClick={clickSubmit}
 					className={classes.submit}>
