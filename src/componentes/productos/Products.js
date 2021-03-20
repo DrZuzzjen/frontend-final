@@ -10,6 +10,10 @@ export default function Products(props) {
 	return (
 		<div>
 			{
+				props.products ===
+				undefined ? <span className='mensaje'>
+					No hay anuncios que cumplan con la busqueda
+				</span> :
 				props.products.length > 0 ? <div>
 					<GridList cellHeight={200} cols={2}>
 						{props.products.map((product, i) => (

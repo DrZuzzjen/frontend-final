@@ -22,9 +22,14 @@ const Menu = withRouter(({ history }) => (
 	<AppBar position='static'>
 		core/Menu
 		<Toolbar>
+      <div style={classes.logoHorizontallyCenter}>
+        <img src={"../public/wallarock.logo.svg" className={classes.logo} alt="logo" />
+      </div>
+    </Toolbar>
+		<Toolbar>
 			<br />
 			<Typography variant='h6' color='inherit'>
-				WALLACLONE
+				WallaRock
 			</Typography>
 			<div>
 				<Link to='/'>

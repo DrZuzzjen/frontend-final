@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import Grid from '@material-ui/core/Grid';
 import Products from '../productos/Products';
 
 import {
@@ -10,8 +9,6 @@ import {
 
 import Suggestions from '../productos/Suggestions';
 
-import Search from '../productos/Search';
-
 const useStyles = makeStyles((theme) => ({
 	root: {
 		flexGrow: 1,
@@ -19,13 +16,15 @@ const useStyles = makeStyles((theme) => ({
 	}
 }));
 
-export default function Home({ products, searched }) {
+export default function Home({ history }) {
+	console.log(history.location.state);
+
 	const classes = useStyles();
 
 	const [
-		suggestionTitle,
-		setSuggestionTitle
-	] = useState('Latest Products');
+		productos,
+		setProductos
+	] = useState([]);
 	const [
 		categories,
 		setCategories
@@ -34,6 +33,22 @@ export default function Home({ products, searched }) {
 		suggestions,
 		setSuggestions
 	] = useState([]);
+
+	useEffect(
+		() => {
+			const info = history.location.state;
+			console.log(info);
+			if (info) {
+				setProductos(info);
+			}
+			else {
+				console.log(info);
+			}
+		},
+		[
+			history.location.state
+		]
+	);
 
 	useEffect(() => {
 		const abortController = new AbortController();
@@ -70,11 +85,8 @@ export default function Home({ products, searched }) {
 
 	return (
 		<div className={classes.root}>
-			<Products products={products} searched={searched} />
-			<Suggestions
-				products={suggestions}
-				title={suggestionTitle}
-			/>
+			<Products products={productos} />
+			<Suggestions products={suggestions} />
 		</div>
 	);
 }
