@@ -6,13 +6,9 @@ import {
 	Divider,
 	Row,
 	Input,
-
-
-
 	Space,
-	Image,
-	} from 'antd';
-
+	Image
+} from 'antd';
 
 import { Modal } from 'react-responsive-modal';
 import Signin from '../auth/Signin';
@@ -27,18 +23,14 @@ import 'react-responsive-modal/styles.css';
 
 import {
 	PlusOutlined,
-
-
-
-
-
-	UserOutlined,S, AppstoreAddOutlined
+	UserOutlined,
+	S,
+	AppstoreAddOutlined
 } from '@ant-design/icons';
 import { useHistory } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 
 export default function Header() {
-
 	const history = useHistory();
 	const { Search } = Input;
 
@@ -160,21 +152,25 @@ export default function Header() {
 		const jwt = auth.isAuthenticated();
 		const id = jwt.user._id;
 		history.push(`/user/${id}/product`);
-	}
+	};
 
 	const handleHome = () => {
-		history.push('/')
-	}
+		history.push('/');
+	};
 
 	return (
 		<div>
 			<Row className='navbar'>
 				<Space>
 					<Col flex='auto'>
-						<a href='#' onClick={handleHome}> 
-						<Image width={130} src='./wallarock.logo.svg' flex='auto' preview={false}/>
+						<a href='#' onClick={handleHome}>
+							<Image
+								width={130}
+								src='./wallarock.logo.svg'
+								flex='auto'
+								preview={false}
+							/>
 						</a>
-					
 					</Col>
 					<Col flex='auto'>
 						{' '}
@@ -191,14 +187,10 @@ export default function Header() {
 							color='red'
 							className='logo'
 						/>
- 
 					</Col>
 					<Col flex='auto'>
-
-				
-
-						<Button className='logo'
-
+						<Button
+							className='logo'
 							icon={<PlusOutlined />}
 							type='danger'
 							shape='round'
@@ -209,8 +201,13 @@ export default function Header() {
 					</Col>
 					{auth.isAuthenticated() && (
 						<Col flex='auto'>
-							<Link className='red' onClick={handleMyProducts}>
-								<Avatar icon={<AppstoreAddOutlined />} /> Mis Productos
+							<Link
+								className='red'
+								onClick={handleMyProducts}>
+								<Avatar
+									icon={<AppstoreAddOutlined />}
+								/>{' '}
+								Mis Productos
 							</Link>
 						</Col>
 					)}
@@ -232,7 +229,8 @@ export default function Header() {
 							</Button>
 						</Col> :
 						<Col>
-								<Button danger
+							<Button
+								danger
 								type='dashed'
 								style={{ float: 'right' }}
 								shape='round'
@@ -247,14 +245,6 @@ export default function Header() {
 			</Row>
 
 			<Divider className='divider' />
-			<Row>
-				{' '}
-				<Products
-					products={values.results}
-					searched={values.searched}
-				/>
-			</Row>
-
 
 			<Modal open={open} onClose={handleClose}>
 				{signbase && (
