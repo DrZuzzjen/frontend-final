@@ -86,7 +86,7 @@ export default function Profile({ match }) {
 	}
 	return (
 		<Paper className={classes.root} elevation={4}>
-			<Typography variant='h6' className={classes.title}>
+			<Typography variant='h1' className={classes.title}>
 				Perfil
 			</Typography>
 			<List dense>

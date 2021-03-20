@@ -25,8 +25,7 @@ const MainRouter = () => {
 						component={Perfil}
 					/>
 					<Route
-						exact
-						path='/user/:userId/product'
+						path={'/user/:userId/product'}
 						component={MisProductos}
 					/>
 					<Route
