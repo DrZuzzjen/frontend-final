@@ -23,7 +23,8 @@ import {
 	MessageOutlined,
 	ShopOutlined,
 	PlusOutlined,
-	UserOutlined
+	UserOutlined,
+	InfoCircleFilled
 } from '@ant-design/icons';
 import { useHistory } from 'react-router-dom';
 import { Link } from 'react-router-dom';
@@ -50,6 +51,9 @@ export default function Header(props) {
 			...values,
 			[name]: event.target.value
 		});
+		history.push({
+			path: '/'
+		});
 	};
 	const search = () => {
 		console.log(values.search);
@@ -67,15 +71,11 @@ export default function Header(props) {
 						results: data,
 						searched: true
 					});
-					history.push({
-						path: '/',
-						state: data
-					});
 				}
-			});
-			history.push({
-				path: '/',
-				state: []
+				history.push({
+					pathname: '/',
+					state: data
+				});
 			});
 		}
 	};
@@ -83,6 +83,7 @@ export default function Header(props) {
 	const enterKey = (event) => {
 		if (event.keyCode === 13) {
 			event.preventDefault();
+			console.log('pase por aca');
 			search();
 		}
 	};

@@ -11,17 +11,13 @@ import DeleteProducto from '../productos/DeleteProduct';
 import EditProducto from '../productos/EditProduct';
 import EditProfile from '../usuario/EditProfile';
 import MisProductos from '../productos/MisProductos';
-import { useHistory } from 'react-router-dom';
-import Header from '../layout/Header';
 
 const MainRouter = () => {
 	return (
 		<div>
 			<Base>
 				<Switch>
-					<Route path='/' exact>
-						{({ history }) => <Home history={history} />}
-					</Route>
+					<Route exact path='/' component={Home} />
 					<Route exact path='/users' component={Users} />
 					<Route
 						exact
