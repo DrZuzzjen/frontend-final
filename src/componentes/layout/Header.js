@@ -164,6 +164,7 @@ export default function Header() {
 			<Row className='navbar'>
 				<Space>
 					<Col flex='auto'>
+<<<<<<< HEAD
 						<a href='#' onClick={handleHome}>
 							<Image
 								width={130}
@@ -171,6 +172,10 @@ export default function Header() {
 								flex='auto'
 								preview={false}
 							/>
+=======
+						<a href='' onClick={handleHome}> 
+						<Image width={130} src='./wallarock.logo.svg' flex='auto' preview={false}/>
+>>>>>>> Small update
 						</a>
 					</Col>
 					<Col flex='auto'>
