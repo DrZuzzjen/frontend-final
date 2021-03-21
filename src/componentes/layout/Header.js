@@ -1,31 +1,19 @@
-
 import React, { useState } from 'react';
-import {
-	Avatar,
-	Button,
-	Col,
-	Divider,
-	Row,
-	Input,
-	Space,
-	Image
-} from 'antd';
+import { Avatar, Button, Col, Divider, Input } from 'antd';
 
 import { Modal } from 'react-responsive-modal';
 import Signin from '../auth/Signin';
 import Signup from '../usuario/Signup';
 import SignBase from '../auth/SignBase';
 import { list } from '../../API/api-product';
-import Products from '../productos/Products';
 import auth from '../auth/auth-helper';
 import 'antd/dist/antd.css';
-import './Base.css';
+import './header.css';
 import 'react-responsive-modal/styles.css';
 
 import {
 	PlusOutlined,
 	UserOutlined,
-	S,
 	AppstoreAddOutlined
 } from '@ant-design/icons';
 import { useHistory } from 'react-router-dom';
@@ -113,8 +101,7 @@ export default function Header() {
 			!auth.isAuthenticated() ? handleClickOpen() :
 			history.push(`/product`);
 	};
-  
-	//Test
+
 	const handleProfile = () => {
 		const jwt = auth.isAuthenticated();
 		const id = jwt.user._id;
@@ -161,96 +148,94 @@ export default function Header() {
 	};
 
 	return (
-		<div>
-			<Row className='navbar'>
-				<Space>
-					<Col flex='auto'>
-<<<<<<< HEAD
-						<a href='#' onClick={handleHome}>
-							<Image
-								width={130}
-								src='./wallarock.logo.svg'
-								flex='auto'
-								preview={false}
-							/>
-=======
-						<a href='' onClick={handleHome}> 
-						<Image width={130} src='./wallarock.logo.svg' flex='auto' preview={false}/>
->>>>>>> Small update
-						</a>
-					</Col>
-					<Col flex='auto'>
-						{' '}
-						<br />
-					</Col>
-					<Col flex='auto'>
-						<Search
-							onKeyDown={enterKey}
-							onChange={handleChange('search')}
-							placeholder='Busca un articulo'
-							onSearch={search}
-							enterButton
-							type='danger'
-							color='red'
-							className='logo'
+		<div className='bajo-navbar'>
+			<navbar className='navbar'>
+				<Col flex='auto'>
+					<a href='#' onClick={handleHome}>
+						<img
+							className='logo2'
+							width={180}
+							src='./Logo-wallarock-2.png'
+							flex='auto'
+							alt='logotipo'
 						/>
-					</Col>
+					</a>
+				</Col>
+
+				<Col flex='auto'>
+					{' '}
+					<br />
+				</Col>
+
+				<Col flex='auto'>
+					<Search
+						onKeyDown={enterKey}
+						onChange={handleChange('search')}
+						placeholder='Busca un articulo'
+						onSearch={search}
+						enterButton
+						type='danger'
+						color='red'
+						className='logo'
+					/>
+				</Col>
+
+				<Col flex='auto' className='bot-subir'>
+					<Button
+						className='logo'
+						icon={<PlusOutlined />}
+						type='danger'
+						shape='round'
+						onClick={handleNuevoProducto}
+						style={{ float: 'right' }}>
+						Subir Producto
+					</Button>
+				</Col>
+
+				{auth.isAuthenticated() && (
 					<Col flex='auto'>
-						<Button
-							className='logo'
-							icon={<PlusOutlined />}
-							type='danger'
-							shape='round'
-							onClick={handleNuevoProducto}
-							style={{ float: 'right' }}>
-							Subir Producto
-						</Button>
+						<Link
+							className='red'
+							onClick={handleMyProducts}>
+							<Avatar icon={<AppstoreAddOutlined />} /> Mis
+							Productos
+						</Link>
 					</Col>
-					{auth.isAuthenticated() && (
-						<Col flex='auto'>
-							<Link
-								className='red'
-								onClick={handleMyProducts}>
-								<Avatar
-									icon={<AppstoreAddOutlined />}
-								/>{' '}
-								Mis Productos
-							</Link>
-						</Col>
-					)}
+				)}
 
-					{auth.isAuthenticated() && (
-						<Col flex='auto'>
-							<Link className='red' onClick={handleProfile}>
-								<Avatar icon={<UserOutlined />} /> Mi Cuenta
-							</Link>
-						</Col>
-					)}
-					{
-						!auth.isAuthenticated() ? <Col flex='auto'>
-							<Button
-								style={{ float: 'right' }}
-								shape='round'
-								onClick={handleClickOpen}>
-								Regístrate o inicia sesión
-							</Button>
-						</Col> :
-						<Col>
-							<Button
-								danger
-								type='dashed'
-								style={{ float: 'right' }}
-								shape='round'
-								onClick={() => {
-									handleSignin();
-									auth.clearJWT(() => history.push('/'));
-								}}>
-								Cerrar Sesión
-							</Button>
-						</Col>}
-				</Space>
-			</Row>
+				{auth.isAuthenticated() && (
+					<Col flex='auto'>
+						<Link className='red' onClick={handleProfile}>
+							<Avatar icon={<UserOutlined />} /> Mi Cuenta
+						</Link>
+					</Col>
+				)}
 
+				{
+					!auth.isAuthenticated() ? <Col flex='auto'>
+						<Button
+							style={{ float: 'right' }}
+							shape='round'
+							onClick={handleClickOpen}>
+							Regístrate o inicia sesión
+						</Button>
+					</Col> :
+					<Col className='bot-cerrar'>
+						<Button
+							danger
+							type='dashed'
+							style={{ float: 'right' }}
+							shape='round'
+							onClick={() => {
+								handleSignin();
+								auth.clearJWT(() => history.push('/'));
+							}}>
+							Cerrar Sesión
+						</Button>
+					</Col>}
+			</navbar>
+
+			<Divider className='divider' />
 			<Divider className='divider' />
 
 			<Modal open={open} onClose={handleClose}>
@@ -271,4 +256,3 @@ export default function Header() {
 		</div>
 	);
 }
->>>>>>> Small update
