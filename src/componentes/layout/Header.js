@@ -174,7 +174,11 @@ export default function Header() {
 =======
 						<a href='' onClick={handleHome}> 
 						<Image width={130} src='./wallarock.logo.svg' flex='auto' preview={false}/>
+<<<<<<< HEAD
 >>>>>>> Small update
+=======
+>>>>>>> b535cde9244acc8dc59b5d14d2dd285279c89e0e
+>>>>>>> 5b201ba1d1d117ea66e0061d2755984260155e7f
 						</a>
 					</Col>
 					<Col flex='auto'>
