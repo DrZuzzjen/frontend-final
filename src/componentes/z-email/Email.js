@@ -1,130 +1,136 @@
-import React, { Component } from "react";
-import axios from "axios";
+import React, { Component } from 'react';
+import axios from 'axios';
 import { API_ROOT } from '../../API/api-config';
-import  './email.css'
+import './email.css';
 
 class Email extends Component {
+	state = {
+		email: '',
+		name: '',
+		mensaje: '',
+		sent: false
+	};
 
-state = {
-  email: "",
-  asunto: "",
-  mensaje: "",
-  sent: false
-};
+	handleEmail = (e) => {
+		this.setState({
+			email: e.target.value
+		});
+	};
+	handleAsunto = (e) => {
+		this.setState({
+			name: e.target.value
+		});
+	};
+	handleMensaje = (e) => {
+		this.setState({
+			mensaje: e.target.value
+		});
+	};
 
-handleEmail=(e)=>{
-    this.setState({
-        email:e.target.value
-    })
-}
-handleAsunto=(e)=>{
-    this.setState({
-        asunto:e.target.value
-    })
-}
-handleMensaje=(e)=>{
-    this.setState({
-        mensaje:e.target.value
-    })
-}
+	constructor() {
+		super();
+		this.enviarEmail = this.enviarEmail.bind(this);
+	}
 
-constructor() {
-    super();
-    this.enviarEmail = this.enviarEmail.bind(this);
-}
+	async enviarEmail(e) {
+		e.preventDefault();
 
- async enviarEmail (e) {
-    e.preventDefault();
-  
-   let data = {
-       email:this.state.email,
-       asunto:this.state.asunto,
-       mensaje:this.state.mensaje
-   }
-    
-    
-     await axios.post(`${API_ROOT}/api/form`, {data})
-            .then( res => {
-                this.setState({
-                    sent:true
-                },this.resetForm())
-            }).catch(()=>{
-                console.log('mensaje no enviado')
-            })
-}
+		let data = {
+			email: this.state.email,
+			name: this.state.asunto,
+			mensaje: this.state.mensaje
+		};
 
-// Resetear formulario email
-resetForm=()=>{
-    this.setState({
-        email:'',
-        asunto:'',
-        mensaje:''
-    })
+		await axios
+			.post(`${API_ROOT}/auth/forgotPassword/`, { data })
+			.then((res) => {
+				this.setState(
+					{
+						sent: true
+					},
+					this.resetForm()
+				);
+			})
+			.catch(() => {
+				console.log('mensaje no enviado');
+			});
+	}
 
-    setTimeout(()=>{
-        this.setState({
-            sent: false,
-        })
-    },3000)
-}
+	// Resetear formulario email
+	resetForm = () => {
+		this.setState({
+			email: '',
+			name: '',
+			mensaje: ''
+		});
 
-render(){
-    return(
-        <div className="container">
-            
-            <form className="form" onSubmit={this.enviarEmail}>
-            <h1> Enviando correo </h1>
-            <div>
-                <label htmlFor="email">Email:</label>
-                <input
-                    className="form-control"
-                    type="email"
-                    name="email"
-                    value={this.state.email}
-                    onChange={this.handleEmail}
-                    required                
-                />
-            </div>
+		setTimeout(() => {
+			this.setState({
+				sent: false
+			});
+		}, 3000);
+	};
 
-            <div>
-                <label htmlFor="asunto">Asunto</label>
-                <input
-                    className="form-control"
-                    type="text"
-                    name="asunto"
-                    value={this.state.asunto}
-                    onChange={this.handleAsunto}                         
-                />
-            </div>
+	render() {
+		return (
+			<div className='container'>
+				<form className='form' onSubmit={this.enviarEmail}>
+					<h1> Enviando correo </h1>
+					<div>
+						<label htmlFor='email'>Email:</label>
+						<input
+							className='form-control'
+							type='email'
+							name='email'
+							value={this.state.email}
+							onChange={this.handleEmail}
+							required
+						/>
+					</div>
 
-            <div>
-                <label htmlFor="mensaje">Mensaje</label>
-                <textarea
-                    className="form-control"
-                    rows="4"
-                    name="mensaje"
-                    value={this.state.mensaje}
-                    onChange={this.handleMensaje}                           
-                > 
-                </textarea>
-            </div>
+					<div>
+						<label htmlFor='asunto'>Asunto</label>
+						<input
+							className='form-control'
+							type='text'
+							name='asunto'
+							value={this.state.asunto}
+							onChange={this.handleAsunto}
+						/>
+					</div>
 
-            <div className={this.state.sent ? 'msg msgAppear' : 'msg'}>
-                El mensaje ha sido enviado
-            </div>
+					<div>
+						<label htmlFor='mensaje'>Mensaje</label>
+						<textarea
+							className='form-control'
+							rows='4'
+							name='mensaje'
+							value={this.state.mensaje}
+							onChange={this.handleMensaje}
+						/>
+					</div>
 
-            <div>
-                <br/>
-                <button type="submit" className="btn btn-primary">
-                    Enviar email
-                </button>
-            </div>
+					<div
+						className={
 
-            </form>
+								this.state.sent ? 'msg msgAppear' :
+								'msg'
+						}>
+						El mensaje ha sido enviado
+					</div>
 
-        </div>
-    )
-}
+					<div>
+						<br />
+						<button
+							type='submit'
+							className='btn btn-primary'>
+							Enviar email
+						</button>
+					</div>
+				</form>
+			</div>
+		);
+	}
 }
 
 export default Email;
