@@ -160,77 +160,71 @@ export default function Header() {
 	};
 
 	return (
-		<div className="bajo-navbar">
+		<div className='bajo-navbar'>
 			<navbar className='navbar'>
-									
-					<Col flex='auto' >
-						<a href='#' onClick={handleHome}>
-							<img 
-								className="logo2"
-								width={180}
-								src='./wallarock.logo.svg'
-								flex='auto'
-								/* preview={false} */
-							/>
-						</a>
-					</Col>
-
-					<Col  flex='auto' >
-						{' '}
-						<br />
-					</Col>
-					
-					<Col flex='auto' >
-						<Search
-							onKeyDown={enterKey}
-							onChange={handleChange('search')}
-							placeholder='Busca un articulo'
-							onSearch={search}
-							enterButton
-							type='danger'
-							color='red'
-							className='logo'
+				<Col flex='auto'>
+					<a href='#' onClick={handleHome}>
+						<img
+							className='logo2'
+							width={180}
+							src='./wallarock.logo.svg'
+							flex='auto'
+							/* preview={false} */
 						/>
-					</Col>
-					
-					<Col flex='auto' className="bot-subir" >
-						<Button
-							className='logo'
-							icon={<PlusOutlined />}
-							type='danger'
-							shape='round'
-							onClick={handleNuevoProducto}
-							style={{ float: 'right' }}>
-							Subir Producto
-						</Button>
-					</Col>
+					</a>
+				</Col>
 
+				<Col flex='auto'>
+					{' '}
+					<br />
+				</Col>
 
-					{auth.isAuthenticated() && (
-						
-						<Col flex='auto'>
-							<Link
-								className='red'
-								onClick={handleMyProducts}>
-								<Avatar
-									icon={<AppstoreAddOutlined />}
-								/>{' '}
-								Mis Productos
-							</Link>
-						</Col>
-					)}
+				<Col flex='auto'>
+					<Search
+						onKeyDown={enterKey}
+						onChange={handleChange('search')}
+						placeholder='Busca un articulo'
+						onSearch={search}
+						enterButton
+						type='danger'
+						color='red'
+						className='logo'
+					/>
+				</Col>
 
-					{auth.isAuthenticated() && (
-						
-						<Col flex='auto'>
-							<Link className='red' onClick={handleProfile}>
-								<Avatar icon={<UserOutlined />} /> Mi Cuenta
-							</Link>
-						</Col>
-					)}
-					
-					{!auth.isAuthenticated() ? 
+				<Col flex='auto' className='bot-subir'>
+					<Button
+						className='logo'
+						icon={<PlusOutlined />}
+						type='danger'
+						shape='round'
+						onClick={handleNuevoProducto}
+						style={{ float: 'right' }}>
+						Subir Producto
+					</Button>
+				</Col>
+
+				{auth.isAuthenticated() && (
 					<Col flex='auto'>
+						<Link
+							className='red'
+							onClick={handleMyProducts}>
+							<Avatar icon={<AppstoreAddOutlined />} /> Mis
+							Productos
+						</Link>
+					</Col>
+				)}
+
+				{auth.isAuthenticated() && (
+					<Col flex='auto'>
+						<Link className='red' onClick={handleProfile}>
+							<Avatar icon={<UserOutlined />} /> Mi Cuenta
+						</Link>
+					</Col>
+				)}
+
+				{
+					!auth.isAuthenticated() ? <Col flex='auto'>
 						<Button
 							style={{ float: 'right' }}
 							shape='round'
@@ -238,24 +232,19 @@ export default function Header() {
 							Regístrate o inicia sesión
 						</Button>
 					</Col> :
-						
-						
-					<Col className="bot-cerrar">
+					<Col className='bot-cerrar'>
 						<Button
-								danger
-								type='dashed'
-								style={{ float: 'right' }}
-								shape='round'
-								onClick={() => {
-									handleSignin();
-									auth.clearJWT(() => history.push('/'));
-								}}>
-								Cerrar Sesión
+							danger
+							type='dashed'
+							style={{ float: 'right' }}
+							shape='round'
+							onClick={() => {
+								handleSignin();
+								auth.clearJWT(() => history.push('/'));
+							}}>
+							Cerrar Sesión
 						</Button>
 					</Col>}
-
-				
-
 			</navbar>
 
 			<Divider className='divider' />
