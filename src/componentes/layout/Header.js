@@ -18,7 +18,8 @@ import { list } from '../../API/api-product';
 import Products from '../productos/Products';
 import auth from '../auth/auth-helper';
 import 'antd/dist/antd.css';
-import './Base.css';
+/* import './Base.css'; */
+import './header.css';
 import 'react-responsive-modal/styles.css';
 
 import {
@@ -159,24 +160,27 @@ export default function Header() {
 	};
 
 	return (
-		<div>
-			<Row className='navbar'>
-				<Space>
-					<Col flex='auto'>
+		<div className="bajo-navbar">
+			<navbar className='navbar'>
+									
+					<Col flex='auto' >
 						<a href='#' onClick={handleHome}>
-							<Image
-								width={130}
+							<img 
+								className="logo2"
+								width={180}
 								src='./wallarock.logo.svg'
 								flex='auto'
-								preview={false}
+								/* preview={false} */
 							/>
 						</a>
 					</Col>
-					<Col flex='auto'>
+
+					<Col  flex='auto' >
 						{' '}
 						<br />
 					</Col>
-					<Col flex='auto'>
+					
+					<Col flex='auto' >
 						<Search
 							onKeyDown={enterKey}
 							onChange={handleChange('search')}
@@ -188,7 +192,8 @@ export default function Header() {
 							className='logo'
 						/>
 					</Col>
-					<Col flex='auto'>
+					
+					<Col flex='auto' className="bot-subir" >
 						<Button
 							className='logo'
 							icon={<PlusOutlined />}
@@ -199,7 +204,10 @@ export default function Header() {
 							Subir Producto
 						</Button>
 					</Col>
+
+
 					{auth.isAuthenticated() && (
+						
 						<Col flex='auto'>
 							<Link
 								className='red'
@@ -213,23 +221,27 @@ export default function Header() {
 					)}
 
 					{auth.isAuthenticated() && (
+						
 						<Col flex='auto'>
 							<Link className='red' onClick={handleProfile}>
 								<Avatar icon={<UserOutlined />} /> Mi Cuenta
 							</Link>
 						</Col>
 					)}
-					{
-						!auth.isAuthenticated() ? <Col flex='auto'>
-							<Button
-								style={{ float: 'right' }}
-								shape='round'
-								onClick={handleClickOpen}>
-								Regístrate o inicia sesión
-							</Button>
-						</Col> :
-						<Col>
-							<Button
+					
+					{!auth.isAuthenticated() ? 
+					<Col flex='auto'>
+						<Button
+							style={{ float: 'right' }}
+							shape='round'
+							onClick={handleClickOpen}>
+							Regístrate o inicia sesión
+						</Button>
+					</Col> :
+						
+						
+					<Col className="bot-cerrar">
+						<Button
 								danger
 								type='dashed'
 								style={{ float: 'right' }}
@@ -239,11 +251,14 @@ export default function Header() {
 									auth.clearJWT(() => history.push('/'));
 								}}>
 								Cerrar Sesión
-							</Button>
-						</Col>}
-				</Space>
-			</Row>
+						</Button>
+					</Col>}
 
+				
+
+			</navbar>
+
+			<Divider className='divider' />
 			<Divider className='divider' />
 
 			<Modal open={open} onClose={handleClose}>
