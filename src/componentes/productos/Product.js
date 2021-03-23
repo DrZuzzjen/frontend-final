@@ -6,7 +6,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import { read, listRelated } from '../../API/api-product';
 import { API_ROOT } from '../../API/api-config';
 import Suggestions from './Suggestions';
-import AddToCart from '../carro/AddToCart';
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -137,14 +136,6 @@ export default function Product({ match }) {
 
 									product.quantity > 0 ? 'Con stock' :
 									'Sin existencias'
-							}
-							action={
-								<span className={classes.action}>
-									<AddToCart
-										cartStyle={classes.addCart}
-										item={product}
-									/>
-								</span>
 							}
 						/>
 						<div className={classes.flex}>
