@@ -1,7 +1,7 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 import Home from '../layout/Home';
-import Cart from '../../componentes/carro/Cart';
+
 import Base from '../layout/Base.js';
 import Users from '../usuario/Users';
 import Product from '../productos/Product';
@@ -54,8 +54,6 @@ const MainRouter = () => {
 						path='/product/:productId/edit/'
 						component={EditProducto}
 					/>
-
-					<Route path='/cart' component={Cart} />
 				</Switch>
 			</Base>
 		</div>

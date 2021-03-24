@@ -1,4 +1,5 @@
 export const API_ROOT = `http://localhost:3000`;
+
 const config = {
 	stripe_connect_test_client_id:
 		'YOUR_stripe_connect_test_client',

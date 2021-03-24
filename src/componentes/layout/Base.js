@@ -4,6 +4,8 @@ import Header from '../layout/Header';
 import 'antd/dist/antd.css';
 import './Base.css';
 import Home from '../layout/Home';
+// import Email from '../z-email/Email'
+
 
 const { Content, Footer } = Layout;
 
@@ -15,7 +17,8 @@ const Base = withRouter(
 				<Header className='blanco'/>
 			</div>
 
-			<Content style={{ padding: '0 50px' }}>
+
+			<Content style={{ padding: '40px 50px' }}>
 				{children}
 			</Content>
 			<Footer className='red' style={{ textAlign: 'center' }}>
