@@ -4,7 +4,7 @@ import { Card, Typography, Image } from 'antd';
 import GridList from '@material-ui/core/GridList';
 import GridListTileBar from '@material-ui/core/GridListTileBar';
 import { Link } from 'react-router-dom';
-import AddToCart from '../carro/AddToCart';
+
 import { API_ROOT } from '../../API/api-config';
 export default function Products(props) {
 	return (
@@ -32,7 +32,6 @@ export default function Products(props) {
 										</Link>
 									}
 									subtitle={<span>{product.price} €</span>}
-									actionIcon={<AddToCart item={product} />}
 								/>
 							</Card>
 						))}
