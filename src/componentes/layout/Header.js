@@ -168,7 +168,7 @@ export default function Header() {
 							<img 
 								className="logo2"
 								width={180}
-								src='./wallarock.logo.svg'
+								src='./Logo-wallarock-2.png'
 								flex='auto'
 								/* preview={false} */
 							/>

@@ -144,6 +144,7 @@ export default function Product({ match }) {
 		return (
 			<>			
 				<div className="pagina-fondo">
+					
 				 <div className="container-detail">
 	  
 	  
