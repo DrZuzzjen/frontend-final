@@ -194,12 +194,23 @@ export default function Header() {
 
 				{auth.isAuthenticated() && (
 					<Col flex='auto'>
+<<<<<<< HEAD
 						<Link
 							className='red'
 							onClick={handleMyProducts}>
 							<Avatar icon={<AppstoreAddOutlined />} /> Mis
 							Productos
 						</Link>
+=======
+						<a href='#' onClick={handleHome}>
+							<Image
+								width={130}
+								src='./wallarock.logo.svg'
+								flex='auto'
+								preview={false}
+							/>
+						</a>
+>>>>>>> locked out
 					</Col>
 				)}
 
