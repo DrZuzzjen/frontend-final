@@ -1,7 +1,7 @@
 .pagina-fondo{
     /* border: 2px solid black; */
     background-color: rgb(238, 235, 235);
-    padding-bottom: 380px;
+    padding-bottom: 340px;
 }
 
 .container-detail{
@@ -10,7 +10,7 @@
     border-radius: 9px;
     padding: 10px 10px 10px 10px ;
     background-color: rgb(255, 255, 255);
-    width: 55%;
+    width: 45%;
     height: 100%;
     margin: 0 auto;
     position: relative;
