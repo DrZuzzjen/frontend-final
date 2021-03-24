@@ -1,7 +1,8 @@
 .pagina-fondo{
     /* border: 2px solid black; */
     background-color: rgb(238, 235, 235);
-    padding-bottom: 380px;
+    padding-bottom: 400px;
+    
 }
 
 .container-detail{
@@ -10,11 +11,11 @@
     border-radius: 9px;
     padding: 10px 10px 10px 10px ;
     background-color: rgb(255, 255, 255);
-    width: 55%;
+    width: 45%;
     height: 100%;
     margin: 0 auto;
     position: relative;
-    top: 140px;
+    /* top: 100px; */
 }
 
 .nav-detail{
@@ -30,11 +31,11 @@
     margin-left: 4px;
     display: flex;
 }
-.producto{
-   /*  border: 1px solid black; */
-}
+/* .producto{
+    border: 1px solid black;
+} */
 
-.nombre{
+.nombre-detalle{
     margin-left: 12px;
 }
 
@@ -55,10 +56,10 @@
    /*  margin-top: 20px; */
     /* margin-left: 10px; */
 }
-
+/* 
 .category{
 
-}
+} */
 
 .chat{
     margin-right: 10px;

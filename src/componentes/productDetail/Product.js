@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
-//import { Card, Typography, Image } from 'antd';
 
-// import Grid from '@material-ui/core/Grid';
-import { makeStyles } from '@material-ui/core/styles';
+// import { makeStyles } from '@material-ui/core/styles';
 import { read, listRelated } from '../../API/api-product';
+
 import { API_ROOT } from '../../API/api-config';
 import { TwitterShareButton, TwitterIcon } from 'react-share';
 import { FacebookShareButton, FacebookIcon } from 'react-share';
@@ -11,66 +10,16 @@ import { EmailShareButton, EmailIcon  } from 'react-share';
 import { WhatsappShareButton, WhatsappIcon  } from 'react-share';
 import Moment from 'react-moment';
 
-// import Suggestions from '../Suggestions';
-// import AddToCart from '../../carro/AddToCart';
-
 import './detailproduct.css'
 
-/* const useStyles = makeStyles((theme) => ({
-	root: {
-		flexGrow: 1,
-		margin: 30
-	},
-	flex: {
-		display: 'flex'
-	},
-	card: {
-		padding: '24px 40px 40px'
-	},
-	subheading: {
-		margin: '24px',
-		color: theme.palette.openTitle
-	},
-	price: {
-		padding: '10px',
-		margin: '16px 0px',
-		display: 'flex',
-		backgroundColor: '#93c5ae3d',
-		fontSize: '1.3em',
-		color: '#375a53'
-	},
-	media: {
-		height: 200,
-		display: 'inline-block',
-		width: '50%',
-		marginLeft: '24px'
-	},
-	icon: {
-		verticalAlign: 'sub'
-	},
-	link: {
-		color: '#3e4c54b3',
-		fontSize: '0.9em'
-	},
-	addCart: {
-		width: '35px',
-		height: '35px',
-		padding: '10px 12px',
-		borderRadius: '0.25em',
-		backgroundColor: '#5f7c8b'
-	},
-	action: {
-		margin: '8px 24px',
-		display: 'inline-block'
-	}
-})); */
+
 
 
 
 export default function Product({ match }) {
 	console.log(match.params);
 
-	/* const classes = useStyles(); */
+	
 
 	const [
 		product,
@@ -84,6 +33,8 @@ export default function Product({ match }) {
 		error,
 		setError
 	] = useState('');
+
+
 	useEffect(
 		() => {
 			const abortController = new AbortController();
@@ -108,6 +59,7 @@ export default function Product({ match }) {
 			match.params.productId
 		]
 	);
+
 
 	useEffect(
 		() => {
@@ -144,6 +96,7 @@ export default function Product({ match }) {
 		return (
 			<>			
 				<div className="pagina-fondo">
+
 				 <div className="container-detail">
 	  
 	  
@@ -154,19 +107,17 @@ export default function Product({ match }) {
 									<div>
 									<img src="/avatar-1.jpg" alt="avatar"></img> 
 									</div>
-									<div className="nombre"> 
+									<div className="nombre-detalle"> 
 										  <div className="nombre-avatar">
 
-										  {/* <strong>{user.name}</strong> */}
+										  {/* <strong>{user.name}</strong>  */}
 
 										  </div>
 										  <div className="producto">
 											  1 Producto
 										  </div>
 									</div>
-							  </div>
-	  
-											   
+							  </div>	   
 	  
 					 
 						  <div className="">
@@ -202,15 +153,13 @@ export default function Product({ match }) {
 				  </div>
 								 {/* is-4by3 */}
 
-						  <div className="ima image is-4by3">
+						  <div className="ima image is-4by2">
 						  		<img
 								  src={imageUrl}
 							   />
 						  </div>
 	  
-	  
-	  
-	  
+	  	  
 						{/* <div className="image is-4by3">
 							<img
 							  src={
@@ -223,7 +172,7 @@ export default function Product({ match }) {
 						</div> */}
 							  
 					<div className="texto-detalle">
-						<p className="precio">{product.price} € </p>  
+						<p className="precio-2">{product.price} € </p>  
 	  
 						<h1 className="title">{product.name}</h1> 
 	  
@@ -235,17 +184,14 @@ export default function Product({ match }) {
 	  
 						<hr/>         
 	  
-						 <div> 
-							  Subido el&nbsp;  
-
-							  <Moment format="DD/MM/YYYY HH:mm">
-								{product.createdAt} 
-							  </Moment>
-							  
-							  </div> 
+								<div> 
+									Subido el&nbsp;
+									<Moment format="DD/MM/YYYY HH:mm">
+										{product.createdAt} 
+									</Moment>
+								</div> 
 	  
-						  </div>
-	  
+						  </div>	  
 						  
 	  
 						 
@@ -256,52 +202,39 @@ export default function Product({ match }) {
 								</div>
 	  
 								<div className="media">
-								<TwitterShareButton
-
-								  url={`http://localhost:3001/product/${product.className.replace(
-									/\s+/g, '-', )}/${product._id}`}
-
-								  title={product.name}
-								>
-
-								  <TwitterIcon size={36} />
-								</TwitterShareButton> 
+									<TwitterShareButton
+										url={`http://localhost:3001/product/${product._id}`}  
+										title={product.name}
+										>
+										<TwitterIcon size={36} />
+									</TwitterShareButton> 
 								</div>
 	  
 								<div className="media">
-								<FacebookShareButton
-
-								  /* url={`http://localhost:3001/product/${product.name.replace(
-									/\s+/g, '-', )}/${product._id}`} */
-
-								  title={product.name}
-								>
-								  <FacebookIcon size={36} />
-								</FacebookShareButton> 
+									<FacebookShareButton
+										url={`http://localhost:3001/product/${product._id}`}
+										title={product.name}
+										>
+										<FacebookIcon size={36} />
+									</FacebookShareButton> 
 								</div>
 	  
 								<div className="media">
-								<EmailShareButton
-
-								  /* url={`http://localhost:3001/product/${product.name.replace(
-									/\s+/g, '-', )}/${product._id}`} */
-
-								  title={product.name}
-								>
-								  <EmailIcon size={36} />
-								</EmailShareButton> 
+									<EmailShareButton
+										url={`http://localhost:3001/product/${product._id}`} 
+										title={product.name}
+										>
+										<EmailIcon size={36}/>
+									</EmailShareButton> 
 								</div>
 	  
 								<div className="media">
-								<WhatsappShareButton
-
-								  /* url={`http://localhost:3001/product/${product.name.replace(
-									/\s+/g, '-', )}/${product._id}`} */
-
-								  title={product.name}
-								>
-								  <WhatsappIcon size={36} />
-								</WhatsappShareButton> 
+										<WhatsappShareButton
+											 url={`http://localhost:3001/product/${product._id}`} 
+											title={product.name}
+											>
+										<WhatsappIcon size={36} />
+									</WhatsappShareButton> 
 								</div>
 	  	  
 						  </div>

@@ -115,9 +115,6 @@ export default function NuevoProducto({ match }) {
 							<Option value='Motor y Accesorios'>
 								Motor y Accesorios
 							</Option>
-							<Option value='Moda y Accesorios'>
-								Moda y Accesorios
-							</Option>
 							<Option value='Inmobiliaria'>
 								Inmobiliaria
 							</Option>
@@ -194,8 +191,6 @@ export default function NuevoProducto({ match }) {
 						</span>
 					</Space>
 				</Form.Item>
-				<br />
-				<br />
 				<Space align='center'>
 					{values.error && (
 						<Typography component='p' color='error'>
