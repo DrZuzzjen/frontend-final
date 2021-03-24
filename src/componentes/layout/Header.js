@@ -101,7 +101,8 @@ export default function Header() {
 			!auth.isAuthenticated() ? handleClickOpen() :
 			history.push(`/product`);
 	};
-
+  
+	//Test
 	const handleProfile = () => {
 		const jwt = auth.isAuthenticated();
 		const id = jwt.user._id;
