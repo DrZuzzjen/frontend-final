@@ -98,7 +98,7 @@ export default function CartItems(props) {
 		setCartItems
 	] = useState(cart.getCart());
 
-	const handleChange = (index) => (event) => {
+	/* const handleChange = (index) => (event) => {
 		let updatedCartItems = cartItems;
 		if (event.target.value === 0) {
 			updatedCartItems[index] = 1;
@@ -110,7 +110,7 @@ export default function CartItems(props) {
 			...updatedCartItems
 		]);
 		cart.updateCart(index, event.target.value);
-	};
+	}; */
 
 	const getTotal = () => {
 		return cartItems.reduce((a, b) => {

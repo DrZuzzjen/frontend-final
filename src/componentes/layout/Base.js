@@ -1,9 +1,9 @@
-import { Layout, Button } from 'antd';
+import { Layout } from 'antd';
 import { withRouter } from 'react-router-dom';
 import Header from '../layout/Header';
 import 'antd/dist/antd.css';
 import './Base.css';
-import Home from '../layout/Home';
+// import Home from '../layout/Home';
 // import Email from '../z-email/Email'
 
 

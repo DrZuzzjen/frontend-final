@@ -31,11 +31,11 @@
     margin-left: 4px;
     display: flex;
 }
-.producto{
-   /*  border: 1px solid black; */
-}
+/* .producto{
+    border: 1px solid black;
+} */
 
-.nombre{
+.nombre-detalle{
     margin-left: 12px;
 }
 
@@ -56,10 +56,10 @@
    /*  margin-top: 20px; */
     /* margin-left: 10px; */
 }
-
+/* 
 .category{
 
-}
+} */
 
 .chat{
     margin-right: 10px;

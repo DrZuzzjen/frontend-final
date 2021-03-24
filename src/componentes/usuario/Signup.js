@@ -1,5 +1,5 @@
 import '../layout/Card.css';
-import { Form, Input, Button, Checkbox, Card } from 'antd';
+import { Form, Input, Button, Card } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
 
 import React, { useState } from 'react';
@@ -17,7 +17,7 @@ import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
 import Typography from '@material-ui/core/Typography';
 
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 
 const styles = (theme) => ({
 	root: {
