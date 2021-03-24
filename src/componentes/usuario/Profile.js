@@ -15,7 +15,7 @@ import auth from './../auth/auth-helper';
 import { read } from '../../API/api-user';
 import { Redirect, Link } from 'react-router-dom';
 import {
-	Skeleton,
+	/* Skeleton, */
 	Typography,
 	Divider,
 	Avatar

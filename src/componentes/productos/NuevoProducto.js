@@ -14,6 +14,8 @@ import {
 	Divider
 } from 'antd';
 
+import './nuevoproducto.css'
+
 export default function NuevoProducto({ match }) {
 	const [
 		values,
@@ -85,7 +87,7 @@ export default function NuevoProducto({ match }) {
 		return <Redirect to={`/user/${id}/product`} />;
 	}
 	return (
-		<div>
+		<div className="subir-producto">
 			<Form layout='vertical'>
 				<Typography type='headline' component='h5'>
 					INFORMACIÓN DE TU PRODUCTO
@@ -112,9 +114,6 @@ export default function NuevoProducto({ match }) {
 							<Option value='Motos'>Motos</Option>
 							<Option value='Motor y Accesorios'>
 								Motor y Accesorios
-							</Option>
-							<Option value='Moda y Accesorios'>
-								Moda y Accesorios
 							</Option>
 							<Option value='Inmobiliaria'>
 								Inmobiliaria
@@ -192,8 +191,6 @@ export default function NuevoProducto({ match }) {
 						</span>
 					</Space>
 				</Form.Item>
-				<br />
-				<br />
 				<Space align='center'>
 					{values.error && (
 						<Typography component='p' color='error'>
